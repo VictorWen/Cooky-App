@@ -1,9 +1,8 @@
 import React from 'react'
-import NavigationBox from './NavigationBox'
+import NavigationBar from './NavigationBar'
 
 const Test = () => (
   <>
-    <NavigationBox/>
     <h1>Content</h1>
   </>
 

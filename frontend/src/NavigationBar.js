@@ -2,17 +2,19 @@ import React from 'react'
 import './navigationBar.css'
 import SearchIcon from '@material-ui/icons/Search'
 import PeopleIcon from '@material-ui/icons/People'
+import MenuItem from '@material-ui/core/MenuItem'
+import { Link } from 'react-router-dom'
 
 
-const NavigationBox = () => {
+const NavigationBar = () => {
   return (
     <div className="navigationBar">li
       <div className="home">
-        <a href>Home</a>
+        <MenuItem component={Link} to={'/'}>Home</MenuItem>
       </div>
 
       <div>
-        <a href>Popular Recipes</a>
+        <MenuItem component={Link} to={'createRecipe'}>Create a recipe</MenuItem>
       </div>
 
       <div>
@@ -20,13 +22,13 @@ const NavigationBox = () => {
       </div>
       <div className="navBarSpace">{/*Filler*/}</div>
       <div>
-        <PeopleIcon />
+        <PeopleIcon/>
       </div>
       <div>
-        <SearchIcon />
+        <SearchIcon/>
       </div>
     </div>
   )
 }
 
-export default NavigationBox
+export default NavigationBar

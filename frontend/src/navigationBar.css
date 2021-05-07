@@ -9,8 +9,13 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
+
 .navBarSpace {
     flex-grow: 1;
+}
+
+.navBarSpace:hover {
+    background-color: #333 !important;
 }
 
 .home {
