@@ -14,21 +14,24 @@ import {
 
 function App() {
   return (
-    <Router>
-      <div>
-        <NavigationBar />
-        {/* A <Switch> looks through its children <Route>s and
+    <div className="page">
+      <Router>
+        <div>
+          <NavigationBar />
+          {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
-        <Switch>
-          <Route path="/createRecipe">
-            <RecipePage />
-          </Route>
-          <Route path="/">
-            <HomePage />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
+          <Switch>
+            <Route path="/createRecipe">
+              <RecipePage />
+            </Route>
+            <Route path="/">
+              <HomePage />
+            </Route>
+          </Switch>
+        </div>
+      </Router>
+    </div>
+
   )
 }
 
