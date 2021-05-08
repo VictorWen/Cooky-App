@@ -1,23 +1,13 @@
 let express = require('express')
+let recipe_data = require('../utils/recipe_data');
 let router = express.Router()
 
-class Recipe {
-    constructor(name){
-        this.name = name;
-    }
-}
-
-let testRecipe1 = new Recipe("testRecipe1");
-let testRecipe2 = new Recipe("testRecipe2");
-
-recipe_dict = {
-    "recipe1": testRecipe1,
-    "recipe2": testRecipe2
-}
-
-router.get('/:id', function(req, res){
-    if (req.params.id in recipe_dict) {
-        res.send(recipe_dict[req.params.id].name);
+router.get('/:id', async function(req, res){
+    id = req.params.id;
+    if (recipe_data.hasRecipe(id)) {
+        let recipe = await recipe_data.getRecipe(id);
+        console.log("test" + recipe.name);
+        res.send(JSON.stringify(recipe));
     }
     else{
         res.send("Recipe not found");
