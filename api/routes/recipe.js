@@ -1,10 +1,10 @@
 let express = require('express')
-let recipe_data = require('../utils/recipe_data');
+let recipe_data = require('../utils/recipe_database');
 let router = express.Router()
 
 router.get('/:id', async function(req, res){
     id = req.params.id;
-    if (recipe_data.hasRecipe(id)) {
+    if (await recipe_data.hasRecipe(id)) {
         let recipe = await recipe_data.getRecipe(id);
         console.log("test" + recipe.name);
         res.send(JSON.stringify(recipe));
