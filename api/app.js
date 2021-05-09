@@ -29,8 +29,8 @@ app.use('/testAPI', testAPIRouter)
 
 // http://URL/recipe/...
 let recipeRouter = require('./routes/recipe');
+app.use('/recipe', express.json())
 app.use('/recipe', recipeRouter)
-
 
 
 // catch 404 and forward to error handler

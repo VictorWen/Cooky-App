@@ -35,6 +35,10 @@ class RecipeDataLoader {
             });
         });
     }
+
+    async updateRecipe(recipe_data) {
+        await this.recipes.update(recipe_data);
+    }
 }
 
 module.exports = new RecipeDataLoader(key_path, db_url);
