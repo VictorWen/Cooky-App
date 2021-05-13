@@ -102,3 +102,6 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Firebase Private key
+api/cs-35l-cooking-app-firebase-adminsdk-pfw6m-00878e5a37.json

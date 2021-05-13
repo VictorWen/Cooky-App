@@ -20,8 +20,7 @@ router.get('/:id', async function(req, res){
 // Update recipe in the database
 router.post('/:id', async function(req, res){
     let recipe = req.body;
-    console.log(recipe);
-    await recipe_data.updateRecipe(recipe);
+    await recipe_data.updateRecipe(req.params.id, recipe);
     res.end();
 });
 

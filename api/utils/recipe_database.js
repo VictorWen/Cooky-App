@@ -3,6 +3,8 @@ firebase = require("firebase-admin");
 const key_path = "../cs-35l-cooking-app-firebase-adminsdk-pfw6m-00878e5a37.json";
 const db_url = "https://cs-35l-cooking-app-default-rtdb.firebaseio.com";
 
+const recipe_properties = ['name', 'description', 'ingredients']
+
 class RecipeDataLoader {
 
     constructor(key_path, db_url) {
@@ -36,8 +38,16 @@ class RecipeDataLoader {
         });
     }
 
-    async updateRecipe(recipe_data) {
-        await this.recipes.update(recipe_data);
+    async updateRecipe(recipe_id, recipe_data) {
+        // Take from https://stackoverflow.com/questions/38750705/filter-object-properties-by-key-in-es6 
+        let filtered_recipe = Object.keys(recipe_data)
+            .filter((key) => recipe_properties.includes(key))
+            .reduce(function(obj, key) {
+                obj[key] = recipe_data[key];
+                return obj;
+            }, {});
+
+        await this.recipes.child(recipe_id).update(filtered_recipe);
     }
 }
 
