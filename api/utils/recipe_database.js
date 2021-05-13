@@ -3,7 +3,7 @@ firebase = require("firebase-admin");
 const key_path = "../cs-35l-cooking-app-firebase-adminsdk-pfw6m-00878e5a37.json";
 const db_url = "https://cs-35l-cooking-app-default-rtdb.firebaseio.com";
 
-const recipe_properties = ['name', 'description', 'ingredients']
+const recipe_properties = ['name', 'description', 'ingredients', 'steps']
 
 class RecipeDataLoader {
 
@@ -16,13 +16,12 @@ class RecipeDataLoader {
         });
 
         this.database = firebase_app.database();
-        this.recipe_ids = this.database.ref("recipe-ids");
         this.recipes = this.database.ref('recipes');
     }
 
     async getRecipe(recipe_id) {
         let recipes = this.recipes;
-        return await new Promise(function (resolve, reject){
+        return await new Promise(function (resolve) {
             recipes.child(recipe_id).get().then(function(snapshot) {
                 resolve(snapshot.val());
             });
@@ -30,16 +29,17 @@ class RecipeDataLoader {
     }
 
     async hasRecipe(recipe_id) {
-        let recipe_ids = this.recipe_ids;
+        let recipes = this.recipes;
         return await new Promise(function (resolve) {
-            recipe_ids.get().then(function(snapshot) {
-                resolve(snapshot.val().includes(recipe_id));
+            recipes.child(recipe_id).get().then(function(snapshot) {
+                resolve(snapshot.exists());
             });
         });
     }
 
-    async updateRecipe(recipe_id, recipe_data) {
-        // Take from https://stackoverflow.com/questions/38750705/filter-object-properties-by-key-in-es6 
+    #filterRecipeProperties(recipe_data) {
+        // Filters out properties from recipe_data that are not needed
+        // Taken from https://stackoverflow.com/questions/38750705/filter-object-properties-by-key-in-es6
         let filtered_recipe = Object.keys(recipe_data)
             .filter((key) => recipe_properties.includes(key))
             .reduce(function(obj, key) {
@@ -47,6 +47,17 @@ class RecipeDataLoader {
                 return obj;
             }, {});
 
+        return filtered_recipe;
+    }
+
+    async addRecipe(recipe_data){
+        let filtered_recipe = this.#filterRecipeProperties(recipe_data);
+        let new_recipe = await this.recipes.push(filtered_recipe);
+        return new_recipe.key;
+    }
+
+    async updateRecipe(recipe_id, recipe_data) {
+        let filtered_recipe = this.#filterRecipeProperties(recipe_data);
         await this.recipes.child(recipe_id).update(filtered_recipe);
     }
 }

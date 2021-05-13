@@ -7,7 +7,8 @@ let router = express.Router()
 
 // Access recipe from the database
 router.get('/:id', async function(req, res){
-    id = req.params.id;
+    let id = req.params.id;
+    console.log(id);
     if (await recipe_data.hasRecipe(id)) {
         let recipe = await recipe_data.getRecipe(id);
         res.json(recipe);
@@ -19,9 +20,10 @@ router.get('/:id', async function(req, res){
 
 // Update recipe in the database
 router.post('/:id', async function(req, res){
+    let id = req.params.id;
     let recipe = req.body;
-    await recipe_data.updateRecipe(req.params.id, recipe);
-    res.end();
+    await recipe_data.updateRecipe(id, recipe);
+    res.json(recipe_data.getRecipe(id))
 });
 
 module.exports = router
