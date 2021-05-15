@@ -8,6 +8,7 @@ const CreateARecipePage = () => {
   const [ingredientsList, setIngredientsList] = useState([])
   const [ingredientsListRendered, setIngredientsListRendered] = useState([])
   const [noIngredients, setNoIngredients] = useState(false)
+  const [cookingTime, setCookingTime] = useState("")
   useEffect(() => {
     const ingredientsListRendered = ingredientsList.map((item, index) => (
       <div key={index}>
@@ -67,6 +68,19 @@ const CreateARecipePage = () => {
             >
               Add Ingredient
             </button>
+
+            <label htmlFor="cookingTime">Cooking time in minutes
+            </label><br/>
+            <input type="number"
+                   id="cookingTime"
+                   name="cookingTime"
+                   value={cookingTime}
+                   onChange={(event) => {
+                     setCookingTime(event.target.value)
+                   }}
+                   placeholder="Cooking Time..."
+            />
+
           </form>
         </div>
 
