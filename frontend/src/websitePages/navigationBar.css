@@ -16,9 +16,6 @@
     background-color: #333 !important;
 }
 
-.home {
-    background-color: #04AA6D;
-}
 
 div.navigationBar > div {
     font-size: 17px;
@@ -31,7 +28,12 @@ div.navigationBar > div {
     top: 0;
 }
 
-div.navigationBar > div:hover {
-    background-color: #111;
+
+div.navigationBar > div:active  {
+    background-color: #04AA6D !important;
 }
 
+a {
+    text-decoration: inherit;
+    color: inherit;
+}

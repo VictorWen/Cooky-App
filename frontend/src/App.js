@@ -1,13 +1,13 @@
 import React from 'react'
-import RecipePage from './RecipePage'
-import HomePage from './HomePage'
-import NavigationBar from './NavigationBar'
+import HomePage from './websitePages/HomePage'
+import NavigationBar from './websitePages/NavigationBar'
+import PopularRecipesPage from './websitePages/PopularRecipePage'
 import './App.css';
 import {
-  BrowserRouter as Router,
   Switch,
   Route
 } from "react-router-dom";
+import CreateARecipePage from "./websitePages/CreateARecipePage";
 
 
 
@@ -15,23 +15,21 @@ import {
 function App() {
   return (
     <div className="page">
-      <Router>
-        <div>
           <NavigationBar />
           {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
           <Switch>
             <Route path="/createRecipe">
-              <RecipePage />
+              <CreateARecipePage />
+            </Route>
+            <Route path="/popularRecipes">
+              <PopularRecipesPage />
             </Route>
             <Route path="/">
               <HomePage />
             </Route>
           </Switch>
-        </div>
-      </Router>
     </div>
-
   )
 }
 
