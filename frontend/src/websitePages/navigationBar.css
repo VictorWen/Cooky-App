@@ -28,6 +28,10 @@ div.navigationBar > div {
     top: 0;
 }
 
+div.navigationBar > div:hover  {
+    background-color: #111 !important;
+    cursor: pointer;
+}
 
 div.navigationBar > div:active  {
     background-color: #04AA6D !important;

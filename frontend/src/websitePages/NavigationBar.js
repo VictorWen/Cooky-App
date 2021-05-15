@@ -3,40 +3,43 @@ import './navigationBar.css'
 import SearchIcon from '@material-ui/icons/Search'
 import PeopleIcon from '@material-ui/icons/People'
 import { NavLink } from 'react-router-dom'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useHistory } from 'react-router-dom'
 
 const NavigationBar = () => {
   let location = useLocation()
+  let history = useHistory()
   console.log(location)
   return (
     <div className="navigationBar">
+
       <div style={{
         backgroundColor: "/" === location.pathname ? "#04AA6D" : "#333",
-
-      }}>
-        <NavLink
-          to={'/'}
-        >
+      }}
+           onClick = {() => {
+             history.push('/')
+           }}
+      >
         Home
-        </NavLink>
       </div>
-
 
       <div div style={{
         backgroundColor: "/createRecipe" === location.pathname ? "#04AA6D" : "#333"
-      }}>
-        <NavLink to={'/createRecipe'}>
+      }}
+           onClick = {() => {
+             history.push('/createRecipe')
+           }}
+      >
           Create a Recipe
-        </NavLink>
-
       </div>
 
       <div style={{
         backgroundColor: "/popularRecipes" === location.pathname ? "#04AA6D" : "#333"
-      }}>
-        <NavLink to={'/popularRecipes'}>
+      }}
+           onClick = {() => {
+             history.push('/popularRecipes')
+           }}
+      >
           Popular Recipes
-        </NavLink>
       </div>
       <div className="navBarSpace">{/*Filler*/}</div>
       <div>
