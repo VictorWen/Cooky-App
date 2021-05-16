@@ -23,7 +23,7 @@ class RecipeDataLoader {
         let recipes = this.recipes;
         return await new Promise(function (resolve) {
             recipes.doc(recipe_id).get().then(function(snapshot) {
-                resolve(snapshot);
+                resolve(snapshot.data());
             });
         });
     }
