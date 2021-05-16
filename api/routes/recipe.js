@@ -23,7 +23,7 @@ router.post('/:id', async function(req, res){
     let id = req.params.id;
     let recipe = req.body;
     await recipe_data.updateRecipe(id, recipe);
-    res.json(recipe_data.getRecipe(id))
+    res.json(await recipe_data.getRecipe(id));
 });
 
 module.exports = router
