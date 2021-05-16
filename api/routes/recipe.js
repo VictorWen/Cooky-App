@@ -5,6 +5,8 @@ let router = express.Router()
 // This module only get and sends recipe data to the frontend
 // It should not be used to process or validate recipe data
 
+// might make sense to handle ingredient and recipe retrieval from same place
+
 // Access recipe from the database
 router.get('/:id', async function(req, res){
     let id = req.params.id;

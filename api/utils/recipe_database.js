@@ -23,7 +23,7 @@ class RecipeDataLoader {
         let recipes = this.recipes;
         return await new Promise(function (resolve) {
             recipes.doc(recipe_id).get().then(function(snapshot) {
-                resolve(snapshot.data());
+                resolve(snapshot);
             });
         });
     }
@@ -33,6 +33,25 @@ class RecipeDataLoader {
         return await new Promise(function (resolve) {
             recipes.doc(recipe_id).get().then(function(snapshot){
                 resolve(snapshot.exists);
+            });
+        });
+    }
+
+    // recipes have additional "ingredients_list" field that strictly contains the names of all ingredients
+    async searchIngredient(target_ingredient) {
+        let recipes = this.recipes;
+        return await new Promise(function (resolve) {
+            recipes.where("ingredients_list", "array-contains", target_ingredient).get().then(function(snapshot) {
+                resolve(snapshot.docs.map(doc => doc.data()));
+            });
+        });
+    }
+
+    async hasIngredient(target_ingredient) {
+        let recipes = this.recipes;
+        return await new Promise(function (resolve) {
+            recipes.where("ingredients_list", "array-contains", target_ingredient).get().then(function(snapshot) {
+                resolve(!snapshot.empty);
             });
         });
     }
