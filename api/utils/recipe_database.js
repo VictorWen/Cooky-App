@@ -37,6 +37,25 @@ class RecipeDataLoader {
         });
     }
 
+    // recipes have additional "ingredients_list" field that strictly contains the names of all ingredients
+    async searchIngredient(target_ingredient) {
+        let recipes = this.recipes;
+        return await new Promise(function (resolve) {
+            recipes.where("ingredients_list", "array-contains", target_ingredient).get().then(function(snapshot) {
+                resolve(snapshot.docs.map(doc => doc.data()));
+            });
+        });
+    }
+
+    async hasIngredient(target_ingredient) {
+        let recipes = this.recipes;
+        return await new Promise(function (resolve) {
+            recipes.where("ingredients_list", "array-contains", target_ingredient).get().then(function(snapshot) {
+                resolve(!snapshot.empty);
+            });
+        });
+    }
+
     #filterRecipeProperties(recipe_data) {
         // Filters out properties from recipe_data that are not needed
         // Taken from https://stackoverflow.com/questions/38750705/filter-object-properties-by-key-in-es6
