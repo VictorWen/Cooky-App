@@ -68,7 +68,7 @@ const CreateARecipePage = () => {
             arrayCopy[index] = event.target.value
             setRecipeInstructionsList(arrayCopy)
           }}
-          placeholder={"Step " + index + "..."}
+          placeholder={"Step " + (index + 1) + "..."}
         />
       </div>
     ))
@@ -78,9 +78,10 @@ const CreateARecipePage = () => {
   console.log(ingredientsListRendered)
   return (
     <>
+      <form>
+
       <div className="container">
         <div>
-          <form>
             <label htmlFor="recipeTitle">Recipe Title:</label><br/>
             <input type="text"
                    id="recipeTitle"
@@ -133,22 +134,34 @@ const CreateARecipePage = () => {
                    }}
                    placeholder="Cooking Time..."
             />
-            <label htmlFor="recipeStep1">Enter the steps of your recipe
-              <span className="emptyStepText">{emptyStep ? " - Please fill in this step first" : ""}</span>
-            </label><br/>
-            {recipeInstructionsListRendered}
+              <label htmlFor="recipeStep1">Enter the steps of your recipe
+                <span className="emptyStepText">{emptyStep ? " - Please fill in this step first" : ""}</span>
+              </label><br/>
+            <div className="recipeStepsContainer">
+              {recipeInstructionsListRendered}
+            </div>
 
 
-          </form>
+
+
         </div>
 
         <div>
           <div className="ingredientsList">
             {ingredientsListRendered}
           </div>
+          <input type="file"
+                 placeholder="Upload an image of your recipe"
+                 id="inputImage"
+                 name="inputImage"
+          />
+          <input type="button"
+                 value="Upload image"
+                 className="uploadFileButton"/>
 
         </div>
       </div>
+      </form>
     </>
 
   )
