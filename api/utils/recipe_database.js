@@ -15,15 +15,15 @@ class RecipeDataLoader {
             databaseURL: db_url
         });
 
-        this.database = firebase_app.database();
-        this.recipes = this.database.ref('recipes');
+        this.database = firebase_app.firestore();
+        this.recipes = this.database.collection('recipes');
     }
 
     async getRecipe(recipe_id) {
         let recipes = this.recipes;
         return await new Promise(function (resolve) {
-            recipes.child(recipe_id).get().then(function(snapshot) {
-                resolve(snapshot.val());
+            recipes.doc(recipe_id).get().then(function(snapshot) {
+                resolve(snapshot.data());
             });
         });
     }
@@ -31,8 +31,27 @@ class RecipeDataLoader {
     async hasRecipe(recipe_id) {
         let recipes = this.recipes;
         return await new Promise(function (resolve) {
-            recipes.child(recipe_id).get().then(function(snapshot) {
-                resolve(snapshot.exists());
+            recipes.doc(recipe_id).get().then(function(snapshot){
+                resolve(snapshot.exists);
+            });
+        });
+    }
+
+    // recipes have additional "ingredients_list" field that strictly contains the names of all ingredients
+    async searchIngredient(target_ingredient) {
+        let recipes = this.recipes;
+        return await new Promise(function (resolve) {
+            recipes.where("ingredients_list", "array-contains", target_ingredient).get().then(function(snapshot) {
+                resolve(snapshot.docs.map(doc => doc.data()));
+            });
+        });
+    }
+
+    async hasIngredient(target_ingredient) {
+        let recipes = this.recipes;
+        return await new Promise(function (resolve) {
+            recipes.where("ingredients_list", "array-contains", target_ingredient).get().then(function(snapshot) {
+                resolve(!snapshot.empty);
             });
         });
     }
@@ -52,13 +71,13 @@ class RecipeDataLoader {
 
     async addRecipe(recipe_data){
         let filtered_recipe = this.#filterRecipeProperties(recipe_data);
-        let new_recipe = await this.recipes.push(filtered_recipe);
-        return new_recipe.key;
+        let new_recipe = await this.recipes.add(filtered_recipe);
+        return new_recipe.id;
     }
 
     async updateRecipe(recipe_id, recipe_data) {
         let filtered_recipe = this.#filterRecipeProperties(recipe_data);
-        await this.recipes.child(recipe_id).update(filtered_recipe);
+        await this.recipes.doc(recipe_id).update(filtered_recipe);
     }
 }
 
