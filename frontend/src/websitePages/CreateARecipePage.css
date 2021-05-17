@@ -7,6 +7,9 @@
     padding-right: 15px;
     padding-left: 15px;
     margin-top: 5px;
+    display: flex;
+    flex-direction: column;
+    height: 90vh;
 }
 
 input[type=text], select, input[type=number], input[type=file] {
@@ -53,7 +56,8 @@ input[type=text], select, input[type=number], input[type=file] {
 .recipeStepsContainer {
     border: 3px solid gray;
     border-radius: 5px;
-    height: 60vh;
+    /*height: 50vh;*/
+    flex: 1;
     overflow-y: scroll;
 }
 
@@ -71,7 +75,8 @@ input[type=text], select, input[type=number], input[type=file] {
     text-align: center;
 }
 
-.addIngredientButton, .uploadFileButton {
+
+.addIngredientButton, .uploadFileButton, .submitRecipeButton {
     border: none;
     color: black;
     padding: 12px 16px;
@@ -85,6 +90,13 @@ input[type=text], select, input[type=number], input[type=file] {
     width: 100%;
     border-radius: 5px;
 }
+
+.submitRecipeButton:hover {
+    background-color: #12A1A1;
+    color: white;
+}
+
+
 
 .addIngredientButton:hover, .uploadFileButton:hover {
     background-color: #04AA6D;
