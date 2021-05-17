@@ -56,7 +56,7 @@ input[type=text], select, input[type=number], input[type=file] {
 .recipeStepsContainer {
     border: 3px solid gray;
     border-radius: 5px;
-    /*height: 50vh;*/
+    min-height: 10vh;
     flex: 1;
     overflow-y: scroll;
 }
@@ -108,7 +108,8 @@ input[type=text], select, input[type=number], input[type=file] {
     grid-template-columns: 1fr 1fr;
     border: 3px solid gray;
     border-radius: 10px;
-    height: 40vh;
+    flex: 1;
+    min-height: 20vh;
     overflow: scroll;
     align-content: start;
 }

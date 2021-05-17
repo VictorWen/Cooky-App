@@ -83,7 +83,7 @@ const CreateARecipePage = () => {
 
       <div className="container">
         <div>
-            <label htmlFor="recipeTitle">Recipe Title:</label><br/>
+            <label htmlFor="recipeTitle">Recipe Title:</label>
             <input type="text"
                    id="recipeTitle"
                    name="recipeTitle"
@@ -96,7 +96,7 @@ const CreateARecipePage = () => {
             /> <br/>
             <label htmlFor="addAnIngredient">Add an ingredient
               <span className="noIngredientsText">{noIngredients ? " - Please enter an ingredient" : ""}</span>
-            </label><br/>
+            </label>
             <input type="text"
                    id="addAnIngredient"
                    name="addAnIngredient"
@@ -125,18 +125,7 @@ const CreateARecipePage = () => {
               Add Ingredient
             </button>
 
-            <label htmlFor="cookingTime">Cooking time in minutes
-            </label><br/>
-            <input type="number"
-                   id="cookingTime"
-                   name="cookingTime"
-                   value={cookingTime}
-                   onChange={(event) => {
-                     setCookingTime(event.target.value)
-                   }}
-                   placeholder="Cooking Time..."
-                   required
-            />
+
               <label htmlFor="recipeStep1">Enter the steps of your recipe
                 <span className="emptyStepText">{emptyStep ? " - Please fill in this step first" : ""}</span>
               </label><br/>
@@ -156,6 +145,19 @@ const CreateARecipePage = () => {
           <div className="ingredientsList">
             {ingredientsListRendered}
           </div>
+          <br />
+          <label htmlFor="cookingTime">Cooking time in minutes
+          </label>
+          <input type="number"
+                 id="cookingTime"
+                 name="cookingTime"
+                 value={cookingTime}
+                 onChange={(event) => {
+                   setCookingTime(event.target.value)
+                 }}
+                 placeholder="Cooking Time..."
+                 required
+          />
           <input type="file"
                  placeholder="Upload an image of your recipe"
                  id="inputImage"
