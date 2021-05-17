@@ -147,6 +147,9 @@ const CreateARecipePage = () => {
         </div>
 
         <div>
+          <div>
+            <h1 className="ingredientsLabel">Ingredients</h1>
+          </div>
           <div className="ingredientsList">
             {ingredientsListRendered}
           </div>
