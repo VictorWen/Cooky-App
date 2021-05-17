@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import './CreateARecipePage.css'
 import CancelIcon from '@material-ui/icons/Cancel';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+import Tooltip from '@material-ui/core/Tooltip';
+import RemoveCircleRoundedIcon from '@material-ui/icons/RemoveCircleRounded';
+import { Remove } from "@material-ui/icons";
 
 const CreateARecipePage = () => {
   const [title, setTitle] = useState("")
@@ -8,21 +12,69 @@ const CreateARecipePage = () => {
   const [ingredientsList, setIngredientsList] = useState([])
   const [ingredientsListRendered, setIngredientsListRendered] = useState([])
   const [noIngredients, setNoIngredients] = useState(false)
+  const [emptyStep, setEmptyStep] = useState(false)
   const [cookingTime, setCookingTime] = useState("")
+  const [recipeInstructionsList, setRecipeInstructionsList] = useState([""])
+  const [recipeInstructionsListRendered, setRecipeInstructionsListRendered] = useState([])
   useEffect(() => {
     const ingredientsListRendered = ingredientsList.map((item, index) => (
       <div key={index}>
-        <CancelIcon className="removeIngredientButton"
-                    onClick={() => {
-                      const arrayCopy = [...ingredientsList]
-                      arrayCopy.splice(index, 1)
-                      setIngredientsList(arrayCopy)
-                    }}/>
+        <Tooltip title="Remove ingredient">
+          <CancelIcon className="removeIngredientButton"
+                      onClick={() => {
+                        const arrayCopy = [...ingredientsList]
+                        arrayCopy.splice(index, 1)
+                        setIngredientsList(arrayCopy)
+                      }}/>
+        </Tooltip>
+
         {item}
       </div>
     ))
     setIngredientsListRendered(ingredientsListRendered)
   }, [ingredientsList])
+
+  useEffect(() => {
+    const recipeInstructionsListRendered = recipeInstructionsList.map((item, index) => (
+      <div className="recipeInstructionsContainer"
+           key={index}
+      >
+
+            <Tooltip title="Add a step">
+            <AddCircleIcon className="addStepButton"
+                           onClick={() => {
+                             const arrayCopy = [...recipeInstructionsList]
+                             arrayCopy.splice(index + 1, 0, "")
+                             setRecipeInstructionsList(arrayCopy)
+                           }}
+            />
+            </Tooltip>
+        <Tooltip title="Remove step">
+          <RemoveCircleRoundedIcon className="removeStepButton"
+                                   onClick={() => {
+                                     if (recipeInstructionsList.length === 1) return
+                                     const arrayCopy = [...recipeInstructionsList]
+                                     arrayCopy.splice(index, 1)
+                                     setRecipeInstructionsList(arrayCopy)
+                                   }}
+          />
+        </Tooltip>
+        <textarea
+          className="recipeInstructions"
+          name={"step" + index}
+          value={recipeInstructionsList[index]}
+          onChange={(event) => {
+            const arrayCopy = [...recipeInstructionsList]
+            arrayCopy[index] = event.target.value
+            setRecipeInstructionsList(arrayCopy)
+          }}
+          placeholder={"Step " + index + "..."}
+        />
+      </div>
+    ))
+    setRecipeInstructionsListRendered(recipeInstructionsListRendered)
+  }, [recipeInstructionsList])
+
   console.log(ingredientsListRendered)
   return (
     <>
@@ -52,12 +104,13 @@ const CreateARecipePage = () => {
                    placeholder="Ingredient Name..."
             />
 
+
             <button
               name="AddIngredient"
               type="button"
               className="addIngredientButton"
               onClick={() => {
-                if(ingredientText === "") {
+                if (ingredientText === "") {
                   setNoIngredients(true)
                   return
                 }
@@ -80,6 +133,11 @@ const CreateARecipePage = () => {
                    }}
                    placeholder="Cooking Time..."
             />
+            <label htmlFor="recipeStep1">Enter the steps of your recipe
+              <span className="emptyStepText">{emptyStep ? " - Please fill in this step first" : ""}</span>
+            </label><br/>
+            {recipeInstructionsListRendered}
+
 
           </form>
         </div>

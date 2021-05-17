@@ -22,7 +22,7 @@ const NavigationBar = () => {
         Home
       </div>
 
-      <div div style={{
+      <div style={{
         backgroundColor: "/createRecipe" === location.pathname ? "#04AA6D" : "#333"
       }}
            onClick = {() => {
