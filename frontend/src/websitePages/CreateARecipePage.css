@@ -67,6 +67,10 @@ input[type=text], select, input[type=number], input[type=file] {
     flex-direction: row;
 }
 
+.ingredientsLabel {
+    text-align: center;
+}
+
 .addIngredientButton, .uploadFileButton {
     border: none;
     color: black;
