@@ -23,7 +23,8 @@ div.navigationBar > div {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 14px 16px;
+    padding: 0px 16px;
+    height: 8vh;
     position: sticky;
     top: 0;
 }

@@ -69,6 +69,7 @@ const CreateARecipePage = () => {
             setRecipeInstructionsList(arrayCopy)
           }}
           placeholder={"Step " + (index + 1) + "..."}
+          required
         />
       </div>
     ))
@@ -91,6 +92,7 @@ const CreateARecipePage = () => {
                      setTitle(event.target.value)
                    }}
                    placeholder="Recipe Title..."
+                   required
             /> <br/>
             <label htmlFor="addAnIngredient">Add an ingredient
               <span className="noIngredientsText">{noIngredients ? " - Please enter an ingredient" : ""}</span>
@@ -133,6 +135,7 @@ const CreateARecipePage = () => {
                      setCookingTime(event.target.value)
                    }}
                    placeholder="Cooking Time..."
+                   required
             />
               <label htmlFor="recipeStep1">Enter the steps of your recipe
                 <span className="emptyStepText">{emptyStep ? " - Please fill in this step first" : ""}</span>
@@ -161,6 +164,10 @@ const CreateARecipePage = () => {
           <input type="button"
                  value="Upload image"
                  className="uploadFileButton"/>
+          <input type="submit"
+                 className="submitRecipeButton"
+                 value="Submit"
+          />
 
         </div>
       </div>
