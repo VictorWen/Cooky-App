@@ -59,6 +59,7 @@ input[type=text], select, input[type=number], input[type=file] {
     min-height: 10vh;
     flex: 1;
     overflow-y: scroll;
+
 }
 
 .addStepButton:hover {
@@ -110,7 +111,7 @@ input[type=text], select, input[type=number], input[type=file] {
     border-radius: 10px;
     flex: 1;
     min-height: 20vh;
-    overflow: scroll;
+    overflow-y: scroll;
     align-content: start;
 }
 
@@ -124,7 +125,7 @@ input[type=text], select, input[type=number], input[type=file] {
     border-radius: 8px;
     height: 8vh;
     padding: 15px;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .removeIngredientButton {

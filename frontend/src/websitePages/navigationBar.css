@@ -10,6 +10,7 @@
 
 .navBarSpace {
     flex-grow: 1;
+    cursor: auto !important;
 }
 
 .navBarSpace:hover {
