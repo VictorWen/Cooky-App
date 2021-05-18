@@ -42,8 +42,12 @@ const NavigationBar = () => {
           Popular Recipes
       </div>
       <div className="navBarSpace">{/*Filler*/}</div>
-      <div>
-        <PeopleIcon/>
+      <div style={{
+        backgroundColor: "/createAnAccount" === location.pathname ? "#04AA6D" : "#333"
+      }}>
+        <PeopleIcon onClick={() => {
+          history.push('/createAnAccount')
+        }}/>
       </div>
       <div>
         <SearchIcon/>
