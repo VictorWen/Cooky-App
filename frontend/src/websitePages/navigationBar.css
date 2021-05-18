@@ -10,6 +10,7 @@
 
 .navBarSpace {
     flex-grow: 1;
+    cursor: auto !important;
 }
 
 .navBarSpace:hover {
@@ -31,11 +32,15 @@ div.navigationBar > div {
 
 
 div.navigationBar > div:hover  {
-    background-color: #111 !important;
+    background-color: #111;
     cursor: pointer;
 }
 
-div.navigationBar > div:active  {
+.activeTab {
+    background-color: #04AA6D;
+}
+
+.activeTab:hover {
     background-color: #04AA6D !important;
 }
 

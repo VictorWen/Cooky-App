@@ -56,9 +56,10 @@ input[type=text], select, input[type=number], input[type=file] {
 .recipeStepsContainer {
     border: 3px solid gray;
     border-radius: 5px;
-    /*height: 50vh;*/
+    min-height: 10vh;
     flex: 1;
     overflow-y: scroll;
+
 }
 
 .addStepButton:hover {
@@ -108,8 +109,9 @@ input[type=text], select, input[type=number], input[type=file] {
     grid-template-columns: 1fr 1fr;
     border: 3px solid gray;
     border-radius: 10px;
-    height: 40vh;
-    overflow: scroll;
+    flex: 1;
+    min-height: 20vh;
+    overflow-y: scroll;
     align-content: start;
 }
 
@@ -123,7 +125,7 @@ input[type=text], select, input[type=number], input[type=file] {
     border-radius: 8px;
     height: 8vh;
     padding: 15px;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .removeIngredientButton {
