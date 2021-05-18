@@ -5,49 +5,46 @@ import PeopleIcon from '@material-ui/icons/People'
 import { NavLink } from 'react-router-dom'
 import { useLocation, useHistory } from 'react-router-dom'
 
+
 const NavigationBar = () => {
   let location = useLocation()
   let history = useHistory()
   console.log(location)
   return (
     <div className="navigationBar">
-
-      <div style={{
-        backgroundColor: "/" === location.pathname ? "#04AA6D" : "#333",
-      }}
-           onClick = {() => {
+      <div className={location.pathname === "/" ? "activeTab" : ""}
+           onClick={() => {
              history.push('/')
            }}
       >
         Home
       </div>
 
-      <div style={{
-        backgroundColor: "/createRecipe" === location.pathname ? "#04AA6D" : "#333"
-      }}
-           onClick = {() => {
-             history.push('/createRecipe')
-           }}
+      <div
+        className={location.pathname === "/createRecipe" ? "activeTab" : ""}
+        onClick={() => {
+          history.push('/createRecipe')
+        }}
       >
-          Create a Recipe
+        Create a Recipe
       </div>
 
-      <div style={{
-        backgroundColor: "/popularRecipes" === location.pathname ? "#04AA6D" : "#333"
-      }}
-           onClick = {() => {
-             history.push('/popularRecipes')
-           }}
+      <div
+        className={location.pathname === "/popularRecipes" ? "activeTab" : ""}
+        onClick={() => {
+          history.push('/popularRecipes')
+        }}
       >
-          Popular Recipes
+        Popular Recipes
       </div>
       <div className="navBarSpace">{/*Filler*/}</div>
-      <div style={{
-        backgroundColor: "/createAnAccount" === location.pathname ? "#04AA6D" : "#333"
-      }}>
-        <PeopleIcon onClick={() => {
+      <div
+        className={location.pathname === "/createAnAccount" ? "activeTab" : ""}
+        onClick={() => {
           history.push('/createAnAccount')
-        }}/>
+        }}
+      >
+        <PeopleIcon/>
       </div>
       <div>
         <SearchIcon/>

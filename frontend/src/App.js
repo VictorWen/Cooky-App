@@ -2,6 +2,7 @@ import React from 'react'
 import HomePage from './websitePages/HomePage'
 import NavigationBar from './websitePages/NavigationBar'
 import PopularRecipesPage from './websitePages/PopularRecipePage'
+import CreateAccountPage from './websitePages/CreateAccountPage'
 import './App.css';
 import {
   Switch,
@@ -24,6 +25,9 @@ function App() {
             </Route>
             <Route path="/popularRecipes">
               <PopularRecipesPage />
+            </Route>
+            <Route path="/createAnAccount">
+              <CreateAccountPage />
             </Route>
             <Route path="/">
               <HomePage />
