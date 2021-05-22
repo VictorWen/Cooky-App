@@ -1,4 +1,4 @@
-firebase = require("firebase-admin");
+let firebase = require("firebase-admin");
 
 const key_path = "../cs-35l-cooking-app-firebase-adminsdk-pfw6m-00878e5a37.json";
 const db_url = "https://cs-35l-cooking-app-default-rtdb.firebaseio.com";
@@ -7,13 +7,8 @@ const recipe_properties = ['name', 'description', 'ingredients', 'steps', "cookt
 
 class RecipeDataLoader {
 
-    constructor(key_path, db_url) {
-        let serviceAccount = require(key_path);
-
-        let firebase_app = firebase.initializeApp({
-            credential: firebase.credential.cert(serviceAccount),
-            databaseURL: db_url
-        });
+    constructor() {
+        let firebase_app = firebase.app(); // Get default app
 
         this.database = firebase_app.firestore();
         this.recipes = this.database.collection('recipes');
@@ -81,4 +76,4 @@ class RecipeDataLoader {
     }
 }
 
-module.exports = new RecipeDataLoader(key_path, db_url);
+module.exports = new RecipeDataLoader();
