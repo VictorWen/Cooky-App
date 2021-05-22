@@ -3,7 +3,7 @@ firebase = require("firebase-admin");
 const key_path = "../cs-35l-cooking-app-firebase-adminsdk-pfw6m-00878e5a37.json";
 const db_url = "https://cs-35l-cooking-app-default-rtdb.firebaseio.com";
 
-const recipe_properties = ['name', 'description', 'ingredients', 'steps']
+const recipe_properties = ['name', 'description', 'ingredients', 'steps', "cooktime", "preptime", "servings", "equipment", "images"]
 
 class RecipeDataLoader {
 
