@@ -48,6 +48,11 @@ class UserDataLoader {
         let new_user = await this.users.add(user);
         return new_user.id;
     }
+
+    async updateUser(user_id, user_data) {
+        let filtered_data = this.#filterUserProperties(user_data);
+        await this.users.doc(user_id).update(filtered_data);
+    }
 }
 
 module.exports = new UserDataLoader();

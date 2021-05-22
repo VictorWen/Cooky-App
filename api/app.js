@@ -50,6 +50,10 @@ let new_recipe_router = require('./routes/new_recipe');
 app.use('/newrecipe', express.json());
 app.use('/newrecipe', new_recipe_router);
 
+let user_router = require('./routes/user');
+app.use('/user', express.json());
+app.use('/user', user_router);
+
 let new_account_router = require('./routes/new_account');
 app.use('/newuser', express.json());
 app.use('/newuser', new_account_router);
