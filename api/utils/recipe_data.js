@@ -13,7 +13,7 @@ class RecipeDataLoader {
         let recipe_path = this.#getRecipePath(recipe_id);
 
         let recipe = await new Promise(function (resolve, reject) {
-            
+
             // Borrowed from https://medium.com/@osiolabs/read-write-json-files-with-node-js-92d03cc82824
             fs.readFile(recipe_path, 'utf-8', function(err, jsonString){
                 if (err) {
@@ -29,7 +29,6 @@ class RecipeDataLoader {
                     reject("JSONError");
                 }
             });
-
         });
         return recipe
     }

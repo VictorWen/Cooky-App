@@ -93,17 +93,17 @@
     border-radius: 5px;
 }
 
+.addIngredientButton:hover, .uploadFileButton:hover {
+    background-color: #04AA6D;
+    color: white;
+}
+
+
 .submitRecipeButton:hover {
     background-color: #12A1A1;
     color: white;
 }
 
-
-
-.addIngredientButton:hover, .uploadFileButton:hover {
-    background-color: #04AA6D;
-    color: white;
-}
 
 .ingredientsList {
     display: grid;

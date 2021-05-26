@@ -1,27 +1,29 @@
-/*input[type=text] {*/
-/*    width: 200px;*/
-/*    transition: width 0.4s ease-in-out;*/
-/*}*/
+.userInput {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
 
-/*input[type=text]:focus {*/
-/*    width: 100%;*/
-/*}*/
+.addIngredientButton {
+    border: none;
+    color: black;
+    padding: 12px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 5px;
+}
 
-/*select{*/
-/*    width: 100%;*/
-/*    padding: 16px 20px;*/
-/*    border: none;*/
-/*    border-radius: 4px;*/
-/*    background-color: #f1f1f1;*/
-/*  }*/
-
-/*input[type=submit]{*/
-/*    width: 100%;*/
-/*    background-color: #1bc57e;*/
-/*    border: none;*/
-/*    color: white;*/
-/*    padding: 16px 32px;*/
-/*    text-decoration: none;*/
-/*    margin: 4px 2px;*/
-/*    cursor: pointer;*/
-/*}*/
+.addIngredientButton:hover, .uploadFileButton:hover {
+    background-color: #04AA6D;
+    color: white;
+}
