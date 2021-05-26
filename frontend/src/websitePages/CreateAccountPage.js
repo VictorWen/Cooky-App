@@ -1,15 +1,13 @@
 import React from 'react'
-import './CreateAccountPage.css'
+import styles from '../styles/CreateAccountPage.module.css'
 
 const CreateAccountPage = () => {
   return (
     <>
-      <body>
         <h1>
           Create an Account
         </h1>
 
-        <div>
           <form>
 
             <label htmlFor="userName">User Name</label>
@@ -48,11 +46,8 @@ const CreateAccountPage = () => {
             </select>
             <input type="submit" value="Submit"></input>
           </form>
-          
-        </div>
 
-      </body>
-      
+
     </>
   )
 }

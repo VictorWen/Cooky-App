@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from "react";
-import './CreateARecipePage.css'
+import styles from '../styles/CreateARecipePage.module.css'
 import CancelIcon from '@material-ui/icons/Cancel';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Tooltip from '@material-ui/core/Tooltip';
 import RemoveCircleRoundedIcon from '@material-ui/icons/RemoveCircleRounded';
 import { Remove } from "@material-ui/icons";
 
+
 const CreateARecipePage = () => {
+  useEffect(() => {
+    console.log(styles)
+  })
+
   const [title, setTitle] = useState("")
   const [ingredientText, setIngredientText] = useState("")
   const [ingredientsList, setIngredientsList] = useState([])
@@ -20,7 +25,7 @@ const CreateARecipePage = () => {
     const ingredientsListRendered = ingredientsList.map((item, index) => (
       <div key={index}>
         <Tooltip title="Remove ingredient">
-          <CancelIcon className="removeIngredientButton"
+          <CancelIcon className={styles.removeIngredientButton}
                       onClick={() => {
                         const arrayCopy = [...ingredientsList]
                         arrayCopy.splice(index, 1)
@@ -36,12 +41,12 @@ const CreateARecipePage = () => {
 
   useEffect(() => {
     const recipeInstructionsListRendered = recipeInstructionsList.map((item, index) => (
-      <div className="recipeInstructionsContainer"
+      <div className={styles.recipeInstructionsContainer}
            key={index}
       >
 
             <Tooltip title="Add a step">
-            <AddCircleIcon className="addStepButton"
+            <AddCircleIcon className={styles.addStepButton}
                            onClick={() => {
                              const arrayCopy = [...recipeInstructionsList]
                              arrayCopy.splice(index + 1, 0, "")
@@ -50,7 +55,7 @@ const CreateARecipePage = () => {
             />
             </Tooltip>
         <Tooltip title="Remove step">
-          <RemoveCircleRoundedIcon className="removeStepButton"
+          <RemoveCircleRoundedIcon className={styles.removeStepButton}
                                    onClick={() => {
                                      if (recipeInstructionsList.length === 1) return
                                      const arrayCopy = [...recipeInstructionsList]
@@ -60,7 +65,7 @@ const CreateARecipePage = () => {
           />
         </Tooltip>
         <textarea
-          className="recipeInstructions"
+          className={styles.recipeInstructions}
           name={"step" + index}
           value={recipeInstructionsList[index]}
           onChange={(event) => {
@@ -81,11 +86,12 @@ const CreateARecipePage = () => {
     <>
       <form>
 
-      <div className="container">
+      <div className={styles.container}>
         <div>
             <label htmlFor="recipeTitle">Recipe Title:</label>
             <input type="text"
                    id="recipeTitle"
+                   className={styles.userInput}
                    name="recipeTitle"
                    value={title}
                    onChange={(event) => {
@@ -98,6 +104,7 @@ const CreateARecipePage = () => {
               <span className="noIngredientsText">{noIngredients ? " - Please enter an ingredient" : ""}</span>
             </label>
             <input type="text"
+                   className={styles.userInput}
                    id="addAnIngredient"
                    name="addAnIngredient"
                    value={ingredientText}
@@ -111,7 +118,7 @@ const CreateARecipePage = () => {
             <button
               name="AddIngredient"
               type="button"
-              className="addIngredientButton"
+              className={styles.addIngredientButton}
               onClick={() => {
                 if (ingredientText === "") {
                   setNoIngredients(true)
@@ -127,9 +134,9 @@ const CreateARecipePage = () => {
 
 
               <label htmlFor="recipeStep1">Enter the steps of your recipe
-                <span className="emptyStepText">{emptyStep ? " - Please fill in this step first" : ""}</span>
+                <span className={styles.emptyStepText}>{emptyStep ? " - Please fill in this step first" : ""}</span>
               </label><br/>
-            <div className="recipeStepsContainer">
+            <div className={styles.recipeStepsContainer}>
               {recipeInstructionsListRendered}
             </div>
 
@@ -140,15 +147,16 @@ const CreateARecipePage = () => {
 
         <div>
           <div>
-            <h1 className="ingredientsLabel">Ingredients</h1>
+            <h1 className={styles.ingredientsLabel}>Ingredients</h1>
           </div>
-          <div className="ingredientsList">
+          <div className={styles.ingredientsList}>
             {ingredientsListRendered}
           </div>
           <br />
           <label htmlFor="cookingTime">Cooking time in minutes
           </label>
           <input type="number"
+                 className={styles.userInput}
                  id="cookingTime"
                  name="cookingTime"
                  value={cookingTime}
@@ -159,15 +167,16 @@ const CreateARecipePage = () => {
                  required
           />
           <input type="file"
+                 className={styles.userInput}
                  placeholder="Upload an image of your recipe"
                  id="inputImage"
                  name="inputImage"
           />
           <input type="button"
                  value="Upload image"
-                 className="uploadFileButton"/>
+                 className={styles.uploadFileButton}/>
           <input type="submit"
-                 className="submitRecipeButton"
+                 className={styles.submitRecipeButton}
                  value="Submit"
           />
 
