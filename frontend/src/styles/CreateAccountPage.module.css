@@ -1,3 +1,30 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
+    flex-direction: column;
+    width: 100%;
+}
+
+.form {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 75%;
+    max-width: 400px;
+    border: 1px solid gray;
+}
+
+.form > div {
+    width: 90%;
+}
+
+.signUpTitle {
+    display: flex;
+    justify-content: center;: center;
+}
+
 .userInput {
     width: 100%;
     padding: 12px 20px;
@@ -8,7 +35,7 @@
     box-sizing: border-box;
 }
 
-.addIngredientButton {
+.signUpButton {
     border: none;
     color: black;
     padding: 12px 16px;
@@ -23,7 +50,7 @@
     border-radius: 5px;
 }
 
-.addIngredientButton:hover, .uploadFileButton:hover {
+.signUpButton:hover {
     background-color: #04AA6D;
     color: white;
 }
