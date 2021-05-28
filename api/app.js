@@ -59,7 +59,7 @@ app.use('/newuser', express.json());
 app.use('/newuser', new_account_router);
 
 // Run Tests
-//require('./tests/test_recipe_database');
+require('./tests/test_recipe_database');
 //require('./tests/test_user_database');
 
 // catch 404 and forward to error handler

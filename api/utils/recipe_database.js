@@ -74,6 +74,16 @@ class RecipeDataLoader {
         let filtered_recipe = this.#filterRecipeProperties(recipe_data);
         await this.recipes.doc(recipe_id).update(filtered_recipe);
     }
+
+    async deleteRecipe(recipe_id) {
+        await this.recipes.doc(recipe_id).delete();
+    }
+
+    // rating should be a number between 1 and 5 inclusive
+    async addRating(recipe_id, user_id, rating) {
+        // Update recipe's average rating
+        // Update user's list of ratings
+    }
 }
 
 module.exports = new RecipeDataLoader();
