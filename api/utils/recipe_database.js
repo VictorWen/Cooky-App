@@ -1,4 +1,5 @@
 let firebase = require("firebase-admin");
+let user_data = require("../utils/user_database");
 
 const key_path = "../cs-35l-cooking-app-firebase-adminsdk-pfw6m-00878e5a37.json";
 const db_url = "https://cs-35l-cooking-app-default-rtdb.firebaseio.com";
@@ -79,10 +80,29 @@ class RecipeDataLoader {
         await this.recipes.doc(recipe_id).delete();
     }
 
-    // rating should be a number between 1 and 5 inclusive
     async addRating(recipe_id, user_id, rating) {
         // Update recipe's average rating
+        let recipe = await this.getRecipe(recipe_id)
+
+        if (isNaN(recipe.rating))
+            recipe.rating = 0;
+        if (isNaN(recipe.n_ratings))
+            recipe.n_ratings = 0;
+
+        let old_sum = recipe.rating * recipe.n_ratings;
+        let new_sum = old_sum + rating
+        let n_ratings = recipe.n_ratings + 1;
+        let updated_recipe_fields = {
+            rating: new_sum / n_ratings,
+            n_ratings: n_ratings
+        }
+        await this.recipes.doc(recipe_id).update(updated_recipe_fields);
+        
         // Update user's list of ratings
+        //let user = await user_data.getUser(user_id);
+        let new_rating = {}
+        new_rating['ratings.' + recipe_id] = rating     
+        await user_data.users.doc(user_id).update(new_rating);
     }
 }
 

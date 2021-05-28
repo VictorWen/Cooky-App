@@ -3,7 +3,7 @@ const recipe_database = require("../utils/recipe_database");
 let test_recipe_database = new Promise(async function(resolve, reject) {
     let test_recipe = {
         name: "Testing Recipe",
-        description: "Testing Recipe Placeholder description",
+        description: "This recipe should not be in the database",
         ingredients: [
             {name: "milk", amount: 1, unit: "cup"},
             {name: "sugar", amount: 2, unit: "spoons"}

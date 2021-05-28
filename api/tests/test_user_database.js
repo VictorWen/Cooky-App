@@ -1,6 +1,6 @@
 const user_database = require("../utils/user_database");
 
-let test_add_user = new Promise(async function(resolve, reject) {
+let test_user_database = new Promise(async function(resolve, reject) {
     let test_user = {
         "username": "TestSubject5000",
         "password": "123SUPERsecure",
@@ -13,6 +13,18 @@ let test_add_user = new Promise(async function(resolve, reject) {
         console.log("Test Add User Passed: " + key);
     else
         reject("key " + key + " not in database");
+
+
+    // Test get user
+    let user = await user_database.getUser(key);
+    if ('fake_prop' in user)
+        reject("Fake Prop found in database");
+    
+    // Compare properties
+    if (user.username != test_user.username)
+        reject("Wrong username property!");
+    if (user.password != test_user.password)
+        reject("Wrong password property!");
 
 
     // Test delete user
