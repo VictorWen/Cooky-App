@@ -64,8 +64,9 @@ let test_recipe_database = new Promise(async function(resolve, reject) {
     else
         console.log("Test Delete Recipe Passed")
     
-    console.log("TEST RECIPE DATABASE PASSED!")
+    resolve()
 })
+.then(() => console.log("TEST RECIPE DATABASE PASSED!"))
 .catch(failure => {
     console.log("TEST RECIPE DATABSE: " + failure)
 });

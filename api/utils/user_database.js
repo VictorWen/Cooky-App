@@ -53,6 +53,10 @@ class UserDataLoader {
         let filtered_data = this.#filterUserProperties(user_data);
         await this.users.doc(user_id).update(filtered_data);
     }
+
+    async deleteUser(user_id) {
+        await this.users.doc(user_id).delete();
+    }
 }
 
 module.exports = new UserDataLoader();

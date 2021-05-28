@@ -2,18 +2,27 @@ const user_database = require("../utils/user_database");
 
 let test_add_user = new Promise(async function(resolve, reject) {
     let test_user = {
-        "username": "TestSubject100",
-        "password": "123secure",
+        "username": "TestSubject5000",
+        "password": "123SUPERsecure",
         "fake_prop": "this should not be here"
     };
 
+    // Test add user
     let key = await user_database.addUser(test_user);
-    if (user_database.hasUser(key)) {
-        console.log(await user_database.getUser(key));
-        resolve(key);
-    }
+    if (await user_database.hasUser(key))
+        console.log("Test Add User Passed: " + key);
     else
-        reject("Key not in database");
+        reject("key " + key + " not in database");
+
+
+    // Test delete user
+    await user_database.deleteUser(key);
+    if (await user_database.hasUser(key))
+        reject("Test Delete User Failed")
+    else
+        console.log("Test Delete User Passed")
+    
+    resolve()
 })
-.then(passed => console.log("Test Add Recipe Passed: " + passed))
-.catch(failed => console.log("Test Add Recipe Failed: " + failed));
+.then(() => console.log("USER TESTS PASSED!"))
+.catch(failed => console.log("User Tests Failed: " + failed));
