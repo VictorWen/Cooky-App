@@ -82,19 +82,9 @@ class RecipeDataLoader {
 
     async addRating(recipe_id, user_id, rating) {
         // Update recipe's average rating
-        let recipe = await this.getRecipe(recipe_id)
-
-        if (isNaN(recipe.rating))
-            recipe.rating = 0;
-        if (isNaN(recipe.n_ratings))
-            recipe.n_ratings = 0;
-
-        let old_sum = recipe.rating * recipe.n_ratings;
-        let new_sum = old_sum + rating
-        let n_ratings = recipe.n_ratings + 1;
         let updated_recipe_fields = {
-            rating: new_sum / n_ratings,
-            n_ratings: n_ratings
+            total_rating: firebase.firestore.FieldValue.increment(rating),
+            n_ratings: firebase.firestore.FieldValue.increment(1)
         }
         await this.recipes.doc(recipe_id).update(updated_recipe_fields);
         
