@@ -1,5 +1,5 @@
 import React from 'react'
-import './navigationBar.css'
+import styles from '../styles/NavigationBar.module.css'
 import SearchIcon from '@material-ui/icons/Search'
 import PeopleIcon from '@material-ui/icons/People'
 import { NavLink } from 'react-router-dom'
@@ -11,8 +11,10 @@ const NavigationBar = () => {
   let history = useHistory()
   console.log(location)
   return (
-    <div className="navigationBar">
-      <div className={location.pathname === "/" ? "activeTab" : ""}
+    <div className={styles.navigationBar}>
+
+      <div
+        className={location.pathname === "/" ? styles.activeTab : styles.none}
            onClick={() => {
              history.push('/')
            }}
@@ -21,25 +23,25 @@ const NavigationBar = () => {
       </div>
 
       <div
-        className={location.pathname === "/createRecipe" ? "activeTab" : ""}
-        onClick={() => {
-          history.push('/createRecipe')
-        }}
+        className={location.pathname === "/createRecipe" ? styles.activeTab : styles.none}
+           onClick={() => {
+             history.push('/createRecipe')
+           }}
       >
         Create a Recipe
       </div>
 
       <div
-        className={location.pathname === "/popularRecipes" ? "activeTab" : ""}
+        className={location.pathname === "/popularRecipes" ? styles.activeTab : styles.none}
         onClick={() => {
           history.push('/popularRecipes')
         }}
       >
         Popular Recipes
       </div>
-      <div className="navBarSpace">{/*Filler*/}</div>
+      <div className={styles.navBarSpace}>{/*Filler*/}</div>
       <div
-        className={location.pathname === "/createAnAccount" ? "activeTab" : ""}
+        className={location.pathname === "/createAnAccount" ? styles.activeTab : styles.none}
         onClick={() => {
           history.push('/createAnAccount')
         }}
