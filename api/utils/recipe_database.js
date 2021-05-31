@@ -4,7 +4,7 @@ let user_data = require("../utils/user_database");
 const key_path = "../cs-35l-cooking-app-firebase-adminsdk-pfw6m-00878e5a37.json";
 const db_url = "https://cs-35l-cooking-app-default-rtdb.firebaseio.com";
 
-const recipe_properties = ['name', 'description', 'ingredients', 'steps', 'cooktime', 'preptime', 'servings', 'equipment', 'images', 'author', 'n_ratings', 'total_rating']
+const recipe_properties = ['name', 'description', 'ingredients', 'steps', 'cooktime', 'preptime', 'servings', 'equipment', 'images', 'author']
 
 class RecipeDataLoader {
 
@@ -53,20 +53,6 @@ class RecipeDataLoader {
     }
 
     filterRecipeProperties(recipe_data) {
-    async getPopularRecipes() {
-        let recipes = this.recipes;
-        return await new Promise(function(resolve) {
-            recipes.orderBy("n_ratings", "desc").get().then(function(snapshot) {
-                resolve(snapshot.docs.map(doc => {
-                    let data = doc.data();
-                    return (data.total_rating / data.n_ratings) >= 4 ? data : undefined
-                }).filter(data => data != undefined));
-            });
-        });
-    }
-
-    #filterRecipeProperties(recipe_data) {
->>>>>>> c00600d6bc4a961e18db4c892a42f91d293f0c22
         // Filters out properties from recipe_data that are not needed
         // Taken from https://stackoverflow.com/questions/38750705/filter-object-properties-by-key-in-es6
         let filtered_recipe = Object.keys(recipe_data)
