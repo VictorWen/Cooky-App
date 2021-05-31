@@ -52,7 +52,7 @@ class RecipeDataLoader {
         });
     }
 
-    #filterRecipeProperties(recipe_data) {
+    filterRecipeProperties(recipe_data) {
         // Filters out properties from recipe_data that are not needed
         // Taken from https://stackoverflow.com/questions/38750705/filter-object-properties-by-key-in-es6
         let filtered_recipe = Object.keys(recipe_data)
@@ -66,13 +66,13 @@ class RecipeDataLoader {
     }
 
     async addRecipe(recipe_data){
-        let filtered_recipe = this.#filterRecipeProperties(recipe_data);
+        let filtered_recipe = this.filterRecipeProperties(recipe_data);
         let new_recipe = await this.recipes.add(filtered_recipe);
         return new_recipe.id;
     }
 
     async updateRecipe(recipe_id, recipe_data) {
-        let filtered_recipe = this.#filterRecipeProperties(recipe_data);
+        let filtered_recipe = this.filterRecipeProperties(recipe_data);
         await this.recipes.doc(recipe_id).update(filtered_recipe);
     }
 
@@ -87,10 +87,10 @@ class RecipeDataLoader {
             n_ratings: firebase.firestore.FieldValue.increment(1)
         }
         await this.recipes.doc(recipe_id).update(updated_recipe_fields);
-        
+
         // Update user's list of ratings
         let new_rating = {}
-        new_rating['ratings.' + recipe_id] = rating     
+        new_rating['ratings.' + recipe_id] = rating
         await user_data.users.doc(user_id).update(new_rating);
     }
 }
