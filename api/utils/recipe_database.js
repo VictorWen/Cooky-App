@@ -1,4 +1,6 @@
 let firebase = require("firebase-admin");
+const { get } = require("../routes");
+const user_database = require("../utils/user_database");
 let user_data = require("../utils/user_database");
 
 const key_path = "../cs-35l-cooking-app-firebase-adminsdk-pfw6m-00878e5a37.json";
@@ -40,6 +42,7 @@ class RecipeDataLoader {
             });
         });
     }
+    
     async getRecipe(recipe_id) {
         let recipes = this.recipes;
         return await new Promise(function (resolve) {
@@ -47,6 +50,25 @@ class RecipeDataLoader {
                 resolve(snapshot.data());
             });
         });
+    }
+
+    async getRecipes(ids) {
+        let recipes = this.recipes;
+        return await new Promise(function (resolve) {
+            recipes.where(firebase.firestore.FieldPath.documentId(), 'in', ids).get().then(function (snapshot) {
+                resolve(snapshot.docs.map(function (doc) {
+                    return {
+                        id: doc.id,
+                        data: doc.data()
+                    }
+                }));
+            });
+        });
+    }
+
+    async getUserRecipes(user_id) {
+        let user = await user_database.getUser(user_id);
+        return await this.getRecipes(user.recipes);
     }
 
     async hasRecipe(recipe_id) {

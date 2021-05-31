@@ -25,6 +25,16 @@ router.post('/:id', async function(req, res){
     res.json(await user_data.getUser(id));
 });
 
+
+router.get('/:id/recipes', async function(req, res) {
+    let id = req.params.id;
+    if (await user_data.hasUser(id)) {
+        res.json(await recipe_database.getUserRecipes(id));
+    }
+    else
+        res.status(404).send("User not found");
+})
+
 router.put('/:id/recipes', async function(req, res) {
     let id = req.params.id;
     let recipe_data = req.body;

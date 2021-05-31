@@ -6,6 +6,10 @@ router.get('/recipes/popular', async function(req, res) {
     res.json(await recipe_data.getPopularRecipes());
 });
 
+router.get('/recipes/name', async function(req, res) {
+    
+});
+
 // GET http://localhost:3001/search/recipes/ingredients/name=Carrots
 router.get('/recipes/ingredients', async function(req, res) {
     let name = req.query.name;

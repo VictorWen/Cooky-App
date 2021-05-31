@@ -1,5 +1,6 @@
 // User database access
 let firebase = require("firebase-admin");
+const recipe_database = require("./recipe_database");
 
 const user_properties = ["username", "password", "recipes", "following"]
 
