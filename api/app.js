@@ -44,9 +44,6 @@ app.use('/recipe', recipe_router);
 let ingredients_router = require('./routes/ingredients');
 app.use('/ingredients', ingredients_router);
 
-let new_recipe_router = require('./routes/new_recipe');
-app.use('/newrecipe', new_recipe_router);
-
 let user_router = require('./routes/user');
 app.use('/user', user_router);
 

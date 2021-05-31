@@ -57,6 +57,13 @@ class UserDataLoader {
     async deleteUser(user_id) {
         await this.users.doc(user_id).delete();
     }
+
+    async addRecipe(user_id, recipe_id) {
+        let updated_user = {
+            recipes: firebase.firestore.FieldValue.arrayUnion(recipe_id)
+        }
+        await this.users.doc(user_id).update(updated_user);
+    }
 }
 
 module.exports = new UserDataLoader();

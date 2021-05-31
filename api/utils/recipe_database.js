@@ -4,7 +4,7 @@ let user_data = require("../utils/user_database");
 const key_path = "../cs-35l-cooking-app-firebase-adminsdk-pfw6m-00878e5a37.json";
 const db_url = "https://cs-35l-cooking-app-default-rtdb.firebaseio.com";
 
-const recipe_properties = ['name', 'description', 'ingredients', 'steps', "cooktime", "preptime", "servings", "equipment", "images"]
+const recipe_properties = ['name', 'description', 'ingredients', 'steps', 'cooktime', 'preptime', 'servings', 'equipment', 'images', 'author']
 
 class RecipeDataLoader {
 
@@ -89,7 +89,6 @@ class RecipeDataLoader {
         await this.recipes.doc(recipe_id).update(updated_recipe_fields);
         
         // Update user's list of ratings
-        //let user = await user_data.getUser(user_id);
         let new_rating = {}
         new_rating['ratings.' + recipe_id] = rating     
         await user_data.users.doc(user_id).update(new_rating);
