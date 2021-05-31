@@ -5,12 +5,12 @@ class RecipeDataLoader {
         this.path = path;
     }
 
-    #getRecipePath(recipe_id){
+    getRecipePath(recipe_id){
         return this.path + '/' + recipe_id + '.json';
     }
 
     async getRecipe(recipe_id) {
-        let recipe_path = this.#getRecipePath(recipe_id);
+        let recipe_path = this.getRecipePath(recipe_id);
 
         let recipe = await new Promise(function (resolve, reject) {
 
@@ -34,7 +34,7 @@ class RecipeDataLoader {
     }
 
     hasRecipe(recipe_id) {
-        let recipe_path = this.#getRecipePath(recipe_id);
+        let recipe_path = this.getRecipePath(recipe_id);
         return fs.existsSync(recipe_path);
     }
 }
