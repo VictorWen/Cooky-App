@@ -4,7 +4,7 @@ let user_data = require("../utils/user_database");
 const key_path = "../cs-35l-cooking-app-firebase-adminsdk-pfw6m-00878e5a37.json";
 const db_url = "https://cs-35l-cooking-app-default-rtdb.firebaseio.com";
 
-const recipe_properties = ['name', 'description', 'ingredients', 'steps', 'cooktime', 'preptime', 'servings', 'equipment', 'images', 'author']
+const recipe_properties = ['name', 'description', 'ingredients', 'steps', 'cooktime', 'preptime', 'servings', 'equipment', 'images', 'author', 'n_ratings', 'total_rating']
 
 class RecipeDataLoader {
 
@@ -48,6 +48,18 @@ class RecipeDataLoader {
         return await new Promise(function (resolve) {
             recipes.where("ingredients_list", "array-contains", target_ingredient).get().then(function(snapshot) {
                 resolve(!snapshot.empty);
+            });
+        });
+    }
+
+    async getPopularRecipes() {
+        let recipes = this.recipes;
+        return await new Promise(function(resolve) {
+            recipes.orderBy("n_ratings", "desc").get().then(function(snapshot) {
+                resolve(snapshot.docs.map(doc => {
+                    let data = doc.data();
+                    return (data.total_rating / data.n_ratings) >= 4 ? data : undefined
+                }).filter(data => data != undefined));
             });
         });
     }

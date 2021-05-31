@@ -28,7 +28,7 @@ router.post('/:id', async function(req, res){
 router.put('/:id/recipes', async function(req, res) {
     let id = req.params.id;
     let recipe_data = req.body;
-    if (await user_data.hasUser(id)){
+    if (await user_data.hasUser(id)) {
         recipe_data['author'] = id;
         let recipe_id = await recipe_database.addRecipe(recipe_data);
         await user_data.addRecipe(id, recipe_id);
