@@ -1,0 +1,20 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.searchFormat {
+    margin-top: 50px;
+    width: 400px;
+    height: 40px;
+    font-size: 20px;
+    padding-left: 15px;
+}
+
+.recipe {
+    margin: 10px;
+    font-size: 18px;
+}

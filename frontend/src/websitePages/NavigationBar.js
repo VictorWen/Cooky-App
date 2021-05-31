@@ -48,7 +48,12 @@ const NavigationBar = () => {
       >
         <PeopleIcon/>
       </div>
-      <div>
+      <div
+        className={location.pathname === "/searchPage" ? styles.activeTab : styles.none}
+        onClick={() => {
+            history.push('/searchPage')
+          }}
+      >
         <SearchIcon/>
       </div>
     </div>

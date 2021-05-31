@@ -3,6 +3,7 @@ import HomePage from './websitePages/HomePage'
 import NavigationBar from './websitePages/NavigationBar'
 import PopularRecipesPage from './websitePages/PopularRecipePage'
 import CreateAccountPage from './websitePages/CreateAccountPage'
+import SearchPage from './websitePages/SearchPage'
 import './App.css';
 import {
   Switch,
@@ -29,9 +30,13 @@ function App() {
           <Route path="/createAnAccount">
             <CreateAccountPage />
           </Route>
+          <Route path="/searchPage">
+            <SearchPage />
+          </Route>
           <Route path="/">
             <HomePage />
           </Route>
+ 
         </Switch>
       </div>
 
