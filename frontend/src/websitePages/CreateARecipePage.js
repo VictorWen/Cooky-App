@@ -101,7 +101,7 @@ const CreateARecipePage = () => {
                    required
             /> <br/>
             <label htmlFor="addAnIngredient">Add an ingredient
-              <span className="noIngredientsText">{noIngredients ? " - Please enter an ingredient" : ""}</span>
+              <span className={styles.noIngredientsText}>{noIngredients ? " - Please enter an ingredient" : ""}</span>
             </label>
             <input type="text"
                    className={styles.userInput}
@@ -120,7 +120,8 @@ const CreateARecipePage = () => {
               type="button"
               className={styles.addIngredientButton}
               onClick={() => {
-                if (ingredientText === "") {
+                const str = ingredientText.replace(/\s/g, '')
+                if (str === "") {
                   setNoIngredients(true)
                   return
                 }

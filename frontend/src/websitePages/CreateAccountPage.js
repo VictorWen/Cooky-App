@@ -11,6 +11,9 @@ const CreateAccountPage = () => {
 
   const handleSubmit = (event) => {
     if (password === passwordConfirmation) {
+      // Can submit form
+    } else {
+      // Raise error
     }
 
   }
