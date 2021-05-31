@@ -33,21 +33,16 @@ class RecipeDataLoader {
         });
     }
 
-    // recipes have additional "ingredients_list" field that strictly contains the names of all ingredients
     async searchIngredient(target_ingredient) {
         let recipes = this.recipes;
         return await new Promise(function (resolve) {
-            recipes.where("ingredients_list", "array-contains", target_ingredient).get().then(function(snapshot) {
-                resolve(snapshot.docs.map(doc => doc.data()));
-            });
-        });
-    }
-
-    async hasIngredient(target_ingredient) {
-        let recipes = this.recipes;
-        return await new Promise(function (resolve) {
-            recipes.where("ingredients_list", "array-contains", target_ingredient).get().then(function(snapshot) {
-                resolve(!snapshot.empty);
+            recipes.where("ingredients." + target_ingredient + ".amount", ">", 0).get().then(function(snapshot) {
+                resolve(snapshot.docs.map(function (doc) {
+                    return {
+                        id: doc.id,
+                        data: doc.data()
+                    }
+                }));
             });
         });
     }
@@ -58,8 +53,8 @@ class RecipeDataLoader {
             recipes.orderBy("n_ratings", "desc").get().then(function(snapshot) {
                 resolve(snapshot.docs.map(doc => {
                     let data = doc.data();
-                    return (data.total_rating / data.n_ratings) >= 4 ? data : undefined
-                }).filter(data => data != undefined));
+                    return (data.total_rating / data.n_ratings) >= 4 ? {id: doc.id, data: data} : undefined
+                }).filter(id => id != undefined));
             });
         });
     }
