@@ -8,7 +8,8 @@ import { Remove } from "@material-ui/icons";
 import { storage } from '../firebase/index'
 
 const CreateARecipePage = () => {
-  const handleSubmit = async () => {
+  const handleSubmit = async (event) => {
+    event.preventDefault()
     const data = {
       name: title,
       description: "Sample description",
@@ -20,13 +21,15 @@ const CreateARecipePage = () => {
       equipment: ["blah"],
       images: [imageURL]
     }
-    const response = await fetch('localhost:3001/user/new user name/recipes', {
-      method: 'POST',
+    const response = await fetch('http://localhost:3001/user/eYNvqIB5X2XcNcXCY0Ia/recipes', {
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(data)
     })
+    console.log(response)
+    return false
 
   }
 

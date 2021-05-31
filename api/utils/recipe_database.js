@@ -15,28 +15,10 @@ class RecipeDataLoader {
         this.recipes = this.database.collection('recipes');
     }
 
-    async getRecipe(recipe_id) {
-        let recipes = this.recipes;
-        return await new Promise(function (resolve) {
-            recipes.doc(recipe_id).get().then(function(snapshot) {
-                resolve(snapshot.data());
-            });
-        });
-    }
-
-    async hasRecipe(recipe_id) {
-        let recipes = this.recipes;
-        return await new Promise(function (resolve) {
-            recipes.doc(recipe_id).get().then(function(snapshot){
-                resolve(snapshot.exists);
-            });
-        });
-    }
-
     async searchIngredient(target_ingredient) {
         let recipes = this.recipes;
         return await new Promise(function (resolve) {
-            recipes.where("ingredients." + target_ingredient + ".amount", ">", 0).get().then(function(snapshot) {
+            recipes.where("ingredients." + target_ingredient + ".amount", ">", 0).get().then(function (snapshot) {
                 resolve(snapshot.docs.map(function (doc) {
                     return {
                         id: doc.id,
@@ -49,22 +31,39 @@ class RecipeDataLoader {
 
     async getPopularRecipes() {
         let recipes = this.recipes;
-        return await new Promise(function(resolve) {
-            recipes.orderBy("n_ratings", "desc").get().then(function(snapshot) {
+        return await new Promise(function (resolve) {
+            recipes.orderBy("n_ratings", "desc").get().then(function (snapshot) {
                 resolve(snapshot.docs.map(doc => {
                     let data = doc.data();
-                    return (data.total_rating / data.n_ratings) >= 4 ? {id: doc.id, data: data} : undefined
+                    return (data.total_rating / data.n_ratings) >= 4 ? { id: doc.id, data: data } : undefined
                 }).filter(id => id != undefined));
             });
         });
     }
+    async getRecipe(recipe_id) {
+        let recipes = this.recipes;
+        return await new Promise(function (resolve) {
+            recipes.doc(recipe_id).get().then(function (snapshot) {
+                resolve(snapshot.data());
+            });
+        });
+    }
 
-    #filterRecipeProperties(recipe_data) {
+    async hasRecipe(recipe_id) {
+        let recipes = this.recipes;
+        return await new Promise(function (resolve) {
+            recipes.doc(recipe_id).get().then(function (snapshot) {
+                resolve(snapshot.exists);
+            });
+        });
+    }
+
+    filterRecipeProperties(recipe_data) {
         // Filters out properties from recipe_data that are not needed
         // Taken from https://stackoverflow.com/questions/38750705/filter-object-properties-by-key-in-es6
         let filtered_recipe = Object.keys(recipe_data)
             .filter((key) => recipe_properties.includes(key))
-            .reduce(function(obj, key) {
+            .reduce(function (obj, key) {
                 obj[key] = recipe_data[key];
                 return obj;
             }, {});
@@ -72,14 +71,14 @@ class RecipeDataLoader {
         return filtered_recipe;
     }
 
-    async addRecipe(recipe_data){
-        let filtered_recipe = this.#filterRecipeProperties(recipe_data);
+    async addRecipe(recipe_data) {
+        let filtered_recipe = this.filterRecipeProperties(recipe_data);
         let new_recipe = await this.recipes.add(filtered_recipe);
         return new_recipe.id;
     }
 
     async updateRecipe(recipe_id, recipe_data) {
-        let filtered_recipe = this.#filterRecipeProperties(recipe_data);
+        let filtered_recipe = this.filterRecipeProperties(recipe_data);
         await this.recipes.doc(recipe_id).update(filtered_recipe);
     }
 
@@ -94,10 +93,10 @@ class RecipeDataLoader {
             n_ratings: firebase.firestore.FieldValue.increment(1)
         }
         await this.recipes.doc(recipe_id).update(updated_recipe_fields);
-        
+
         // Update user's list of ratings
         let new_rating = {}
-        new_rating['ratings.' + recipe_id] = rating     
+        new_rating['ratings.' + recipe_id] = rating
         await user_data.users.doc(user_id).update(new_rating);
     }
 }
