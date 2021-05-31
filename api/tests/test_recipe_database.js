@@ -70,3 +70,35 @@ let test_recipe_database = new Promise(async function(resolve, reject) {
 .catch(failure => {
     console.log("TEST RECIPE DATABSE: " + failure)
 });
+
+let test_searches = new Promise(async function(resolve, reject) {
+    const N = 10;
+    let add_promises = [];
+    let ratings = [];
+    for (let i = 0; i < N; i++) {
+        add_promises.push(new Promise(async function(resolve){
+            let n_ratings = Math.floor(Math.random() * 20) + 1;
+            let total_rating = Math.floor(n_ratings*(Math.random() + 4));
+            ratings.push(total_rating/n_ratings);
+            resolve(await recipe_database.addRecipe({
+                n_ratings: n_ratings,
+                total_rating: total_rating
+            }));
+        }));
+    }
+    let added_recipes = []
+    await Promise.all(add_promises).then(values => added_recipes = values);
+
+    let data = await recipe_database.getPopularRecipes()
+    console.log(data.map(recipe => {
+        return {
+            total_rating: recipe.total_rating,
+            n_ratings: recipe.n_ratings,
+            average: recipe.total_rating / recipe.n_ratings
+        };
+    }));
+
+    added_recipes.forEach(function(recipe_id) {
+       recipe_database.deleteRecipe(recipe_id); 
+    });
+});
