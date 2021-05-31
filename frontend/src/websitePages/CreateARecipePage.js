@@ -9,17 +9,26 @@ import { storage } from '../firebase/index'
 
 const CreateARecipePage = () => {
   const handleUpload = (e) => {
+    if (image === null) return
     const uploadTask = storage.ref(`images/${image.name}`).put(image)
     uploadTask.on(
       "state_changed",
       snapshot => {},
-      error => {console.log("error", error)},
+      error => {
+        console.log("error", error)
+        setImageUploadable(true)
+
+      },
       () => {
         storage
           .ref("images")
           .child(image.name)
           .getDownloadURL()
-          .then(url => {console.log("url", url)})
+          .then(url => {
+            setImageURL(url)
+            setImageUploadable(false)
+            console.log("url", url)
+          })
       }
     )
   }
@@ -29,6 +38,8 @@ const CreateARecipePage = () => {
       setImage(e.target.files[0])
     }
   }
+  const [imageUploadable, setImageUploadable] = useState(true)
+  const [imageURL, setImageURL] = useState("")
   const [image, setImage] = useState(null)
   const [title, setTitle] = useState("")
   const [ingredientText, setIngredientText] = useState("")
@@ -191,8 +202,9 @@ const CreateARecipePage = () => {
                    onChange={handleImageChange}
             />
             <input type="button"
-                   value="Upload image"
-                   className={styles.uploadFileButton}
+                   disabled={!imageUploadable}
+                   value={imageUploadable ? "Upload image" : "Image Uploaded"}
+                   className={imageUploadable ? styles.uploadFileButton : styles.imageUploadedButton}
                    onClick={handleUpload}
             />
             <input type="submit"
