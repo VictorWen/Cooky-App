@@ -1,5 +1,4 @@
 // ======= Starter Code ========
-// TODO: delete stuff we don't need
 let createError = require('http-errors');
 let express = require('express');
 let path = require('path');
@@ -40,28 +39,27 @@ firebase.initializeApp({
 
 // http://URL/recipe/...
 let recipe_router = require('./routes/recipe');
-app.use('/recipe', express.json());
 app.use('/recipe', recipe_router);
 
 let ingredients_router = require('./routes/ingredients');
 app.use('/ingredients', ingredients_router);
 
 let new_recipe_router = require('./routes/new_recipe');
-app.use('/newrecipe', express.json());
 app.use('/newrecipe', new_recipe_router);
 
 let user_router = require('./routes/user');
-app.use('/user', express.json());
 app.use('/user', user_router);
 
 let new_account_router = require('./routes/new_account');
-app.use('/newuser', express.json());
 app.use('/newuser', new_account_router);
 
+let ratings_router = require('./routes/ratings');
+app.use('/ratings', ratings_router);
+
 // Run Tests
-require('./tests/test_recipe_database');
-require('./tests/test_user_database');
-require('./tests/test_ratings');
+//require('./tests/test_recipe_database');
+//require('./tests/test_user_database');
+//require('./tests/test_ratings');
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
