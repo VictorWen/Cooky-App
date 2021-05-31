@@ -5,13 +5,31 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import Tooltip from '@material-ui/core/Tooltip';
 import RemoveCircleRoundedIcon from '@material-ui/icons/RemoveCircleRounded';
 import { Remove } from "@material-ui/icons";
-
+import { storage } from '../firebase/index'
 
 const CreateARecipePage = () => {
-  useEffect(() => {
-    console.log(styles)
-  })
+  const handleUpload = (e) => {
+    const uploadTask = storage.ref(`images/${image.name}`).put(image)
+    uploadTask.on(
+      "state_changed",
+      snapshot => {},
+      error => {console.log("error", error)},
+      () => {
+        storage
+          .ref("images")
+          .child(image.name)
+          .getDownloadURL()
+          .then(url => {console.log("url", url)})
+      }
+    )
+  }
 
+  const handleImageChange = (e) => {
+    if (e.target.files[0]) {
+      setImage(e.target.files[0])
+    }
+  }
+  const [image, setImage] = useState(null)
   const [title, setTitle] = useState("")
   const [ingredientText, setIngredientText] = useState("")
   const [ingredientsList, setIngredientsList] = useState([])
@@ -45,15 +63,15 @@ const CreateARecipePage = () => {
            key={index}
       >
 
-            <Tooltip title="Add a step">
-            <AddCircleIcon className={styles.addStepButton}
-                           onClick={() => {
-                             const arrayCopy = [...recipeInstructionsList]
-                             arrayCopy.splice(index + 1, 0, "")
-                             setRecipeInstructionsList(arrayCopy)
-                           }}
-            />
-            </Tooltip>
+        <Tooltip title="Add a step">
+          <AddCircleIcon className={styles.addStepButton}
+                         onClick={() => {
+                           const arrayCopy = [...recipeInstructionsList]
+                           arrayCopy.splice(index + 1, 0, "")
+                           setRecipeInstructionsList(arrayCopy)
+                         }}
+          />
+        </Tooltip>
         <Tooltip title="Remove step">
           <RemoveCircleRoundedIcon className={styles.removeStepButton}
                                    onClick={() => {
@@ -86,8 +104,8 @@ const CreateARecipePage = () => {
     <>
       <form>
 
-      <div className={styles.container}>
-        <div>
+        <div className={styles.container}>
+          <div>
             <label htmlFor="recipeTitle">Recipe Title:</label>
             <input type="text"
                    id="recipeTitle"
@@ -134,55 +152,56 @@ const CreateARecipePage = () => {
             </button>
 
 
-              <label htmlFor="recipeStep1">Enter the steps of your recipe
-                <span className={styles.emptyStepText}>{emptyStep ? " - Please fill in this step first" : ""}</span>
-              </label><br/>
+            <label htmlFor="recipeStep1">Enter the steps of your recipe
+              <span className={styles.emptyStepText}>{emptyStep ? " - Please fill in this step first" : ""}</span>
+            </label><br/>
             <div className={styles.recipeStepsContainer}>
               {recipeInstructionsListRendered}
             </div>
 
 
+          </div>
 
-
-        </div>
-
-        <div>
           <div>
-            <h1 className={styles.ingredientsLabel}>Ingredients</h1>
-          </div>
-          <div className={styles.ingredientsList}>
-            {ingredientsListRendered}
-          </div>
-          <br />
-          <label htmlFor="cookingTime">Cooking time in minutes
-          </label>
-          <input type="number"
-                 className={styles.userInput}
-                 id="cookingTime"
-                 name="cookingTime"
-                 value={cookingTime}
-                 onChange={(event) => {
-                   setCookingTime(event.target.value)
-                 }}
-                 placeholder="Cooking Time..."
-                 required
-          />
-          <input type="file"
-                 className={styles.userInput}
-                 placeholder="Upload an image of your recipe"
-                 id="inputImage"
-                 name="inputImage"
-          />
-          <input type="button"
-                 value="Upload image"
-                 className={styles.uploadFileButton}/>
-          <input type="submit"
-                 className={styles.submitRecipeButton}
-                 value="Submit"
-          />
+            <div>
+              <h1 className={styles.ingredientsLabel}>Ingredients</h1>
+            </div>
+            <div className={styles.ingredientsList}>
+              {ingredientsListRendered}
+            </div>
+            <br/>
+            <label htmlFor="cookingTime">Cooking time in minutes
+            </label>
+            <input type="number"
+                   className={styles.userInput}
+                   id="cookingTime"
+                   name="cookingTime"
+                   value={cookingTime}
+                   onChange={(event) => {
+                     setCookingTime(event.target.value)
+                   }}
+                   placeholder="Cooking Time..."
+                   required
+            />
+            <input type="file"
+                   className={styles.userInput}
+                   placeholder="Upload an image of your recipe"
+                   id="inputImage"
+                   name="inputImage"
+                   onChange={handleImageChange}
+            />
+            <input type="button"
+                   value="Upload image"
+                   className={styles.uploadFileButton}
+                   onClick={handleUpload}
+            />
+            <input type="submit"
+                   className={styles.submitRecipeButton}
+                   value="Submit"
+            />
 
+          </div>
         </div>
-      </div>
       </form>
     </>
 

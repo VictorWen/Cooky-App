@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "cs-35l-cooking-app",
+  "private_key_id": "00878e5a3718c43dd0d98ddce30f0634f8906825",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCx6qF+MoviYjao\nQfGwBaFNL8+ofnyxhG/n+VIue2XiKEYYQKFLAo8pHhYEoQ5/WfVquZdWbnp9L6ya\nFkGTk27B7JT0Y7FYwMfXIBpbQS8+WmScC3EGo5WLNWr9OKQcsN9HzVHADcyxFbGh\n4mZ34MjB17Ok+HWYaQ/SKdMcSSMAFE5EAZTsJTjq76kT3Yf7RgkfgI1bmjDx2NRY\nL18lRpsUA5V4k6qd8sGlHQlm/BO74qKilviJ0ZaJbgYwGp2ATAygyzOp/V8ymjmD\nQrsilHX1LDuYWTXsj7FL/TsMmCY+5MoSenQDnBDCne8+YFro0xWqbDLjwgX2Xm3I\n0hfSftpjAgMBAAECggEAICivBCaSzlq+Um+JBi4eV9tah7RFSbkMmTuhtTEs21I4\nSU31WZ+ezOnZRQDvo+lYyO+/ASp7DYG+iyOWutwdWwQucHZMqiQ+ew4cdX400ep4\n4RPYXEDZWQ5QxnCkiWMXGN1t928HHsMzFnXb27NP1mns2NboOqJS78QLmsNFhk/X\nxdT6N1BXx+/Cgyn2jCtwtjqAPy5HbiJxmCnTjzCrs4a2Jme7pdgdD77QoJOm8B+Y\nHlkpBhFGikNteSVE0ERxHyEtmafF9pB+LmVkpl2TEZhR3jxR47upjvN10RwVmim+\nvr+DrmNrlXgEIVmYEBz+PX60zlMbijamHbkiQ/5+YQKBgQDroYNGKo1AZktYvvyV\nsUpExeCOdww44OrkzOkSNnBoXv8NmSCyWJv4/5tFTwdrbLA0JjJuJFbnzCN9NX9Z\nTiCCiOz0HIh89cRHYInHS5wGBIYl4J+VyyO1sG063Mv7pUGzX7+cA7xNL62pvB/w\nX2u762t2YKms80StS4vUfAta6wKBgQDBS+ejEyPl1ylL0QsX7pISXyygrVl8L1EX\nYYkKTpEngi4z/9MMuUOH3FuBziCq0jB7PMlYqlMJFPzqTQ6J4PkoE5UwO/RlGsR3\n4u/dPXyTvsjYrVkQ+vbpWuGhFmKw4i00Vlw5E6VJPQXvH38vrPO50QyHgB1dQzGa\nXC7har+waQKBgEvxGCALIs84qNwHYdzU8PzNUZxY3gWO5+Wp7QxDo2LgCw/U5GbW\njB5qMx7ZY6jJtNh53xMEf0Xh0yZNkae0uGGZw9TBRXQQuZvPj1g+FCEUYC/g/04F\n1JKANBQeiVenYU9wco7T3WJ7FVt5GEoeVtiP/Wh/qu/kz6OSj5SCDh7VAoGBALAS\nZUhdWfi12g8Otw0wqmwDt9IQtY9yRmqG1N7HnF8hrNZ+9I8FfucVqWD/EzCmz7Si\nNUIHvCVsscj3MgQUIsEHvYC3TDKAhHA0Dow3wu+N/MOqe5QFFr6PozEqA/HdxJGF\nDPKM26Vv6aTcyuzxnP0o2EHhSF44o8lYqPd6VmvpAoGBAInuMgUm58enS2j0ckoG\nobegeQpGnBmtkVpwGqAdIwErtKYG8AiXOH0PoMV9ek5Tazw1OZk2cgAZno3UFFKX\nWX7/tZA+LCWq/VYZ4VzlC2OD4qKMuy3Vwi8OHX7MtpqvMkkfIfEAhri9N2aCPEvy\n0uAq2YcDI5AbaJg8T1mnL/H8\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-pfw6m@cs-35l-cooking-app.iam.gserviceaccount.com",
+  "client_id": "115985244000474737970",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-pfw6m%40cs-35l-cooking-app.iam.gserviceaccount.com"
+}
