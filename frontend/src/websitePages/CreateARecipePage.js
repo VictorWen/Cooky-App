@@ -8,6 +8,28 @@ import { Remove } from "@material-ui/icons";
 import { storage } from '../firebase/index'
 
 const CreateARecipePage = () => {
+  const handleSubmit = async () => {
+    const data = {
+      name: title,
+      description: "Sample description",
+      ingredients: ingredientsList,
+      cooktime: cookingTime,
+      preptime: 0,
+      servings: 0,
+      steps: recipeInstructionsList,
+      equipment: ["blah"],
+      images: [imageURL]
+    }
+    const response = await fetch('localhost:3001/user/new user name/recipes', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+
+  }
+
   const handleUpload = (e) => {
     if (image === null) return
     const uploadTask = storage.ref(`images/${image.name}`).put(image)
@@ -113,7 +135,7 @@ const CreateARecipePage = () => {
   console.log(ingredientsListRendered)
   return (
     <>
-      <form>
+      <form onSubmit={handleSubmit}>
 
         <div className={styles.container}>
           <div>
