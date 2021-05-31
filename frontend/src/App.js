@@ -15,25 +15,26 @@ import CreateARecipePage from "./websitePages/CreateARecipePage";
 
 function App() {
   return (
-    <div className="page">
-          <NavigationBar />
-          {/* A <Switch> looks through its children <Route>s and
+      <div className="page">
+        <NavigationBar />
+        {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
-          <Switch>
-            <Route path="/createRecipe">
-              <CreateARecipePage />
-            </Route>
-            <Route path="/popularRecipes">
-              <PopularRecipesPage />
-            </Route>
-            <Route path="/createAnAccount">
-              <CreateAccountPage />
-            </Route>
-            <Route path="/">
-              <HomePage />
-            </Route>
-          </Switch>
-    </div>
+        <Switch>
+          <Route path="/createRecipe">
+            <CreateARecipePage />
+          </Route>
+          <Route path="/popularRecipes">
+            <PopularRecipesPage />
+          </Route>
+          <Route path="/createAnAccount">
+            <CreateAccountPage />
+          </Route>
+          <Route path="/">
+            <HomePage />
+          </Route>
+        </Switch>
+      </div>
+
   )
 }
 

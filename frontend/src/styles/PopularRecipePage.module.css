@@ -1,0 +1,39 @@
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 300px);
+    grid-column-gap: 20px;
+    min-height: 20vh;
+    align-items: center;
+    justify-content: center;
+}
+
+.container > div {
+    margin: 8px;
+    border: 1px solid gray;
+    height: 500px;
+    width: 300px;
+}
+
+.recipeImage {
+    height: 60%;
+    width: 100%;
+    object-fit: cover;
+
+}
+
+.recipeInfo {
+    margin: 15px;
+}
+
+.ratingStars {
+    color: #04AA6D;
+}
+
+.recipeDescription {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
