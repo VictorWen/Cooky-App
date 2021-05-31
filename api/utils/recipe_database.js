@@ -17,7 +17,21 @@ class RecipeDataLoader {
         this.recipes = this.database.collection('recipes');
     }
 
-    async searchIngredient(target_ingredient) {
+    async searchByName(name) {
+        let recipes = this.recipes;
+        return await new Promise(function (resolve) {
+            recipes.where("name", '==', name).get().then(function (snapshot) {
+                resolve(snapshot.docs.map(function (doc) {
+                    return {
+                        id: doc.id,
+                        data: doc.data()
+                    }
+                }));
+            });
+        });
+    }
+
+    async searchByIngredients(target_ingredient) {
         let recipes = this.recipes;
         return await new Promise(function (resolve) {
             recipes.where("ingredients." + target_ingredient + ".amount", ">", 0).get().then(function (snapshot) {
