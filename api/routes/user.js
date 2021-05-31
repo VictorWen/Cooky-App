@@ -25,7 +25,6 @@ router.post('/:id', async function(req, res){
     res.json(await user_data.getUser(id));
 });
 
-
 router.get('/:id/recipes', async function(req, res) {
     let id = req.params.id;
     if (await user_data.hasUser(id)) {
@@ -39,10 +38,19 @@ router.put('/:id/recipes', async function(req, res) {
     let id = req.params.id;
     let recipe_data = req.body;
     if (await user_data.hasUser(id)) {
-        recipe_data['author'] = id;
-        let recipe_id = await recipe_database.addRecipe(recipe_data);
-        await user_data.addRecipe(id, recipe_id);
-        res.send(recipe_id);
+        res.send(await recipe_database.addUserRecipe(id, recipe_data));
+    }
+    else
+        res.status(404).send("User not found");
+});
+
+// Copy recipe
+router.put('/:id/copy/:recipe_id', async function(req, res) {
+    let id = req.params.id;
+    let recipe_id = req.params.recipe_id;
+    if (await user_data.hasUser(id)){
+        let recipe = await recipe_database.getRecipe(recipe_id);
+        res.send(await recipe_database.addUserRecipe(id, recipe));
     }
     else
         res.status(404).send("User not found");

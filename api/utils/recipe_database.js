@@ -119,7 +119,22 @@ class RecipeDataLoader {
     }
 
     async deleteRecipe(recipe_id) {
+        let recipe = await this.getRecipe(recipe_id);
+        if ('author' in recipe) {
+            let updated_user = {
+                recipes: firebase.firestore.FieldValue.arrayRemove(recipe_id)
+            };
+            console.log(updated_user);
+            await user_data.updateUser(recipe.author, updated_user);
+        }
         await this.recipes.doc(recipe_id).delete();
+    }
+
+    async addUserRecipe(user_id, recipe_data) {
+        recipe_data['author'] = user_id;
+        let recipe_id = await this.addRecipe(recipe_data);
+        await user_data.addRecipe(user_id, recipe_id);
+        return recipe_id;
     }
 
     async addRating(recipe_id, user_id, rating) {
