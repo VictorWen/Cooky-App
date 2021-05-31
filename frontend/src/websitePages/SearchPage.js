@@ -15,16 +15,15 @@ const SearchPage = () => {
             >
             </input>
             {JSONDATA.filter((value) => {
-                if(searchTerm =="") {
-                    return value;
-                }
-                else if (value.first_name.toLowerCase().includes(searchTerm.toLowerCase())) {
-                    return value;
+                if(searchTerm =="") {}
+                
+                else if (value.user_name.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    return value.user_name;
                 }
 
             })
                 .map((val,key) => {
-                return <div className = {styles.recipe}> {val.first_name}</div>
+                return <div className = {styles.recipe}> {val.user_name}</div>
             })}
 
 
