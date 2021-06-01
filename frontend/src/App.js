@@ -9,32 +9,34 @@ import {
   Route
 } from "react-router-dom";
 import CreateARecipePage from "./websitePages/CreateARecipePage";
+import { AuthProvider } from './contexts/AuthContext'
 
 
 
 
 function App() {
   return (
+    <AuthProvider>
       <div className="page">
-        <NavigationBar />
-        {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
-        <Switch>
-          <Route path="/createRecipe">
-            <CreateARecipePage />
-          </Route>
-          <Route path="/popularRecipes">
-            <PopularRecipesPage />
-          </Route>
-          <Route path="/createAnAccount">
-            <CreateAccountPage />
-          </Route>
-          <Route path="/">
-            <HomePage />
-          </Route>
-        </Switch>
-      </div>
-
+          <NavigationBar />
+          {/* A <Switch> looks through its children <Route>s and
+              renders the first one that matches the current URL. */}
+          <Switch>
+            <Route path="/createRecipe">
+              <CreateARecipePage />
+            </Route>
+            <Route path="/popularRecipes">
+              <PopularRecipesPage />
+            </Route>
+            <Route path="/createAnAccount">
+              <CreateAccountPage />
+            </Route>
+            <Route path="/">
+              <HomePage />
+            </Route>
+          </Switch>
+        </div>
+    </AuthProvider>
   )
 }
 

@@ -1,5 +1,6 @@
 import React, {useState, useRef} from 'react'
 import styles from '../styles/CreateAccountPage.module.css'
+import { useAuth } from '../contexts/AuthContext'
 
 const CreateAccountPage = () => {
   const [email, setEmail] = useState('')
@@ -8,19 +9,32 @@ const CreateAccountPage = () => {
   const passwordRef = useRef()
   const [passwordConfirmation, setPasswordConfirmation] = useState('')
   const passwordConfirmationRef = useRef()
+  const { signup, currentUser } = useAuth()
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
 
-  const handleSubmit = (event) => {
-    if (password === passwordConfirmation) {
-      // Can submit form
-    } else {
-      // Raise error
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    if (passwordRef.current.value !== passwordConfirmationRef.current.value) {
+      return setError('Passwords do not match')
     }
 
+    try {
+      setError('')
+      setLoading(true)
+      await signup(emailRef.current.value, passwordRef.current.value)
+    } catch {
+      setError('Failed to create an account')
+    }
+
+    setLoading(false)
   }
 
   return (
         <div className={styles.container}>
-          <form className={styles.form}>
+          <form className={styles.form} onSubmit = {handleSubmit}>
+            {currentUser.email}
             <div>
               <h1 className={styles.signUpTitle}>Sign Up</h1>
             </div>
@@ -30,10 +44,7 @@ const CreateAccountPage = () => {
                        id="email"
                        className={styles.userInput}
                        name="email"
-                       value={email}
-                       onChange={(event) => {
-                         setEmail(event.target.value)
-                       }}
+                       ref={emailRef}
                        placeholder="Enter your email..."
                        required
                 /> <br/>
@@ -44,10 +55,7 @@ const CreateAccountPage = () => {
                      id="password"
                      className={styles.userInput}
                      name="password"
-                     value={password}
-                     onChange={(event) => {
-                       setPassword(event.target.value)
-                     }}
+                     ref={passwordRef}
                      required
               /> <br/>
             </div>
@@ -58,10 +66,7 @@ const CreateAccountPage = () => {
                      id="passwordConfirmation"
                      className={styles.userInput}
                      name="passwordConfirmation"
-                     value={passwordConfirmation}
-                     onChange={(event) => {
-                       setPasswordConfirmation(event.target.value)
-                     }}
+                     ref={passwordConfirmationRef}
                      required
               /> <br/>
             </div>
@@ -71,6 +76,7 @@ const CreateAccountPage = () => {
                 type="button"
                 value="Sign Up"
                 className={styles.signUpButton}
+                disabled = {loading}
                 onClick={() => {
 
                 }}
