@@ -28,4 +28,11 @@ router.post('/:id', async function(req, res){
     res.json(await recipe_data.getRecipe(id));
 });
 
+// Delete recipe in the database
+router.post('/delete/:id', async function(req, res) {
+    let id = req.params.id;
+    await recipe_data.deleteRecipe(id);
+    res.end();
+});
+
 module.exports = router

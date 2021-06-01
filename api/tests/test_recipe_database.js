@@ -4,10 +4,12 @@ let test_recipe_database = new Promise(async function(resolve, reject) {
     let test_recipe = {
         name: "Testing Recipe",
         description: "This recipe should not be in the database",
-        ingredients: [
-            {name: "milk", amount: 1, unit: "cup"},
-            {name: "sugar", amount: 2, unit: "spoons"}
-        ],
+
+        ingredients: {
+            Milk:{amount: 1, unit: "cup"},
+            Sugar: {amount: 2, unit: "spoons"}
+        },
+      
         steps: [
             "Step Number One", "Step #2", "3rd Step"
         ],
@@ -41,7 +43,9 @@ let test_recipe_database = new Promise(async function(resolve, reject) {
         reject("Wrong name property!");
     if (recipe_data.description != test_recipe.description)
         reject("Wrong description property!");
-    if (recipe_data.ingredients.length != test_recipe.ingredients.length)
+
+    if (Object.keys(recipe_data.ingredients).length != Object.keys(test_recipe.ingredients).length)
+
         reject("Wrong ingredients property!");
     if (recipe_data.steps.length != test_recipe.steps.length)
         reject("Wrong stepts property!");
@@ -69,4 +73,39 @@ let test_recipe_database = new Promise(async function(resolve, reject) {
 .then(() => console.log("TEST RECIPE DATABASE PASSED!"))
 .catch(failure => {
     console.log("TEST RECIPE DATABSE: " + failure)
+
+});
+
+let test_searches = new Promise(async function(resolve, reject) {
+    const N = 10;
+    let add_promises = [];
+    let ratings = [];
+    for (let i = 0; i < N; i++) {
+        add_promises.push(new Promise(async function(resolve){
+            let n_ratings = Math.floor(Math.random() * 20) + 1;
+            let total_rating = Math.floor(n_ratings*(Math.random() + 4));
+            ratings.push(total_rating/n_ratings);
+            resolve(await recipe_database.addRecipe({
+                n_ratings: n_ratings,
+                total_rating: total_rating
+            }));
+        }));
+    }
+    let added_recipes = []
+    await Promise.all(add_promises).then(values => added_recipes = values);
+
+    let data = await recipe_database.getPopularRecipes()
+    console.log(data.map(recipe => {
+        return {
+            id: recipe.id,
+            total_rating: recipe.data.total_rating,
+            n_ratings: recipe.data.n_ratings,
+            average: recipe.data.total_rating / recipe.data.n_ratings
+        };
+    }));
+
+    added_recipes.forEach(function(recipe_id) {
+       recipe_database.deleteRecipe(recipe_id); 
+    });
+
 });
