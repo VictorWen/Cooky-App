@@ -4,10 +4,12 @@ let test_recipe_database = new Promise(async function(resolve, reject) {
     let test_recipe = {
         name: "Testing Recipe",
         description: "This recipe should not be in the database",
+
         ingredients: {
             Milk:{amount: 1, unit: "cup"},
             Sugar: {amount: 2, unit: "spoons"}
         },
+      
         steps: [
             "Step Number One", "Step #2", "3rd Step"
         ],
@@ -41,7 +43,9 @@ let test_recipe_database = new Promise(async function(resolve, reject) {
         reject("Wrong name property!");
     if (recipe_data.description != test_recipe.description)
         reject("Wrong description property!");
+
     if (Object.keys(recipe_data.ingredients).length != Object.keys(test_recipe.ingredients).length)
+
         reject("Wrong ingredients property!");
     if (recipe_data.steps.length != test_recipe.steps.length)
         reject("Wrong stepts property!");
@@ -69,6 +73,7 @@ let test_recipe_database = new Promise(async function(resolve, reject) {
 .then(() => console.log("TEST RECIPE DATABASE PASSED!"))
 .catch(failure => {
     console.log("TEST RECIPE DATABSE: " + failure)
+
 });
 
 let test_searches = new Promise(async function(resolve, reject) {
@@ -102,4 +107,5 @@ let test_searches = new Promise(async function(resolve, reject) {
     added_recipes.forEach(function(recipe_id) {
        recipe_database.deleteRecipe(recipe_id); 
     });
+
 });

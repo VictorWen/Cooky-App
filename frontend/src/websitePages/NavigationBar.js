@@ -39,6 +39,14 @@ const NavigationBar = () => {
       >
         Popular Recipes
       </div>
+      <div
+        className={location.pathname === "/yourRecipes" ? styles.activeTab : styles.none}
+        onClick={() => {
+          history.push('/yourRecipes')
+        }}
+      >
+        Your Recipes
+      </div>
       <div className={styles.navBarSpace}>{/*Filler*/}</div>
       <div
         className={location.pathname === "/createAnAccount" ? styles.activeTab : styles.none}
@@ -48,7 +56,12 @@ const NavigationBar = () => {
       >
         <PeopleIcon/>
       </div>
-      <div>
+      <div
+        className={location.pathname === "/searchPage" ? styles.activeTab : styles.none}
+        onClick={() => {
+            history.push('/searchPage')
+          }}
+      >
         <SearchIcon/>
       </div>
     </div>

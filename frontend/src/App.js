@@ -3,12 +3,15 @@ import HomePage from './websitePages/HomePage'
 import NavigationBar from './websitePages/NavigationBar'
 import PopularRecipesPage from './websitePages/PopularRecipePage'
 import CreateAccountPage from './websitePages/CreateAccountPage'
+import SearchPage from './websitePages/SearchPage'
+import YourRecipesPage from './websitePages/YourRecipesPage'
 import './App.css';
 import {
   Switch,
   Route
 } from "react-router-dom";
 import CreateARecipePage from "./websitePages/CreateARecipePage";
+import YourRecipes from './websitePages/YourRecipesPage'
 
 
 
@@ -26,12 +29,19 @@ function App() {
           <Route path="/popularRecipes">
             <PopularRecipesPage />
           </Route>
+          <Route path="/yourRecipes">
+            <YourRecipesPage />
+          </Route>
           <Route path="/createAnAccount">
             <CreateAccountPage />
+          </Route>
+          <Route path="/searchPage">
+            <SearchPage />
           </Route>
           <Route path="/">
             <HomePage />
           </Route>
+ 
         </Switch>
       </div>
 
