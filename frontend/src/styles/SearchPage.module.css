@@ -14,7 +14,16 @@
     padding-left: 15px;
 }
 
-.recipe {
-    margin: 10px;
-    font-size: 18px;
-}
+.recipeFormat {
+    margin-top: 20px;
+    border-radius: 25px;
+    border: 2px solid #73AD21;
+    padding: 1px;
+    width: 1000px;
+    height: 80px;
+
+    padding-left: 15px;
+    padding-top: 10px;
+    white-space: pre-line;
+    font-size:18px;
+  }

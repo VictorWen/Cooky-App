@@ -23,7 +23,11 @@ const SearchPage = () => {
 
             })
                 .map((val,key) => {
-                return <div className = {styles.recipe}> {val.user_name}</div>
+                return <div className = {styles.recipeFormat}>
+                    Recipe Name: {val.user_name} {'\n'}
+                    Recipe Creator: {val.first_name} {val.last_name} {'\n'}
+                    Date Created : {val.email}
+                </div>
             })}
 
 

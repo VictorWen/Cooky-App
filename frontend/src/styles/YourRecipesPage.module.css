@@ -3,6 +3,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    font-family: 'Times New Roman', Times, serif;
 }
 
 .searchFormat {
@@ -23,4 +24,5 @@
     padding-left: 15px;
     padding-top: 10px;
     white-space: pre-line;
+    font-size:18px;
   }
