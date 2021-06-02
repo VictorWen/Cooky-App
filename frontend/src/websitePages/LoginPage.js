@@ -3,11 +3,10 @@ import styles from '../styles/CreateAccountPage.module.css'
 import { useAuth } from '../contexts/AuthContext'
 import { Link, useHistory } from 'react-router-dom'
 
-const CreateAccountPage = () => {
+const LoginPage = () => {
   const emailRef = useRef()
   const passwordRef = useRef()
-  const passwordConfirmationRef = useRef()
-  const { signup, currentUser } = useAuth()
+  const { login, currentUser } = useAuth()
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const history = useHistory()
@@ -15,17 +14,13 @@ const CreateAccountPage = () => {
   async function handleSubmit (e) {
     e.preventDefault()
 
-    if (passwordRef.current.value !== passwordConfirmationRef.current.value) {
-      return setError('Passwords do not match')
-    }
-
     try {
       setError('')
       setLoading(true)
-      await signup(emailRef.current.value, passwordRef.current.value)
+      await login(emailRef.current.value, passwordRef.current.value)
       history.push('/')
     } catch {
-      setError('Failed to create an account')
+      setError('Failed to log in')
     }
 
     setLoading(false)
@@ -35,7 +30,7 @@ const CreateAccountPage = () => {
         <div className={styles.container}>
           <form className={styles.form} onSubmit = {handleSubmit}>
             <div>
-              <h1 className={styles.signUpTitle}>Sign Up</h1>
+              <h1 className={styles.signUpTitle}>Log in</h1>
             </div>
               <div>
                 <label htmlFor="email">Email:</label>
@@ -58,34 +53,23 @@ const CreateAccountPage = () => {
                      required
               /> <br/>
             </div>
-
-            <div>
-              <label htmlFor="passwordConfirmation">Confirm Password:</label>
-              <input type="password"
-                     id="passwordConfirmation"
-                     className={styles.userInput}
-                     name="passwordConfirmation"
-                     ref={passwordConfirmationRef}
-                     required
-              /> <br/>
-            </div>
             <div>
               <button
-                name="signUpButton"
+                name="logInButton"
                 type="submit"
-                value="Sign Up"
+                value="LogIn"
                 className={styles.signUpButton}
                 disabled = {loading}
-              > Sign Up
+              > Log In
               </button>
             </div>
             <br />
             <div className={styles.signUpTitle}>
-              Already have an account?&nbsp; <Link to="/login">Log in</Link>
+              Need an account?&nbsp; <Link to="/createAnAccount">Sign up</Link>
             </div>
           </form>
         </div>
   )
 }
 
-export default CreateAccountPage
+export default LoginPage

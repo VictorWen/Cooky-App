@@ -1,15 +1,51 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styles from '../styles/NavigationBar.module.css'
 import SearchIcon from '@material-ui/icons/Search'
 import PeopleIcon from '@material-ui/icons/People'
-import { NavLink } from 'react-router-dom'
+import { NavLink} from 'react-router-dom'
 import { useLocation, useHistory } from 'react-router-dom'
+import { useAuth } from '../contexts/AuthContext'
 
 
 const NavigationBar = () => {
   let location = useLocation()
-  let history = useHistory()
   console.log(location)
+  const history = useHistory()
+
+  const { currentUser, logout } = useAuth()
+  const [error, setError] = useState('')
+
+  async function handleLogout() {
+    setError('')
+
+    try {
+      await logout()
+      history.push('/')
+    } catch {
+      setError('Failed to log out')
+    }
+  }
+  let authdiv
+  if (currentUser === null)
+  {
+    authdiv = <div
+    className={location.pathname === "/createAnAccount" ? styles.activeTab : styles.none}
+    onClick={() => {
+      history.push('/createAnAccount')
+    }}
+  >
+    <PeopleIcon/>
+  </div>
+  }
+  else
+  {
+    authdiv = <div
+    className={styles.none}
+    onClick={handleLogout}
+    >
+      Log Out
+    </div>
+  }
   return (
     <div className={styles.navigationBar}>
 
@@ -48,14 +84,7 @@ const NavigationBar = () => {
         Your Recipes
       </div>
       <div className={styles.navBarSpace}>{/*Filler*/}</div>
-      <div
-        className={location.pathname === "/createAnAccount" ? styles.activeTab : styles.none}
-        onClick={() => {
-          history.push('/createAnAccount')
-        }}
-      >
-        <PeopleIcon/>
-      </div>
+        {authdiv}
       <div
         className={location.pathname === "/searchPage" ? styles.activeTab : styles.none}
         onClick={() => {
