@@ -5,47 +5,68 @@ import PopularRecipesPage from './websitePages/PopularRecipePage'
 import CreateAccountPage from './websitePages/CreateAccountPage'
 import SearchPage from './websitePages/SearchPage'
 import YourRecipesPage from './websitePages/YourRecipesPage'
+import UserDetails from './websitePages/UserDetails'
 import './App.css';
 import {
   Switch,
   Route
 } from "react-router-dom";
 import CreateARecipePage from "./websitePages/CreateARecipePage";
-import { AuthProvider } from './contexts/AuthContext'
-
-
+import { useAuth } from './contexts/AuthContext'
 
 
 function App() {
-  return (
-    <AuthProvider>
-     <div className="page">
-        <NavigationBar />
+  let renderItem;
+  const { currentUser } = useAuth()
+  if (currentUser === null) {
+    return (
+      <div className="page">
+        <NavigationBar/>
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
         <Switch>
-          <Route path="/createRecipe">
-            <CreateARecipePage />
-          </Route>
           <Route path="/popularRecipes">
-            <PopularRecipesPage />
+            <PopularRecipesPage/>
           </Route>
-          <Route path="/yourRecipes">
-            <YourRecipesPage />
-          </Route>
-          <Route path="/createAnAccount">
-            <CreateAccountPage />
+          <Route path="/accountPage">
+            <CreateAccountPage/>
           </Route>
           <Route path="/searchPage">
-            <SearchPage />
+            <SearchPage/>
           </Route>
           <Route path="/">
-            <HomePage />
+            <HomePage/>
           </Route>
         </Switch>
       </div>
-      </AuthProvider>
-  )
+    )
+  } else {
+    return (
+      <div className="page">
+        <NavigationBar/>
+        <Switch>
+          <Route path="/createRecipe">
+            <CreateARecipePage/>
+          </Route>
+          <Route path="/popularRecipes">
+            <PopularRecipesPage/>
+          </Route>
+          <Route path="/yourRecipes">
+            <YourRecipesPage/>
+          </Route>
+          <Route path="/accountPage">
+            <UserDetails/>
+          </Route>
+          <Route path="/searchPage">
+            <SearchPage/>
+          </Route>
+          <Route path="/">
+            <HomePage/>
+          </Route>
+        </Switch>
+      </div>
+    )
+  }
 }
 
 export default App;
