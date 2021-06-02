@@ -1,5 +1,6 @@
 import firebase from "firebase/app"
 import "firebase/storage"
+import "firebase/auth"
 
 
 const db_url = "https://cs-35l-cooking-app-default-rtdb.firebaseio.com";
@@ -17,6 +18,7 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig)
 
+const auth = firebase.auth()
 const storage = firebase.storage()
 
-export { storage, firebase as default };
+export { auth, storage, firebase as default };

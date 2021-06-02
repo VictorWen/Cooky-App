@@ -11,14 +11,15 @@ import {
   Route
 } from "react-router-dom";
 import CreateARecipePage from "./websitePages/CreateARecipePage";
-import YourRecipes from './websitePages/YourRecipesPage'
+import { AuthProvider } from './contexts/AuthContext'
 
 
 
 
 function App() {
   return (
-      <div className="page">
+    <AuthProvider>
+     <div className="page">
         <NavigationBar />
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
@@ -41,10 +42,9 @@ function App() {
           <Route path="/">
             <HomePage />
           </Route>
- 
         </Switch>
       </div>
-
+      </AuthProvider>
   )
 }
 
