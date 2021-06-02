@@ -25,6 +25,12 @@
     justify-content:  center;
 }
 
+.accountExistsText {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 .userInput {
   width: 100%;
   padding: 12px 20px;

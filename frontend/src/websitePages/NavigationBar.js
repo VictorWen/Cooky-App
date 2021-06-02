@@ -54,7 +54,7 @@ const NavigationBar = () => {
       </div>
       <div className={styles.navBarSpace}>{/*Filler*/}</div>
       <div
-        className={location.pathname === "/accountPage" ? styles.activeTab : styles.none}
+        className={location.pathname === "/accountPage" || location.pathname === "/login" ? styles.activeTab : styles.none}
         onClick={() => {
           history.push('/accountPage')
         }}

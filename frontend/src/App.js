@@ -6,6 +6,7 @@ import CreateAccountPage from './websitePages/CreateAccountPage'
 import SearchPage from './websitePages/SearchPage'
 import YourRecipesPage from './websitePages/YourRecipesPage'
 import UserDetails from './websitePages/UserDetails'
+import Login from './websitePages/LoginPage'
 import './App.css';
 import {
   Switch,
@@ -34,6 +35,9 @@ function App() {
           <Route path="/searchPage">
             <SearchPage/>
           </Route>
+          <route path="/login">
+            <Login />
+          </route>
           <Route path="/">
             <HomePage/>
           </Route>
