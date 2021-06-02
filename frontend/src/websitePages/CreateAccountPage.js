@@ -31,7 +31,6 @@ const CreateAccountPage = () => {
   return (
         <div className={styles.container}>
           <form className={styles.form} onSubmit = {handleSubmit}>
-            {JSON.stringify(currentUser.email)}
             <div>
               <h1 className={styles.signUpTitle}>Sign Up</h1>
             </div>
