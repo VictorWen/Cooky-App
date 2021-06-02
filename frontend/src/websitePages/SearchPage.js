@@ -1,10 +1,34 @@
 import React, {useState} from 'react'
 import styles from '../styles/SearchPage.module.css'
 import JSONDATA from '../mockData.json'
-//import SearchBar from '../searchBar.js'
+
+
 
 const SearchPage = () => {
-    const [searchTerm,setSearchTerm] = useState('')
+
+    async function submitValue (data) {
+        const localhost = "https://localhost:3000/search/recipes/name/"
+        const url = localhost.concat(data)
+        const response = await fetch(url)
+        const val = await response.json()
+    }
+    return (
+        
+        <div className = {styles.container}>
+            <form action=""method = "get">
+                <input type = "text" 
+                    placeholder = "search" 
+                    name = "recipe"
+                    className = {styles.searchFormat}
+                />
+ 
+                <button type = "submit" className={styles.submitButton}>Search</button>
+            </form>
+        </div>
+    )
+  
+  
+    {/* const [searchTerm,setSearchTerm] = useState('')
     return (
         <div className = {styles.container}>
             <input type = "text" 
@@ -29,10 +53,8 @@ const SearchPage = () => {
                     Date Created : {val.email}
                 </div>
             })}
-
-
         </div>
-      )
+        )*/}
 }
 
 export default SearchPage
