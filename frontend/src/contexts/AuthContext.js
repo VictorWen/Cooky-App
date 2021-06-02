@@ -9,12 +9,28 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }) {
+    const [user, setUser] = useState(null)
     const [currentUser, setCurrentUser] = useState()
     const [loading, setLoading] = useState(true)
 
     function signup(email, password) {
         return auth.createUserWithEmailAndPassword(email, password)
     }
+
+    const logout = () => {
+        return auth.signOut()
+    }
+
+    const signin = (email, password) => {
+        return auth
+          .signInWithEmailAndPassword(email, password)
+          .then((response) => {
+              setUser(response.user)
+              console.log(response.user)
+              return response.user
+          })
+    }
+
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(user => {
@@ -28,7 +44,9 @@ export function AuthProvider({ children }) {
 
     const value = {
         currentUser,
-        signup
+        signup,
+        logout,
+        signin,
     }
 
     return (

@@ -1,6 +1,7 @@
 import React, {useState, useRef} from 'react'
 import styles from '../styles/CreateAccountPage.module.css'
 import { useAuth } from '../contexts/AuthContext'
+import {useHistory} from 'react-router-dom'
 
 const CreateAccountPage = () => {
   const emailRef = useRef()
@@ -9,6 +10,8 @@ const CreateAccountPage = () => {
   const { signup, currentUser } = useAuth()
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  let history = useHistory()
+
 
   async function handleSubmit (e) {
     e.preventDefault()
@@ -78,7 +81,11 @@ const CreateAccountPage = () => {
             </div>
             <br />
             <div className={styles.signUpTitle}>
-              <p> I already have an account </p>
+              <p onClick={() => {
+                history.push('/login')
+              }}
+                 className={styles.accountExistsText}
+              > I already have an account </p>
             </div>
           </form>
         </div>

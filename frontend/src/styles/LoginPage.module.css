@@ -1,0 +1,70 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
+    flex-direction: column;
+    width: 100%;
+}
+
+.form {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 75%;
+    max-width: 400px;
+    border: 1px solid gray;
+}
+
+.form > div {
+    width: 90%;
+}
+
+.SignInTitle {
+    display: flex;
+    justify-content:  center;
+}
+
+.loginError {
+    color: red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.accountExistsText {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.userInput {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.SignInButton {
+    border: none;
+    color: black;
+    padding: 12px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 5px;
+}
+
+.SignInButton:hover {
+    background-color: #04aa6d;
+    color: white;
+}
