@@ -1,0 +1,28 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.searchFormat {
+    margin-top: 50px;
+    width: 400px;
+    height: 40px;
+    font-size: 20px;
+    padding-left: 15px;
+}
+.recipeFormat {
+    margin-top: 20px;
+    border-radius: 25px;
+    border: 2px solid #73AD21;
+    padding: 1px;
+    width: 1000px;
+    height: 80px;
+
+    padding-left: 15px;
+    padding-top: 10px;
+    white-space: pre-line;
+    font-size:18px;
+  }

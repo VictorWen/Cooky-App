@@ -3,6 +3,8 @@ import HomePage from './websitePages/HomePage'
 import NavigationBar from './websitePages/NavigationBar'
 import PopularRecipesPage from './websitePages/PopularRecipePage'
 import CreateAccountPage from './websitePages/CreateAccountPage'
+import SearchPage from './websitePages/SearchPage'
+import YourRecipesPage from './websitePages/YourRecipesPage'
 import './App.css';
 import {
   Switch,
@@ -17,28 +19,31 @@ import { AuthProvider } from './contexts/AuthContext'
 function App() {
   return (
     <AuthProvider>
-      <div className="page">
-          <NavigationBar />
-          {/* A <Switch> looks through its children <Route>s and
-              renders the first one that matches the current URL. */}
-          <Switch>
-            <Route path="/createRecipe">
-              <CreateARecipePage />
-            </Route>
-            <Route path="/popularRecipes">
-              <PopularRecipesPage />
-            </Route>
-            <Route path="/createAnAccount">
-              <CreateAccountPage />
-            </Route>
-            <Route path="/login">
-              
-            </Route>
-            <Route path="/">
-              <HomePage />
-            </Route>
-          </Switch>
-        </div>
+     <div className="page">
+        <NavigationBar />
+        {/* A <Switch> looks through its children <Route>s and
+            renders the first one that matches the current URL. */}
+        <Switch>
+          <Route path="/createRecipe">
+            <CreateARecipePage />
+          </Route>
+          <Route path="/popularRecipes">
+            <PopularRecipesPage />
+          </Route>
+          <Route path="/yourRecipes">
+            <YourRecipesPage />
+          </Route>
+          <Route path="/createAnAccount">
+            <CreateAccountPage />
+          </Route>
+          <Route path="/searchPage">
+            <SearchPage />
+          </Route>
+          <Route path="/">
+            <HomePage />
+          </Route>
+        </Switch>
+      </div>
       </AuthProvider>
   )
 }

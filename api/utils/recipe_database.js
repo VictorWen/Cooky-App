@@ -1,6 +1,8 @@
 let firebase = require("firebase-admin");
+
 const { get } = require("../routes");
 const user_database = require("../utils/user_database");
+
 let user_data = require("../utils/user_database");
 
 const key_path = "../cs-35l-cooking-app-firebase-adminsdk-pfw6m-00878e5a37.json";
@@ -119,6 +121,7 @@ class RecipeDataLoader {
     }
 
     async deleteRecipe(recipe_id) {
+
         let recipe = await this.getRecipe(recipe_id);
         if ('author' in recipe) {
             let updated_user = {
@@ -137,6 +140,7 @@ class RecipeDataLoader {
         return recipe_id;
     }
 
+
     async addRating(recipe_id, user_id, rating) {
         // Update recipe's average rating
         let updated_recipe_fields = {
@@ -145,9 +149,11 @@ class RecipeDataLoader {
         }
         await this.recipes.doc(recipe_id).update(updated_recipe_fields);
 
+
         // Update user's list of ratings
         let new_rating = {}
         new_rating['ratings.' + recipe_id] = rating
+
         await user_data.users.doc(user_id).update(new_rating);
     }
 }
