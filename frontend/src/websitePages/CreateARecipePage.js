@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from '../styles/CreateARecipePage.module.css'
 import CancelIcon from '@material-ui/icons/Cancel';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
@@ -11,14 +11,14 @@ const CreateARecipePage = () => {
   const handleSubmit = async (event) => {
     event.preventDefault()
     const data = {
-      name: title,
+      name: title.value,
       description: "Sample description",
       ingredients: ingredientsList,
-      cooktime: cookingTime,
-      preptime: 0,
+      cooktime: cookingTime.current.value,
+      preptime: prepTime.current.value,
       servings: 0,
       steps: recipeInstructionsList,
-      equipment: ["blah"],
+      equipment: equipmentList,
       images: [imageURL]
     }
     const response = await fetch('http://localhost:3001/user/eYNvqIB5X2XcNcXCY0Ia/recipes', {
@@ -38,7 +38,8 @@ const CreateARecipePage = () => {
     const uploadTask = storage.ref(`images/${image.name}`).put(image)
     uploadTask.on(
       "state_changed",
-      snapshot => {},
+      snapshot => {
+      },
       error => {
         console.log("error", error)
         setImageUploadable(true)
@@ -63,16 +64,22 @@ const CreateARecipePage = () => {
       setImage(e.target.files[0])
     }
   }
+
   const [imageUploadable, setImageUploadable] = useState(true)
   const [imageURL, setImageURL] = useState("")
   const [image, setImage] = useState(null)
-  const [title, setTitle] = useState("")
-  const [ingredientText, setIngredientText] = useState("")
+  const title = useRef()
+  const ingredientText = useRef()
   const [ingredientsList, setIngredientsList] = useState([])
   const [ingredientsListRendered, setIngredientsListRendered] = useState([])
+  const equipmentText = useRef()
+  const [noEquipmentText, setNoEquipmentText] = useState(false)
+  const [equipmentList, setEquipmentList] = useState([])
+  const [equipmentListRendered, setEquipmentListRendered] = useState([])
   const [noIngredients, setNoIngredients] = useState(false)
   const [emptyStep, setEmptyStep] = useState(false)
-  const [cookingTime, setCookingTime] = useState("")
+  const cookingTime = useRef()
+  const prepTime = useRef()
   const [recipeInstructionsList, setRecipeInstructionsList] = useState([""])
   const [recipeInstructionsListRendered, setRecipeInstructionsListRendered] = useState([])
   useEffect(() => {
@@ -94,11 +101,29 @@ const CreateARecipePage = () => {
   }, [ingredientsList])
 
   useEffect(() => {
+    const equipmentListRendered = equipmentList.map((item, index) => (
+      <div key={index}>
+        <Tooltip title="Remove ingredient">
+          <CancelIcon className={styles.removeIngredientButton}
+                      onClick={() => {
+                        const arrayCopy = [...equipmentList]
+                        arrayCopy.splice(index, 1)
+                        setEquipmentList(arrayCopy)
+                      }}/>
+        </Tooltip>
+
+        {item}
+      </div>
+    ))
+    setEquipmentListRendered(equipmentListRendered)
+  }, [equipmentList])
+
+
+  useEffect(() => {
     const recipeInstructionsListRendered = recipeInstructionsList.map((item, index) => (
       <div className={styles.recipeInstructionsContainer}
            key={index}
       >
-
         <Tooltip title="Add a step">
           <AddCircleIcon className={styles.addStepButton}
                          onClick={() => {
@@ -135,7 +160,6 @@ const CreateARecipePage = () => {
     setRecipeInstructionsListRendered(recipeInstructionsListRendered)
   }, [recipeInstructionsList])
 
-  console.log(ingredientsListRendered)
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -147,13 +171,10 @@ const CreateARecipePage = () => {
                    id="recipeTitle"
                    className={styles.userInput}
                    name="recipeTitle"
-                   value={title}
-                   onChange={(event) => {
-                     setTitle(event.target.value)
-                   }}
+                   ref={title}
                    placeholder="Recipe Title..."
                    required
-            /> <br/>
+            />
             <label htmlFor="addAnIngredient">Add an ingredient
               <span className={styles.noIngredientsText}>{noIngredients ? " - Please enter an ingredient" : ""}</span>
             </label>
@@ -161,30 +182,56 @@ const CreateARecipePage = () => {
                    className={styles.userInput}
                    id="addAnIngredient"
                    name="addAnIngredient"
-                   value={ingredientText}
-                   onChange={(event) => {
-                     setIngredientText(event.target.value)
-                   }}
+                   ref={ingredientText}
                    placeholder="Ingredient Name..."
             />
-
 
             <button
               name="AddIngredient"
               type="button"
               className={styles.addIngredientButton}
               onClick={() => {
-                const str = ingredientText.replace(/\s/g, '')
+                const str = ingredientText.current.value.replace(/\s/g, '')
                 if (str === "") {
                   setNoIngredients(true)
                   return
                 }
                 setNoIngredients(false)
-                setIngredientsList([...ingredientsList, ingredientText])
-                setIngredientText("")
+                setIngredientsList([...ingredientsList, ingredientText.current.value])
+                ingredientText.current.value = ""
               }}
             >
               Add Ingredient
+            </button>
+
+            <label htmlFor="addEquipment">Add a piece of equipment
+              <span
+                className={styles.noIngredientsText}>{noEquipmentText ? " - Please enter a piece of equipment" : ""}</span>
+            </label>
+            <input type="text"
+                   className={styles.userInput}
+                   id="addEquipment"
+                   name="addEquipment"
+                   ref={equipmentText}
+                   placeholder="Equipment..."
+            />
+
+            <button
+              name="addEquipment"
+              type="button"
+              className={styles.addIngredientButton}
+              onClick={() => {
+                const str = equipmentText.current.value.replace(/\s/g, '')
+                if (str === "") {
+                  setNoEquipmentText(true)
+                  return
+                }
+                setNoEquipmentText(false)
+                setEquipmentList([...equipmentList, equipmentText.current.value])
+                equipmentText.current.value = ""
+              }}
+            >
+              Add equipment
             </button>
 
 
@@ -199,23 +246,45 @@ const CreateARecipePage = () => {
           </div>
 
           <div>
-            <div>
-              <h1 className={styles.ingredientsLabel}>Ingredients</h1>
-            </div>
-            <div className={styles.ingredientsList}>
-              {ingredientsListRendered}
+            <div className={styles.ingredientsEquipmentContainer}>
+              <div>
+                <div className={styles.ingredientsList}>
+                  {ingredientsListRendered}
+                </div>
+                <div className={styles.listContainerText}>
+                  Ingredients
+                </div>
+              </div>
+
+              <div>
+                <div className={styles.ingredientsList}>
+                  {equipmentListRendered}
+                </div>
+                <div className={styles.listContainerText}>
+                  Equipment
+                </div>
+
+              </div>
+
             </div>
             <br/>
+            <label htmlFor="prepTime">Preparation time in minutes
+            </label>
+            <input type="number"
+                   className={styles.userInput}
+                   id="prepTime"
+                   name="prepTime"
+                   ref={prepTime}
+                   placeholder="Prep Time..."
+                   required
+            />
             <label htmlFor="cookingTime">Cooking time in minutes
             </label>
             <input type="number"
                    className={styles.userInput}
                    id="cookingTime"
                    name="cookingTime"
-                   value={cookingTime}
-                   onChange={(event) => {
-                     setCookingTime(event.target.value)
-                   }}
+                   ref={cookingTime}
                    placeholder="Cooking Time..."
                    required
             />
