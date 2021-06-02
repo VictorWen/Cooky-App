@@ -11,6 +11,7 @@ const SearchPage = () => {
         const url = localhost.concat(data)
         const response = await fetch(url)
         const val = await response.json()
+        console.log(val)
     }
     return (
         
