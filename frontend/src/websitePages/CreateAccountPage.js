@@ -3,17 +3,14 @@ import styles from '../styles/CreateAccountPage.module.css'
 import { useAuth } from '../contexts/AuthContext'
 
 const CreateAccountPage = () => {
-  const [email, setEmail] = useState('')
   const emailRef = useRef()
-  const [password, setPassword] = useState('')
   const passwordRef = useRef()
-  const [passwordConfirmation, setPasswordConfirmation] = useState('')
   const passwordConfirmationRef = useRef()
   const { signup, currentUser } = useAuth()
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
-  const handleSubmit = async (e) => {
+  async function handleSubmit (e) {
     e.preventDefault()
 
     if (passwordRef.current.value !== passwordConfirmationRef.current.value) {
@@ -34,7 +31,7 @@ const CreateAccountPage = () => {
   return (
         <div className={styles.container}>
           <form className={styles.form} onSubmit = {handleSubmit}>
-            {currentUser.email}
+            {JSON.stringify(currentUser.email)}
             <div>
               <h1 className={styles.signUpTitle}>Sign Up</h1>
             </div>
@@ -73,13 +70,10 @@ const CreateAccountPage = () => {
             <div>
               <button
                 name="signUpButton"
-                type="button"
+                type="submit"
                 value="Sign Up"
                 className={styles.signUpButton}
                 disabled = {loading}
-                onClick={() => {
-
-                }}
               > Sign Up
               </button>
             </div>
@@ -87,7 +81,6 @@ const CreateAccountPage = () => {
             <div className={styles.signUpTitle}>
               <p> I already have an account </p>
             </div>
-
           </form>
         </div>
   )

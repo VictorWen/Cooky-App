@@ -31,12 +31,15 @@ function App() {
             <Route path="/createAnAccount">
               <CreateAccountPage />
             </Route>
+            <Route path="/login">
+              
+            </Route>
             <Route path="/">
               <HomePage />
             </Route>
           </Switch>
         </div>
-    </AuthProvider>
+      </AuthProvider>
   )
 }
 
