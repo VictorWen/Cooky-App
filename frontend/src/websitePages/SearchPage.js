@@ -36,11 +36,11 @@ const SearchPage = () => {
     }
 
     function displayRecipes(){
-        if(recipeList.current?.recipes?.length !== 0) {
-            recipeList.current.recipes.map(function(object,index){
-                return <li key={ index }>{object.data.description}</li>;
-            })}
+            recipeList.current.recipes.map((object,index)=> {
+                return <div>{object.data.description}</div>;
+            })
     }
+    
 
     return (
         
