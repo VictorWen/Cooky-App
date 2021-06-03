@@ -49,7 +49,7 @@ const ViewRecipePage = () => {
         <ul>
           {recipeInstructions}
         </ul>
-        {(currentUser === null || userData.ratings === undefined) ? <></> :
+        {(currentUser === null) ? <></> :
           (userData.ratings === undefined || !(location.state.id in userData.ratings))
           ?
           <form onSubmit={(e) => {
@@ -74,6 +74,7 @@ const ViewRecipePage = () => {
           } catch(err) {
             console.log(err)
           }
+            window.location.reload()
         }}>
           <input type="number"
                  className={styles.userInput}

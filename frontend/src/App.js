@@ -44,6 +44,9 @@ function App() {
           <Route path="/resetPassword">
             <ResetPasswordPage/>
           </Route>
+          <Route path="/viewRecipe">
+            <ViewRecipePage />
+          </Route>
           <Route path="/">
             <HomePage/>
           </Route>
