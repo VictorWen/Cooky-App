@@ -7,10 +7,22 @@ import RemoveCircleRoundedIcon from '@material-ui/icons/RemoveCircleRounded';
 import { Remove } from "@material-ui/icons";
 import { storage } from '../firebase/index'
 import { useAuth } from '../contexts/AuthContext'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useHistory } from 'react-router-dom'
+
+const makeid = (length) => {
+  var result = [];
+  var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var charactersLength = characters.length;
+  for (var i = 0; i < length; i++) {
+    result.push(characters.charAt(Math.floor(Math.random() *
+      charactersLength)));
+  }
+  return result.join('');
+}
 
 const CreateARecipePage = () => {
   const location = useLocation()
+  const history = useHistory()
   console.log("location", location)
   const { currentUser } = useAuth()
   console.log("uid", currentUser.uid)
@@ -29,32 +41,56 @@ const CreateARecipePage = () => {
       total_rating: 5,
       description: shortDescription.current.value,
     }
-    const response = await fetch('http://localhost:3001/user/' + currentUser.uid +  '/recipes', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
-    console.log(response)
+    if (location.pathname.slice(0, 5) === "/edit") {
+      try {
+        const response = await fetch('http://localhost:3001/recipe/' + location.state.id, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        })
+
+        console.log(response)
+      } catch (err) {
+        console.log(err)
+      }
+    } else {
+      try {
+        const response = await fetch('http://localhost:3001/user/' + currentUser.uid + '/recipes', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        })
+        console.log(response)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    history.push('/yourRecipes')
+
   }
 
   const handleUpload = (e) => {
     if (image === null) return
-    const uploadTask = storage.ref(`images/${image.name}`).put(image)
-    uploadTask.on(
+    console.log("image", image)
+    const imageid = makeid(20)
+    const storageRef = storage.ref('images/')
+    const fileRef = storageRef.child(imageid)
+    fileRef.put(image).on(
       "state_changed",
-      snapshot => {
-      },
-      error => {
+      snapshot=>{},
+      error=>{
         console.log("error", error)
         setImageUploadable(true)
-
       },
       () => {
+        console.log(imageid)
         storage
           .ref("images")
-          .child(image.name)
+          .child(imageid)
           .getDownloadURL()
           .then(url => {
             setImageURL(url)
@@ -98,7 +134,8 @@ const CreateARecipePage = () => {
       prepTime.current.value = location.state.data.preptime
       cookingTime.current.value = location.state.data.cooktime
       shortDescription.current.value = location.state.data.description
-      if (location.state.data.images.length === 1) {
+      if (location.state.data.images.length === 1 && location.state.data.images[0] !== "") {
+        setImageURL(location.state.data.images[0])
         setImageUploadable(false)
       }
 
@@ -228,7 +265,7 @@ const CreateARecipePage = () => {
               Add Ingredient
             </button>
 
-            <label htmlFor="addEquipment">Give a short description of your recipe
+            <label htmlFor="addEquipment">Add a piece of equipment
               <span
                 className={styles.noIngredientsText}>{noEquipmentText ? " - Please enter a piece of equipment" : ""}</span>
             </label>
@@ -318,7 +355,7 @@ const CreateARecipePage = () => {
                    id="inputImage"
                    name="inputImage"
                    onChange={handleImageChange}
-                   required
+                   required={location.pathname.slice(0, 5) !== "/edit"}
             />
 
             <input type="button"
@@ -328,7 +365,7 @@ const CreateARecipePage = () => {
                    className={imageUploadable ? styles.uploadFileButton : styles.imageUploadedButton}
                    onClick={handleUpload}
             />
-            <label htmlFor="shortDescription">Add a piece of equipment
+            <label htmlFor="shortDescription">Give a short description of your recipe
             </label>
             <input type="text"
                    className={styles.userInput}

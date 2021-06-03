@@ -36,15 +36,8 @@ const YourRecipesPage = () => {
     }
   }).map((item, index) => (
     <RecipeDisplay item={item}
-                   // title={item.data.name}
                    key={index}
-                   // numRatings={item.data.n_ratings}
-                   // stars={item.data.total_rating / item.data.n_ratings}
-                   // imgsrc={item.data.images[0]}
-                   // description={item.data.description}
                    personalRecipe={true}
-                   // recipeID={item.id}
-
     />
   ))
 

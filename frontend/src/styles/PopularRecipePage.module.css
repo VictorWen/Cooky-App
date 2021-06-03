@@ -20,16 +20,24 @@
 
 .editButton {
     position: absolute;
-    bottom: 5px;
-    right: 5px;
+    bottom: 15px;
+    right: 15px;
     cursor: pointer;
+}
+
+.editButton:hover {
+    color: #04AA6D;
 }
 
 .deleteButton {
     position: absolute;
-    bottom: 5px;
-    right: 35px;
+    bottom: 15px;
+    right: 45px;
     cursor: pointer;
+}
+
+.deleteButton:hover {
+    color: red;
 }
 
 .recipeImage {

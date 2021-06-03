@@ -8,6 +8,7 @@ import YourRecipesPage from './websitePages/YourRecipesPage'
 import UserDetails from './websitePages/UserDetails'
 import LoginPage from './websitePages/LoginPage'
 import ResetPasswordPage from './websitePages/ResetPasswordPage'
+import ViewRecipePage from './websitePages/ViewRecipePage'
 import './App.css';
 import {
   Switch,
@@ -43,6 +44,9 @@ function App() {
           <Route path="/resetPassword">
             <ResetPasswordPage/>
           </Route>
+          <Route path="/viewRecipe">
+            <ViewRecipePage />
+          </Route>
           <Route path="/">
             <HomePage/>
           </Route>
@@ -72,8 +76,11 @@ function App() {
             <Route path="/searchPage">
               <SearchPage/>
             </Route>
-            <Route path="/editRecipe/:id">
+            <Route path="/editRecipe">
               <CreateARecipePage/>
+            </Route>
+            <Route path="/viewRecipe">
+              <ViewRecipePage />
             </Route>
             <Route path="/">
               <HomePage/>

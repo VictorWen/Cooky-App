@@ -1,52 +1,65 @@
-import React, {useState, useRef} from 'react'
+import React, { useState, useEffect } from 'react'
 import styles from '../styles/SearchPage.module.css'
 import JSONDATA from '../mockData.json'
-//import SearchBar from '../searchBar.js'
+import RecipeDisplay from './components/recipeDisplay'
+import { useAuth } from '../contexts/AuthContext'
+import SearchIcon from '@material-ui/icons/Search';
 
-const SearchPage = () => {
-    const [searchTerm,setSearchTerm] = useState('')
-    return (
-        <div className = {styles.container}>
-            <input type = "text" 
-                placeholder = "search" 
-                className = {styles.searchFormat}
-                onChange = {event => {setSearchTerm(event.target.value)
-                }}
-            >
-            </input>
-            {JSONDATA.filter((value) => {
-                if(searchTerm =="") {}
-                
-                else if (value.user_name.toLowerCase().includes(searchTerm.toLowerCase())) {
-                    return value.user_name;
-                }
+const YourRecipesPage = () => {
+  const [recipesList, setRecipesList] = useState([])
+  const [searchTerm, setSearchTerm] = useState('')
+  const { currentUser } = useAuth()
+  const itemsRendered = recipesList.map((item, index) => (
+    <RecipeDisplay item={item}
+                   key={index}
+                   personalRecipe={true}
+    />
+  ))
+  return (
+    <div className={styles.container}>
+      <div>
+        <div className={styles.searchContainer}>
+          <input type="text"
+                 placeholder="Search by recipe name..."
+                 className={styles.searchBox}
+                 value={searchTerm}
+                 onChange={(e) => {
+                   setSearchTerm(e.target.value)
+                 }}
+          />
+          <SearchIcon className={styles.searchIcon}
+                      onClick={async () => {
+                        try {
+                          const response = await fetch('http://localhost:3001/search/recipes/name/' + searchTerm, {
+                            method: 'GET',
+                            headers: {
+                              'Content-Type': 'application/json'
+                            },
+                          })
+                          console.log(response)
+                          const data = await response.json()
+                          console.log(data)
+                          setRecipesList(data)
+                        } catch(err) {
+                          console.log(err)
+                        }
 
-            })
-                .map((val,key) => {
-                return <div className = {styles.recipeFormat}>
-                    Recipe Name: {val.user_name} {'\n'}
-                    Recipe Creator: {val.first_name} {val.last_name} {'\n'}
-                    Date Created : {val.email}
-                </div>
-            })}
-
-
+                      }}
+          />
         </div>
-      )
+
+      </div>
+      <div>
+        <br/><br/>
+      </div>
+      <div className={styles.recipeContainer}>
+        {itemsRendered}
+      </div>
+
+    </div>
+  )
+
 }
 
-const SearchPag2e = () => {
-    const searchTerm = useRef()
-    return (
-	<div className={styles.container}>
-	    <div>
-		<input type="text"
-		       placeholder="search"
-		       classname={styles.searchFormat}
-		/>
-	    </div>
-	</div>
-    )
-}
 
-export default SearchPage
+export default YourRecipesPage
