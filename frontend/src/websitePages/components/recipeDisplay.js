@@ -91,12 +91,12 @@ const RecipeDisplay = (props) => {
         </>
         :
         <VisibilityIcon className={styles.editButton}
-                                                       onClick={() => {
-                                                         history.push({
-                                                           pathname: '/viewRecipe',
-                                                           state: props.item,
-                                                         })
-                                                       }}
+                        onClick={() => {
+                          history.push({
+                            pathname: '/viewRecipe',
+                            state: props.item,
+                          })
+                        }}
         />}
 
 

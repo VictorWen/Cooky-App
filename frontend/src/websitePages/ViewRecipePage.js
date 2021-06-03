@@ -1,3 +1,4 @@
+
 import React, { useRef, useState, useEffect } from 'react'
 import styles from "../styles/CreateARecipePage.module.css";
 import { useLocation } from 'react-router-dom'
@@ -19,15 +20,15 @@ const ViewRecipePage = () => {
           }
         })
         const data = await response.json()
-        console.log("data", data)
+        console.log("userData", userData)
+        setUserData(data)
       } catch(err) {
         console.log(err)
       }
     }
     getData()
   }, [])
-  console.log(location.state)
-  console.log(currentUser)
+  console.log("userData", userData)
   const recipeInstructions = location.state.data.steps.map((item, index) => (
     <li key={index}>{item}</li>
   ))
@@ -48,23 +49,30 @@ const ViewRecipePage = () => {
         <ul>
           {recipeInstructions}
         </ul>
-
-        {currentUser === null ? <></> : <form onSubmit={() => {
+        {(currentUser === null || userData.ratings === undefined) ? <></> :
+          (userData.ratings === undefined || !(location.state.id in userData.ratings))
+          ?
+          <form onSubmit={(e) => {
+          e.preventDefault()
+          const recipeId = location.state.id
+          const userid = currentUser.uid
           const data = {
-            recipe_id: location.state.id,
-            user_id: currentUser.uid,
-            rating: rating
+            'recipe_id': recipeId,
+            'user_id': userid,
+            'rating': rating.current.value
           }
           try {
-            fetch('http://localhost:3001/ratings/', {
+            const url = 'http://localhost:3001/user/' + currentUser.uid + '/rate/' + location.state.id + '/' + rating.current.value
+            fetch(url, {
               method: 'PUT',
               headers: {
                 'Content-Type': 'application/json'
               },
               body: JSON.stringify(data)
+            }).then(response => {
             })
           } catch(err) {
-
+            console.log(err)
           }
         }}>
           <input type="number"
@@ -78,7 +86,9 @@ const ViewRecipePage = () => {
                  className={styles.addIngredientButton}
                  value="Submit rating"
           />
-        </form>}
+        </form> :
+        <p>You rated this recipe {userData.ratings[location.state.id]} out of 5</p>
+        }
       </div>
       <div>
         <p>Ingredients:</p>
