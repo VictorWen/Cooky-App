@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import styles from "../styles/CreateARecipePage.module.css";
 import { useLocation } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 
 
 const ViewRecipePage = () => {
+  const rating = useRef()
   const location = useLocation()
   const { currentUser } = useAuth()
   console.log(location.state)
@@ -28,10 +29,21 @@ const ViewRecipePage = () => {
         <ul>
           {recipeInstructions}
         </ul>
-        {currentUser === null ? <></> : <input type="number"
-                                               className={styles.userInput}
-                                               placeholder="Rate the recipe on a scale of 1 to 5"
-        />}
+
+        {currentUser === null ? <></> : <form onSubmit={() => {
+
+        }}>
+          <input type="number"
+                 className={styles.userInput}
+                 placeholder="Rate the recipe on a scale of 1 to 5"
+                 min={0} max={5}
+                 required
+          />
+          <input type="submit"
+                 className={styles.addIngredientButton}
+                 value="Submit rating"
+          />
+        </form>}
       </div>
       <div>
         <p>Ingredients:</p>

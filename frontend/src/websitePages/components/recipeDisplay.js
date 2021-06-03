@@ -90,7 +90,7 @@ const RecipeDisplay = (props) => {
           />
         </>
         :
-        currentUser === null ? <></> : <VisibilityIcon className={styles.editButton}
+        <VisibilityIcon className={styles.editButton}
                                                        onClick={() => {
                                                          history.push({
                                                            pathname: '/viewRecipe',
