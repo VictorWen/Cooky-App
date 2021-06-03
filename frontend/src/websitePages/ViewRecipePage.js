@@ -45,6 +45,7 @@ const ViewRecipePage = () => {
         <p>Recipe title: {location.state.data.name}</p>
         <p>Preparation time: {location.state.data.preptime} minutes</p>
         <p>Cooking time: {location.state.data.cooktime} minutes</p>
+        <p>Description: {location.state.data.description}</p>
         <p>Steps:</p>
         <ul>
           {recipeInstructions}

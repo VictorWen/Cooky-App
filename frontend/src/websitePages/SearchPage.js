@@ -12,7 +12,7 @@ const YourRecipesPage = () => {
   const itemsRendered = recipesList.map((item, index) => (
     <RecipeDisplay item={item}
                    key={index}
-                   personalRecipe={true}
+                   personalRecipe={currentUser !== null && item.data.author === currentUser.uid}
     />
   ))
   return (
