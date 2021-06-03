@@ -15,7 +15,6 @@ const CreateARecipePage = () => {
   const { currentUser } = useAuth()
   console.log("uid", currentUser.uid)
   const handleSubmit = async (event) => {
-    event.preventDefault()
     const data = {
       name: title.current.value,
       ingredients: ingredientsList,

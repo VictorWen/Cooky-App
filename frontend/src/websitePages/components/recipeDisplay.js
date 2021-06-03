@@ -70,7 +70,22 @@ const RecipeDisplay = (props) => {
                         })
                     }}
           />
-          <DeleteIcon className={styles.deleteButton}/>
+          <DeleteIcon className={styles.deleteButton}
+                      onClick={async () => {
+                        try {
+                          const url = "http://localhost:3001/recipe/delete/" + props.item.id
+                          const response = await fetch(url, {
+                            method: 'POST',
+                            headers: {
+                              'Content-Type': 'application/json'
+                            },
+                          })
+                          window.location.reload()
+                        } catch (err) {
+                          console.log(err)
+                        }
+                      }}
+          />
         </>
         :
         <></>
