@@ -35,29 +35,12 @@ const SearchPage = () => {
         return false
     }
 
-   /* function displayRecipes(){
-        if(recipeList.current.recipes.length !== 0) {
-            if (recipeList.current.recipes.length > 10){
-                for (let i = 0; i < 10; ++i){
-                    return(
-                        <p>Recipe Name: {recipeList.current.recipes[i]} 
-                        Recipe Creator: {recipeList.current.recipes[i]}
-                        Date Created : {recipeList.current.recipes[i]}</p>
-                    );
-                }
-            }
-            else {
-                for (let i = 0; i < recipeList.current.recipes.length; ++i){
-                    return(
-                        <p>Recipe Name: {recipeList.current.recipes[i].data.name} 
-                        Recipe ID: {recipeList.current.recipes[i].id}
-                        Number of Ratings: {recipeList.current.recipes[i].data.total_ratings}</p>
-                    );
-                }
-            }
-        }
-        return null;
-    }*/
+    function displayRecipes(){
+        if(recipeList.current?.recipes?.length !== 0) {
+            recipeList.current.recipes.map(function(object,index){
+                return <li key={ index }>{object.data.description}</li>;
+            })}
+    }
 
     return (
         
@@ -72,15 +55,16 @@ const SearchPage = () => {
  
             <input type="button" 
                 onClick={() => {
-                    SubmitFunction()
+                    SubmitFunction().then(displayRecipes)
+                    /*if(recipeList.current?.recipes?.length > 0) {
+                        recipeList.current.recipes.map(function(object,index){
+                            return <li key={ index }>{object.data.description}</li>;
+                        })}*/
+                    
                 }} className={styles.submitButton} value="Search" />
             </form>
             
-            {recipeList.current?.recipes?.length > 0 &&
-                recipeList.current.recipes.map(function(object,key){
-                    return <li key={ key }>{object.data.description}</li>;
-                })
-            }
+            
                 
             
         
