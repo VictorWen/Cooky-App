@@ -15,6 +15,7 @@ import {
 } from "react-router-dom";
 import CreateARecipePage from "./websitePages/CreateARecipePage";
 import { useAuth } from './contexts/AuthContext'
+import { Create } from "@material-ui/icons";
 
 
 function App() {
@@ -70,6 +71,9 @@ function App() {
             </Route>
             <Route path="/searchPage">
               <SearchPage/>
+            </Route>
+            <Route path="/editRecipe/:id">
+              <CreateARecipePage/>
             </Route>
             <Route path="/">
               <HomePage/>

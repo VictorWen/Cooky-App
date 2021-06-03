@@ -7,9 +7,12 @@ import RemoveCircleRoundedIcon from '@material-ui/icons/RemoveCircleRounded';
 import { Remove } from "@material-ui/icons";
 import { storage } from '../firebase/index'
 import { useAuth } from '../contexts/AuthContext'
+import { useLocation } from 'react-router-dom'
 
 const CreateARecipePage = () => {
-  const {currentUser} = useAuth()
+  const location = useLocation()
+  console.log("location", location)
+  const { currentUser } = useAuth()
   console.log("uid", currentUser.uid)
   const handleSubmit = async (event) => {
     event.preventDefault()
@@ -26,7 +29,7 @@ const CreateARecipePage = () => {
       total_rating: 5,
       description: shortDescription.current.value,
     }
-    const response = await fetch('http://localhost:3001/user/' + currentUser.uid +  '/recipes', {
+    const response = await fetch('http://localhost:3001/user/' + currentUser.uid + '/recipes', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -86,6 +89,23 @@ const CreateARecipePage = () => {
   const shortDescription = useRef()
   const [recipeInstructionsList, setRecipeInstructionsList] = useState([""])
   const [recipeInstructionsListRendered, setRecipeInstructionsListRendered] = useState([])
+  useEffect(() => {
+    if (location.state !== undefined) {
+      title.current.value = location.state.data.name
+      setIngredientsList(location.state.data.ingredients)
+      setEquipmentList(location.state.data.equipment)
+      setRecipeInstructionsList(location.state.data.steps)
+      prepTime.current.value = location.state.data.preptime
+      cookingTime.current.value = location.state.data.cooktime
+      shortDescription.current.value = location.state.data.description
+      if (location.state.data.images.length === 1) {
+        setImageUploadable(false)
+      }
+
+    }
+  }, [title.current])
+
+
   useEffect(() => {
     const ingredientsListRendered = ingredientsList.map((item, index) => (
       <div key={index}>
@@ -208,7 +228,7 @@ const CreateARecipePage = () => {
               Add Ingredient
             </button>
 
-            <label htmlFor="addEquipment">Add a piece of equipment
+            <label htmlFor="addEquipment">Give a short description of your recipe
               <span
                 className={styles.noIngredientsText}>{noEquipmentText ? " - Please enter a piece of equipment" : ""}</span>
             </label>
@@ -301,6 +321,13 @@ const CreateARecipePage = () => {
                    required
             />
 
+            <input type="button"
+                   disabled={!imageUploadable}
+                   value={imageUploadable ? "Upload image" :
+                     location.pathname.slice(0, 5) === "/edit" ? "Image already uploaded" : "Image Uploaded"}
+                   className={imageUploadable ? styles.uploadFileButton : styles.imageUploadedButton}
+                   onClick={handleUpload}
+            />
             <label htmlFor="shortDescription">Add a piece of equipment
             </label>
             <input type="text"
@@ -312,12 +339,6 @@ const CreateARecipePage = () => {
                    required
             />
 
-            <input type="button"
-                   disabled={!imageUploadable}
-                   value={imageUploadable ? "Upload image" : "Image Uploaded"}
-                   className={imageUploadable ? styles.uploadFileButton : styles.imageUploadedButton}
-                   onClick={handleUpload}
-            />
             <input type="submit"
                    className={styles.submitRecipeButton}
                    value="Submit"

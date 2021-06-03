@@ -14,6 +14,24 @@
     width: 300px;
 }
 
+.recipeInfoContainer {
+    position: relative;
+}
+
+.editButton {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    cursor: pointer;
+}
+
+.deleteButton {
+    position: absolute;
+    bottom: 5px;
+    right: 35px;
+    cursor: pointer;
+}
+
 .recipeImage {
     height: 60%;
     width: 100%;object-fit: cover;

@@ -19,7 +19,7 @@ const YourRecipesPage = () => {
           },
         })
         const data = await response.json()
-        console.log("data", data[0].data)
+        console.log("data", data[0])
         setRecipesList(data)
       } catch(err) {
         console.log(err)
@@ -35,14 +35,15 @@ const YourRecipesPage = () => {
       return value
     }
   }).map((item, index) => (
-    <RecipeDisplay title={item.data.name}
+    <RecipeDisplay item={item}
+                   // title={item.data.name}
                    key={index}
-                   numRatings={item.data.n_ratings}
-                   stars={item.data.total_rating / item.data.n_ratings}
-                   imgsrc={item.data.images[0]}
-                   description={item.data.description}
+                   // numRatings={item.data.n_ratings}
+                   // stars={item.data.total_rating / item.data.n_ratings}
+                   // imgsrc={item.data.images[0]}
+                   // description={item.data.description}
                    personalRecipe={true}
-      // author={}
+                   // recipeID={item.id}
 
     />
   ))
