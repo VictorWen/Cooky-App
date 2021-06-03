@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useRef} from 'react'
 import styles from '../styles/SearchPage.module.css'
 import JSONDATA from '../mockData.json'
 
@@ -6,26 +6,51 @@ import JSONDATA from '../mockData.json'
 
 const SearchPage = () => {
 
-    async function submitValue (data) {
-        const localhost = "https://localhost:3000/search/recipes/name/"
-        const url = localhost.concat(data)
-        const response = await fetch(url)
+    const searchQuery = useRef()
+    const [recipeList,setrecipeList] = useRef('')
+    async function submitFunction(event) {
+
+       // event.stopPropagation()
+        //event.nativeEvent.stopImmediatePropagation();
+        const localhost = "http://localhost:3001/search/recipes/name/"
+        const url = localhost.concat(searchQuery.current.value)
+        console.log(url)
+        try {
+            const response = await fetch(url,
+                {method: 'GET',headers: {
+                'Content-Type': 'application/json'
+            }})
+        
+        console.log(response)
         const val = await response.json()
         console.log(val)
+        setrecipeList(val)
+        }
+
+        catch(err){
+            console.log(err)
+        }
+
+        return false
     }
     return (
         
         <div className = {styles.container}>
             <form action=""method = "get">
                 <input type = "text" 
+                    ref={searchQuery}
                     placeholder = "search" 
                     name = "recipe"
                     className = {styles.searchFormat}
                 />
  
-                <button type = "submit" className={styles.submitButton}>Search</button>
+            <input type="button" 
+                onClick={() => {
+                    submitFunction()
+                }} className={styles.submitButton} value="Search" />
             </form>
         </div>
+
     )
   
   
