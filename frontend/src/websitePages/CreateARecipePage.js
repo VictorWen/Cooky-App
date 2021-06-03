@@ -9,6 +9,17 @@ import { storage } from '../firebase/index'
 import { useAuth } from '../contexts/AuthContext'
 import { useLocation, useHistory } from 'react-router-dom'
 
+const makeid = (length) => {
+  var result = [];
+  var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var charactersLength = characters.length;
+  for (var i = 0; i < length; i++) {
+    result.push(characters.charAt(Math.floor(Math.random() *
+      charactersLength)));
+  }
+  return result.join('');
+}
+
 const CreateARecipePage = () => {
   const location = useLocation()
   const history = useHistory()
@@ -64,20 +75,22 @@ const CreateARecipePage = () => {
 
   const handleUpload = (e) => {
     if (image === null) return
-    const uploadTask = storage.ref(`images/${image.name}`).put(image)
-    uploadTask.on(
+    console.log("image", image)
+    const imageid = makeid(20)
+    const storageRef = storage.ref('images/')
+    const fileRef = storageRef.child(imageid)
+    fileRef.put(image).on(
       "state_changed",
-      snapshot => {
-      },
-      error => {
+      snapshot=>{},
+      error=>{
         console.log("error", error)
         setImageUploadable(true)
-
       },
       () => {
+        console.log(imageid)
         storage
           .ref("images")
-          .child(image.name)
+          .child(imageid)
           .getDownloadURL()
           .then(url => {
             setImageURL(url)
@@ -121,7 +134,7 @@ const CreateARecipePage = () => {
       prepTime.current.value = location.state.data.preptime
       cookingTime.current.value = location.state.data.cooktime
       shortDescription.current.value = location.state.data.description
-      if (location.state.data.images.length === 1) {
+      if (location.state.data.images.length === 1 && location.state.data.images[0] !== "") {
         setImageURL(location.state.data.images[0])
         setImageUploadable(false)
       }
@@ -252,7 +265,7 @@ const CreateARecipePage = () => {
               Add Ingredient
             </button>
 
-            <label htmlFor="addEquipment">Give a short description of your recipe
+            <label htmlFor="addEquipment">Add a piece of equipment
               <span
                 className={styles.noIngredientsText}>{noEquipmentText ? " - Please enter a piece of equipment" : ""}</span>
             </label>
@@ -352,7 +365,7 @@ const CreateARecipePage = () => {
                    className={imageUploadable ? styles.uploadFileButton : styles.imageUploadedButton}
                    onClick={handleUpload}
             />
-            <label htmlFor="shortDescription">Add a piece of equipment
+            <label htmlFor="shortDescription">Give a short description of your recipe
             </label>
             <input type="text"
                    className={styles.userInput}

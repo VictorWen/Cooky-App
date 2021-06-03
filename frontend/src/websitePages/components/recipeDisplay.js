@@ -6,9 +6,11 @@ import StarBorderIcon from '@material-ui/icons/StarBorder';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { useHistory } from 'react-router-dom'
-
+import { useAuth } from '../../contexts/AuthContext'
+import VisibilityIcon from '@material-ui/icons/Visibility'
 
 const RecipeDisplay = (props) => {
+  const { currentUser } = useAuth()
   let history = useHistory()
   const starsMapping = []
   const noStars = props.item.data.total_rating / props.item.data.n_ratings
@@ -62,12 +64,12 @@ const RecipeDisplay = (props) => {
         <>
           <EditIcon className={styles.editButton}
                     onClick={() => {
-                      const pathname = '/editRecipe/' + props.item.id
+                      const pathname = '/editRecipe/'
                       console.log(pathname)
                       history.push({
                         pathname: pathname,
                         state: props.item
-                        })
+                      })
                     }}
           />
           <DeleteIcon className={styles.deleteButton}
@@ -88,8 +90,15 @@ const RecipeDisplay = (props) => {
           />
         </>
         :
-        <></>
-      }
+        currentUser === null ? <></> : <VisibilityIcon className={styles.editButton}
+                                                       onClick={() => {
+                                                         history.push({
+                                                           pathname: '/viewRecipe',
+                                                           state: props.item,
+                                                         })
+                                                       }}
+        />}
+
 
     </div>
   )
