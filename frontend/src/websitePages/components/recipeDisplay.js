@@ -19,21 +19,21 @@ const RecipeDisplay = (props) => { // props.stars
   const stars = starsMapping.map((item, index) => {
     if (item === 2) {
       return (
-        <>
-          <StarIcon className={styles.ratingStars}/>
-        </>
+          <StarIcon className={styles.ratingStars}
+                    key={index}
+          />
       )
     } else if (item === 1) {
       return (
-        <>
-          <StarHalfIcon className={styles.ratingStars}/>
-        </>
+          <StarHalfIcon className={styles.ratingStars}
+                        key={index}
+          />
       )
     } else {
       return (
-        <>
-          <StarBorderIcon className={styles.ratingStars}/>
-        </>
+          <StarBorderIcon className={styles.ratingStars}
+                          key={index}
+          />
       )
     }
 
@@ -52,7 +52,7 @@ const RecipeDisplay = (props) => { // props.stars
       }}>{props.numRatings} </span>
         <br/>
         <p className={styles.recipeDescription}>{props.description}</p>
-        <b>By:{props.author}</b>
+        {/*<b>By:{props.author}</b>*/}
       </div>
     </div>
   )

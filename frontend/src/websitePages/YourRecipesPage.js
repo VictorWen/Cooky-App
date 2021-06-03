@@ -1,32 +1,52 @@
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import styles from '../styles/YourRecipesPage.module.css'
 import JSONDATA from '../mockData.json'
 import RecipeDisplay from './components/recipeDisplay'
+import { useAuth } from '../contexts/AuthContext'
 
 const YourRecipesPage = () => {
+  const [recipesList, setRecipesList] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
-
-  const renderedResults = JSONDATA.filter(value => {
-    if (searchTerm === "") {
-      return value.user_name
-    } else if (value.user_name.toLowerCase().includes(searchTerm.toLowerCase())) {
-      return value.user_name
+  const { currentUser } = useAuth()
+  useEffect(() => {
+    const getRecipes = async () => {
+      try {
+        const url = 'http://localhost:3001/user/' + currentUser.uid + '/recipes'
+        const response = await fetch(url, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+        })
+        const data = await response.json()
+        console.log("data", data[0].data)
+        setRecipesList(data)
+      } catch(err) {
+        console.log(err)
+      }
     }
-  }).map((val, key) => (
-    <div>
-      <RecipeDisplay title={val.user_name}
-                     numRatings={30}
-					 stars={3.7}
-                     imgsrc="https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fimages.media-allrecipes.com%2Fuserphotos%2F7847380.jpg&w=272&h=272&c=sc&poi=face&q=85"
-                     description="Using pantry items plus a couple of fresh items, you can create a cheesy,"
-                     author={val.first_name + " " + val.last_name}
-      />
-    </div>
+    getRecipes()
+  }, [])
 
+  const renderedResults2 = recipesList.filter(value => {
+    if (searchTerm === "") {
+      return value
+    } else if (value.data.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+      return value
+    }
+  }).map((item, index) => (
+    <RecipeDisplay title={item.data.name}
+                   key={index}
+                   numRatings={item.data.n_ratings}
+                   stars={item.data.total_rating / item.data.n_ratings}
+                   imgsrc={item.data.images[0]}
+                   description={item.data.description}
+                   personalRecipe={true}
+      // author={}
 
+    />
   ))
 
-  console.log(renderedResults)
 
 
   return (
@@ -45,7 +65,7 @@ const YourRecipesPage = () => {
         <br/><br/>
       </div>
       <div className={styles.recipeContainer}>
-        {renderedResults}
+        {renderedResults2}
       </div>
 
     </div>

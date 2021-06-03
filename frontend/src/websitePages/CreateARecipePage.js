@@ -14,15 +14,17 @@ const CreateARecipePage = () => {
   const handleSubmit = async (event) => {
     event.preventDefault()
     const data = {
-      name: title.value,
-      description: "Sample description",
+      name: title.current.value,
       ingredients: ingredientsList,
       cooktime: cookingTime.current.value,
       preptime: prepTime.current.value,
       servings: 0,
       steps: recipeInstructionsList,
       equipment: equipmentList,
-      images: [imageURL]
+      images: [imageURL],
+      n_ratings: 1,
+      total_rating: 5,
+      description: shortDescription.current.value,
     }
     const response = await fetch('http://localhost:3001/user/' + currentUser.uid +  '/recipes', {
       method: 'PUT',
@@ -81,6 +83,7 @@ const CreateARecipePage = () => {
   const [emptyStep, setEmptyStep] = useState(false)
   const cookingTime = useRef()
   const prepTime = useRef()
+  const shortDescription = useRef()
   const [recipeInstructionsList, setRecipeInstructionsList] = useState([""])
   const [recipeInstructionsListRendered, setRecipeInstructionsListRendered] = useState([])
   useEffect(() => {
@@ -163,7 +166,7 @@ const CreateARecipePage = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} required>
 
         <div className={styles.container}>
           <div>
@@ -295,7 +298,20 @@ const CreateARecipePage = () => {
                    id="inputImage"
                    name="inputImage"
                    onChange={handleImageChange}
+                   required
             />
+
+            <label htmlFor="shortDescription">Add a piece of equipment
+            </label>
+            <input type="text"
+                   className={styles.userInput}
+                   id="shortDescription"
+                   name="shortDescription"
+                   ref={shortDescription}
+                   placeholder="Please enter a short description of your recipe"
+                   required
+            />
+
             <input type="button"
                    disabled={!imageUploadable}
                    value={imageUploadable ? "Upload image" : "Image Uploaded"}

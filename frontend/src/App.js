@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { createContext } from 'react'
 import HomePage from './websitePages/HomePage'
 import NavigationBar from './websitePages/NavigationBar'
 import PopularRecipesPage from './websitePages/PopularRecipePage'
@@ -50,32 +50,32 @@ function App() {
     )
   } else {
     return (
-      <div className="page">
-        <NavigationBar/>
-        <Switch>
-          <Route path="/createRecipe">
-            <CreateARecipePage/>
-          </Route>
-          <Route path="/popularRecipes">
-            <PopularRecipesPage/>
-          </Route>
-          <Route path="/yourRecipes">
-            <YourRecipesPage/>
-          </Route>
-          <Route path="/accountPage">
-            <UserDetails/>
-          </Route>
-          <Route path="/resetPassword">
-            <ResetPasswordPage/>
-          </Route>
-          <Route path="/searchPage">
-            <SearchPage/>
-          </Route>
-          <Route path="/">
-            <HomePage/>
-          </Route>
-        </Switch>
-      </div>
+        <div className="page">
+          <NavigationBar/>
+          <Switch>
+            <Route path="/createRecipe">
+              <CreateARecipePage/>
+            </Route>
+            <Route path="/popularRecipes">
+              <PopularRecipesPage/>
+            </Route>
+            <Route path="/yourRecipes">
+              <YourRecipesPage/>
+            </Route>
+            <Route path="/accountPage">
+              <UserDetails/>
+            </Route>
+            <Route path="/resetPassword">
+              <ResetPasswordPage/>
+            </Route>
+            <Route path="/searchPage">
+              <SearchPage/>
+            </Route>
+            <Route path="/">
+              <HomePage/>
+            </Route>
+          </Switch>
+        </div>
     )
   }
 }
