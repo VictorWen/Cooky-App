@@ -58,4 +58,23 @@ router.put('/:id/copy/:recipe_id', async function(req, res) {
         res.status(404).send("User not found");
 });
 
+router.put('/:id/rate/:recipe_id/:rating', async function(req, res) {
+    let user_id = req.params.id;
+    let recipe_id = req.params.recipe_id;
+    let rating = parseInt(req.params.rating);
+
+    if (!await user_data.hasUser(user_id)) {
+        res.status(404).send("User not found");
+        return;
+    }
+    
+    if (!await recipe_database.hasRecipe(recipe_id)) {
+        res.status(404).send("Recipe not found");
+        return;
+    }
+
+    await recipe_database.addRating(recipe_id, user_id, rating);
+    res.status(200).send("Success");
+});
+
 module.exports = router
