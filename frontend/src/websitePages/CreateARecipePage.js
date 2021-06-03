@@ -29,7 +29,7 @@ const CreateARecipePage = () => {
       total_rating: 5,
       description: shortDescription.current.value,
     }
-    const response = await fetch('http://localhost:3001/user/' + currentUser.uid + '/recipes', {
+    const response = await fetch('http://localhost:3001/user/' + currentUser.uid +  '/recipes', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
