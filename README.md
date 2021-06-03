@@ -25,7 +25,8 @@ need to be changed respectively.
 
 ## Start
 
-The backend api run on port 3001 and the frontend runs on port 3000
+The backend api run on port 3001 and the frontend runs on port 3000.
+
 The backend api can be started by running:
 
 ```
