@@ -20,8 +20,8 @@
 
 .editButton {
     position: absolute;
-    bottom: 5px;
-    right: 5px;
+    bottom: 15px;
+    right: 15px;
     cursor: pointer;
 }
 
@@ -31,8 +31,8 @@
 
 .deleteButton {
     position: absolute;
-    bottom: 5px;
-    right: 35px;
+    bottom: 15px;
+    right: 45px;
     cursor: pointer;
 }
 

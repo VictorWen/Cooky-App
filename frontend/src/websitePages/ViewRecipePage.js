@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import styles from "../styles/CreateARecipePage.module.css";
 import { useLocation } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
@@ -7,8 +7,27 @@ import { useAuth } from '../contexts/AuthContext'
 const ViewRecipePage = () => {
   const rating = useRef()
   const location = useLocation()
+  const [userData, setUserData] = useState({})
   const { currentUser } = useAuth()
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await fetch('http://localhost:3001/user/' + currentUser.uid, {
+          method: 'GET',
+          headers: {
+            'Content-Type': '/application/json'
+          }
+        })
+        const data = await response.json()
+        console.log("data", data)
+      } catch(err) {
+        console.log(err)
+      }
+    }
+    getData()
+  }, [])
   console.log(location.state)
+  console.log(currentUser)
   const recipeInstructions = location.state.data.steps.map((item, index) => (
     <li key={index}>{item}</li>
   ))
@@ -31,12 +50,28 @@ const ViewRecipePage = () => {
         </ul>
 
         {currentUser === null ? <></> : <form onSubmit={() => {
+          const data = {
+            recipe_id: location.state.id,
+            user_id: currentUser.uid,
+            rating: rating
+          }
+          try {
+            fetch('http://localhost:3001/ratings/', {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(data)
+            })
+          } catch(err) {
 
+          }
         }}>
           <input type="number"
                  className={styles.userInput}
                  placeholder="Rate the recipe on a scale of 1 to 5"
                  min={0} max={5}
+                 ref={rating}
                  required
           />
           <input type="submit"
