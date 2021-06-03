@@ -5,10 +5,18 @@ import JSONDATA from '../mockData.json'
 
 
 const SearchPage = () => {
+    const [userInput, setUserInput] = useState('')
 
-    async function submitValue (data) {
-        const localhost = "https://localhost:3000/search/recipes/name/"
-        const url = localhost.concat(data)
+
+    async function submitValue () {
+        //URLs for fetching
+        const searchName = "localhost:3001/search/recipes/name/"
+        const searchIngredient = "localhost:3001/search/recipes/ingredient/"
+        const searchPopular = "localhost:3001/search/recipes/popular/"
+
+        console.log(userInput)
+        //trying to fetch the data from firebase and then display it
+        const url = searchName.concat(userInput)
         const response = await fetch(url)
         const val = await response.json()
         console.log(val)
@@ -16,18 +24,15 @@ const SearchPage = () => {
     return (
         
         <div className = {styles.container}>
-            <form action=""method = "get">
-                <input type = "text" 
-                    placeholder = "search" 
-                    name = "recipe"
-                    className = {styles.searchFormat}
-                />
- 
-                <button type = "submit" className={styles.submitButton}>Search</button>
-            </form>
+            <input type = "text" 
+                placeholder = "search" 
+                name = "recipe"
+                onChange = {event => {setUserInput(event.target.value)}}
+                className = {styles.searchFormat}
+            />
         </div>
     )
-  
+
   
     {/* const [searchTerm,setSearchTerm] = useState('')
     return (
