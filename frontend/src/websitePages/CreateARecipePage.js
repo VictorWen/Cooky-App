@@ -7,14 +7,16 @@ import RemoveCircleRoundedIcon from '@material-ui/icons/RemoveCircleRounded';
 import { Remove } from "@material-ui/icons";
 import { storage } from '../firebase/index'
 import { useAuth } from '../contexts/AuthContext'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useHistory } from 'react-router-dom'
 
 const CreateARecipePage = () => {
   const location = useLocation()
+  const history = useHistory()
   console.log("location", location)
   const { currentUser } = useAuth()
   console.log("uid", currentUser.uid)
   const handleSubmit = async (event) => {
+    event.preventDefault()
     const data = {
       name: title.current.value,
       ingredients: ingredientsList,
@@ -28,14 +30,36 @@ const CreateARecipePage = () => {
       total_rating: 5,
       description: shortDescription.current.value,
     }
-    const response = await fetch('http://localhost:3001/user/' + currentUser.uid +  '/recipes', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
-    console.log(response)
+    if (location.pathname.slice(0, 5) === "/edit") {
+      try {
+        const response = await fetch('http://localhost:3001/recipe/' + location.state.id, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        })
+
+        console.log(response)
+      } catch (err) {
+        console.log(err)
+      }
+    } else {
+      try {
+        const response = await fetch('http://localhost:3001/user/' + currentUser.uid + '/recipes', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        })
+        console.log(response)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    history.push('/yourRecipes')
+
   }
 
   const handleUpload = (e) => {
@@ -98,6 +122,7 @@ const CreateARecipePage = () => {
       cookingTime.current.value = location.state.data.cooktime
       shortDescription.current.value = location.state.data.description
       if (location.state.data.images.length === 1) {
+        setImageURL(location.state.data.images[0])
         setImageUploadable(false)
       }
 
@@ -317,7 +342,7 @@ const CreateARecipePage = () => {
                    id="inputImage"
                    name="inputImage"
                    onChange={handleImageChange}
-                   required
+                   required={location.pathname.slice(0, 5) !== "/edit"}
             />
 
             <input type="button"
