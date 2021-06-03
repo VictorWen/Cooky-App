@@ -35,14 +35,6 @@ const SearchPage = () => {
         return false
     }
 
-    function displayResults(){
-        console.log(recipeList)
-        if ( recipeList.current?.recipes.length !== 0) {
-            return (
-                <h1>sad</h1>
-            )
-        }
-    }
     return (
         
         <div className = {styles.container}>
@@ -56,14 +48,17 @@ const SearchPage = () => {
  
             <input type="button" 
                 onClick={() => {
-                    SubmitFunction().then(displayResults())
+                    SubmitFunction()
                 }} className={styles.submitButton} value="Search" />
             </form>
-
+            {recipeList.current.recipes.length !== 0 &&
+                <h2>True</h2>
+                
+            }
         
         </div>
 
-    )
+    );
 
 
   
