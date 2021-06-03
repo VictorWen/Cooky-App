@@ -17,15 +17,15 @@ const Login = () => {
     try {
       setError('')
       setLoading(true)
-      await signin(emailRef.current.value, passwordRef.current.value)
+      const signIn = await signin(emailRef.current.value, passwordRef.current.value)
+      history.push('/yourRecipes')
     } catch(err) {
       console.log(err.code)
       setError(err.code)
     }
     setLoading(false)
-    history.push('/yourRecipes')
-
   }
+
 
   return (
     <div className={styles.container}>
@@ -33,7 +33,7 @@ const Login = () => {
         <div>
           <h1 className={styles.SignInTitle}>Sign In</h1>
         </div>
-        <div>
+         <div>
           <label htmlFor="email">Email:</label>
           <input type="text"
                  id="email"
@@ -43,7 +43,7 @@ const Login = () => {
                  placeholder="Enter your email..."
                  required
           /> <br/>
-        </div>
+          </div> 
         <div>
           <label htmlFor="password">Password:</label>
           <input type="password"
@@ -65,7 +65,7 @@ const Login = () => {
           > Sign In
           </button>
         </div>
-        <br />
+          <br />
         {error === "auth/user-not-found" ?
           <div>
             <div className={styles.loginError}>
@@ -76,7 +76,7 @@ const Login = () => {
                 Please create an account.
               </p>
             </div>
-          </div> : ""
+          </div> : <><br/><br/></>
         }
         {error === "auth/wrong-password" ?
           <div>
@@ -85,9 +85,21 @@ const Login = () => {
                 Incorrect email or password
               </p>
             </div>
-          </div> : ""
+          </div> : <br/>
+
         }
 
+        {error === "auth/too-many-requests" ?
+          <div>
+            <div className={styles.loginError}>
+              <p>
+                Server Error - try again later
+              </p>
+            </div>
+          </div> : <br/>
+
+        }
+	  
         <div className={styles.SignInTitle}>
           <p onClick={() => {
             history.push('/accountPage')

@@ -25,6 +25,14 @@
     justify-content:  center;
 }
 
+.loginError {
+  color: red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
 .accountExistsText {
   color: blue;
   text-decoration: underline;
