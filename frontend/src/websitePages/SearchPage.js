@@ -17,7 +17,13 @@ const SearchPage = () => {
         console.log(userInput)
         //trying to fetch the data from firebase and then display it
         const url = searchName.concat(userInput)
-        const response = await fetch(url)
+
+        console.log(url)
+        const response = await fetch(url,
+            {method: 'PUT', headers: 
+            {'Content-Type': 'application/json'}
+        })
+
         const val = await response.json()
         console.log(val)
     }
