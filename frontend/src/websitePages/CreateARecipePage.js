@@ -10,6 +10,7 @@ import { useAuth } from '../contexts/AuthContext'
 
 const CreateARecipePage = () => {
   const {currentUser} = useAuth()
+  console.log("uid", currentUser.uid)
   const handleSubmit = async (event) => {
     event.preventDefault()
     const data = {
@@ -23,7 +24,7 @@ const CreateARecipePage = () => {
       equipment: equipmentList,
       images: [imageURL]
     }
-    const response = await fetch('http://localhost:3001/user/' + useAuth +  '/recipes', {
+    const response = await fetch('http://localhost:3001/user/' + currentUser.uid +  '/recipes', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
