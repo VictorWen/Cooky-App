@@ -13,7 +13,7 @@ const CreateAccountPage = () => {
   let history = useHistory()
 
 
-  async function handleSubmit (e) {
+  async function handleSubmit(e) {
     e.preventDefault()
 
     if (passwordRef.current.value !== passwordConfirmationRef.current.value) {
@@ -29,77 +29,78 @@ const CreateAccountPage = () => {
       console.log(err)
       setError(err.code)
       setLoading(false)
-  }
-  return (
-        <div className={styles.container}>
-          <form className={styles.form} onSubmit = {handleSubmit}>
+    }
+    return (
+      <div className={styles.container}>
+        <form className={styles.form} onSubmit={handleSubmit}>
+          <div>
+            <h1 className={styles.signUpTitle}>Sign Up</h1>
+          </div>
+          <div>
+            <label htmlFor="email">Email:</label>
+            <input type="text"
+                   id="email"
+                   className={styles.userInput}
+                   name="email"
+                   ref={emailRef}
+                   placeholder="Enter your email..."
+                   required
+            /> <br/>
+          </div>
+          <div>
+            <label htmlFor="password">Password:</label>
+            <input type="password"
+                   id="password"
+                   className={styles.userInput}
+                   name="password"
+                   ref={passwordRef}
+                   required
+            /> <br/>
+          </div>
+
+          <div>
+            <label htmlFor="passwordConfirmation">Confirm Password:</label>
+            <input type="password"
+                   id="passwordConfirmation"
+                   className={styles.userInput}
+                   name="passwordConfirmation"
+                   ref={passwordConfirmationRef}
+                   required
+            /> <br/>
+          </div>
+          <div>
+            <button
+              name="signUpButton"
+              type="submit"
+              value="Sign Up"
+              className={styles.signUpButton}
+              disabled={loading}
+            > Sign Up
+            </button>
+          </div>
+          <br/>
+          <br/><br/>
+          {error === "auth/email-already-in-use" ?
             <div>
-              <h1 className={styles.signUpTitle}>Sign Up</h1>
-            </div>
-              <div>
-                <label htmlFor="email">Email:</label>
-                <input type="text"
-                       id="email"
-                       className={styles.userInput}
-                       name="email"
-                       ref={emailRef}
-                       placeholder="Enter your email..."
-                       required
-                /> <br/>
+              <div className={styles.loginError}>
+                <p>
+                  An account with this email already exists
+                </p>
               </div>
-            <div>
-              <label htmlFor="password">Password:</label>
-              <input type="password"
-                     id="password"
-                     className={styles.userInput}
-                     name="password"
-                     ref={passwordRef}
-                     required
-              /> <br/>
-            </div>
+            </div> : <br/>
+          }
 
-            <div>
-              <label htmlFor="passwordConfirmation">Confirm Password:</label>
-              <input type="password"
-                     id="passwordConfirmation"
-                     className={styles.userInput}
-                     name="passwordConfirmation"
-                     ref={passwordConfirmationRef}
-                     required
-              /> <br/>
-            </div>
-            <div>
-              <button
-                name="signUpButton"
-                type="submit"
-                value="Sign Up"
-                className={styles.signUpButton}
-                disabled = {loading}
-              > Sign Up
-              </button>
-            </div>
-            <br />
-	   <br/><br/>
-            {error === "auth/email-already-in-use" ?
-              <div>
-                <div className={styles.loginError}>
-                  <p>
-                    An account with this email already exists
-                  </p>
-                </div>
-              </div> : <br/>
-            }
-
-            <div className={styles.signUpTitle}>
-              <p onClick={() => {
-                history.push('/login')
-              }}
-                 className={styles.accountExistsText}
-              > I already have an account </p>
-            </div>
-          </form>
-        </div>
-  )
+          <div className={styles.signUpTitle}>
+            <p onClick={() => {
+              history.push('/login')
+            }}
+               className={styles.accountExistsText}
+            > I already have an account </p>
+          </div>
+        </form>
+      </div>
+    )
+  }
 }
 
 export default CreateAccountPage
