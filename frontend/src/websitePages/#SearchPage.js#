@@ -35,18 +35,4 @@ const SearchPage = () => {
       )
 }
 
-const SearchPag2e = () => {
-    const searchTerm = useRef()
-    return (
-	<div className={styles.container}>
-	    <div>
-		<input type="text"
-		       placeholder="search"
-		       classname={styles.searchFormat}
-		/>
-	    </div>
-	</div>
-    )
-}
 
-export default SearchPage

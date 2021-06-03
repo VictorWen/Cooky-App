@@ -24,14 +24,12 @@ const CreateAccountPage = () => {
       setError('')
       setLoading(true)
       await signup(emailRef.current.value, passwordRef.current.value)
-      history.push('/')
-    } catch {
-      setError('Failed to create an account')
-    }
-
-    setLoading(false)
+      history.push('/yourRecipes')
+    } catch (err) {
+      console.log(err)
+      setError(err.code)
+      setLoading(false)
   }
-
   return (
         <div className={styles.container}>
           <form className={styles.form} onSubmit = {handleSubmit}>
@@ -81,6 +79,17 @@ const CreateAccountPage = () => {
               </button>
             </div>
             <br />
+	   <br/><br/>
+            {error === "auth/email-already-in-use" ?
+              <div>
+                <div className={styles.loginError}>
+                  <p>
+                    An account with this email already exists
+                  </p>
+                </div>
+              </div> : <br/>
+            }
+
             <div className={styles.signUpTitle}>
               <p onClick={() => {
                 history.push('/login')

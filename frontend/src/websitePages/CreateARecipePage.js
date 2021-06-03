@@ -6,8 +6,10 @@ import Tooltip from '@material-ui/core/Tooltip';
 import RemoveCircleRoundedIcon from '@material-ui/icons/RemoveCircleRounded';
 import { Remove } from "@material-ui/icons";
 import { storage } from '../firebase/index'
+import { useAuth } from '../contexts/AuthContext'
 
 const CreateARecipePage = () => {
+  const {currentUser} = useAuth()
   const handleSubmit = async (event) => {
     event.preventDefault()
     const data = {
@@ -21,7 +23,7 @@ const CreateARecipePage = () => {
       equipment: equipmentList,
       images: [imageURL]
     }
-    const response = await fetch('http://localhost:3001/user/eYNvqIB5X2XcNcXCY0Ia/recipes', {
+    const response = await fetch('http://localhost:3001/user/' + useAuth +  '/recipes', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -29,8 +31,6 @@ const CreateARecipePage = () => {
       body: JSON.stringify(data)
     })
     console.log(response)
-    return false
-
   }
 
   const handleUpload = (e) => {
