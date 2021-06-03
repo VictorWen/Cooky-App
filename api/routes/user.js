@@ -28,7 +28,9 @@ router.post('/:id', async function(req, res){
 router.get('/:id/recipes', async function(req, res) {
     let id = req.params.id;
     if (await user_data.hasUser(id)) {
-        res.json(await recipe_database.getUserRecipes(id));
+        let matching_recipes = await recipe_database.getUserRecipes(id);
+        matching_recipes.splice(30); 
+        res.json(matching_recipes);
     }
     else
         res.status(404).send("User not found");

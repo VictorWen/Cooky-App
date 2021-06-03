@@ -24,20 +24,12 @@ const CreateAccountPage = () => {
       setError('')
       setLoading(true)
       await signup(emailRef.current.value, passwordRef.current.value)
-<<<<<<< HEAD
+      history.push('/yourRecipes')
     } catch (err) {
       console.log(err)
       setError(err.code)
-=======
-      history.push('/')
-    } catch {
-      setError('Failed to create an account')
->>>>>>> e7a2f156d3c2612c2d14ec594e5c79e9351f677d
-    }
-
-    setLoading(false)
+      setLoading(false)
   }
-
   return (
         <div className={styles.container}>
           <form className={styles.form} onSubmit = {handleSubmit}>
