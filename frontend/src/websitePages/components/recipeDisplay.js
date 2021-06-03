@@ -3,14 +3,19 @@ import styles from "../../styles/PopularRecipePage.module.css";
 import StarHalfIcon from "@material-ui/icons/StarHalf";
 import StarIcon from "@material-ui/icons/Star";
 import StarBorderIcon from '@material-ui/icons/StarBorder';
-import { StarBorder } from "@material-ui/icons";
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { useHistory } from 'react-router-dom'
 
-const RecipeDisplay = (props) => { // props.stars
+
+const RecipeDisplay = (props) => {
+  let history = useHistory()
   const starsMapping = []
+  const noStars = props.item.data.total_rating / props.item.data.n_ratings
   for (let i = 0; i < 5; i++) {
-    if (i + .75 < props.stars) {
+    if (i + .75 < noStars) {
       starsMapping.push(2)
-    } else if (i + .25 < props.stars) {
+    } else if (i + .25 < noStars) {
       starsMapping.push(1)
     } else {
       starsMapping.push(0)
@@ -19,41 +24,58 @@ const RecipeDisplay = (props) => { // props.stars
   const stars = starsMapping.map((item, index) => {
     if (item === 2) {
       return (
-        <>
-          <StarIcon className={styles.ratingStars}/>
-        </>
+        <StarIcon className={styles.ratingStars}
+                  key={index}
+        />
       )
     } else if (item === 1) {
       return (
-        <>
-          <StarHalfIcon className={styles.ratingStars}/>
-        </>
+        <StarHalfIcon className={styles.ratingStars}
+                      key={index}
+        />
       )
     } else {
       return (
-        <>
-          <StarBorderIcon className={styles.ratingStars}/>
-        </>
+        <StarBorderIcon className={styles.ratingStars}
+                        key={index}
+        />
       )
     }
 
   })
 
   return (
-    <div>
-      <img src={props.imgsrc}
+    <div className={styles.recipeInfoContainer}>
+      <img src={props.item.data.images[0]}
            className={styles.recipeImage}
       />
       <div className={styles.recipeInfo}>
-        <h4>{props.title}</h4>
-        {stars}  <span style={{
+        <h4>{props.item.data.name}</h4>
+        {stars} <span style={{
         position: 'relative',
         top: '-6px',
-      }}>{props.numRatings} </span>
+      }}>{props.item.data.n_ratings} </span>
         <br/>
-        <p className={styles.recipeDescription}>{props.description}</p>
-        <b>By:{props.author}</b>
+        <p className={styles.recipeDescription}>{props.item.data.description}</p>
       </div>
+      {props.personalRecipe ?
+        <>
+          <EditIcon className={styles.editButton}
+                    onClick={() => {
+                      const pathname = '/editRecipe/' + props.item.id
+                      console.log(pathname)
+                      history.push({
+                        pathname: pathname,
+                        state: props.item
+                        })
+                    }}
+          />
+          <DeleteIcon className={styles.deleteButton}/>
+        </>
+        :
+        <></>
+      }
+
     </div>
   )
 }

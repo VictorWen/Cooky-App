@@ -2,7 +2,7 @@
 let firebase = require("firebase-admin");
 const recipe_database = require("./recipe_database");
 
-const user_properties = ["username", "password", "recipes", "following"]
+const user_properties = ["uid", "recipes", "email"]
 
 class UserDataLoader {
 
@@ -46,7 +46,8 @@ class UserDataLoader {
 
     async addUser(user_data) {
         let user = this.filterUserProperties(user_data);
-        let new_user = await this.users.add(user);
+        let uid = user.uid
+        let new_user = await this.users.doc(uid).set(user);
         return new_user.id;
     }
 

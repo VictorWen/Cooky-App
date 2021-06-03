@@ -10,7 +10,7 @@ import { useLocation, useHistory } from 'react-router-dom'
 const NavigationBar = () => {
     let location = useLocation()
     const history = useHistory()
-  
+
     const { currentUser, logout } = useAuth()
     let authdiv
     if (currentUser === null)
@@ -33,7 +33,6 @@ const NavigationBar = () => {
         Log Out
       </div>
     }
-  console.log(location)
   return (
     <div className={styles.navigationBar}>
       <div
