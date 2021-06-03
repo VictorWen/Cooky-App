@@ -4,7 +4,7 @@ import { useAuth } from '../contexts/AuthContext'
 
 const UserPages = () => {
   const { currentUser, logout } = useAuth()
-  console.log(currentUser)
+  //console.log(currentUser)
   return (
     <div className={styles.container}>
         <h1>Account Details </h1>

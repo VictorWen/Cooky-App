@@ -13,8 +13,34 @@ export function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = useState()
     const [loading, setLoading] = useState(true)
 
-    function signup(email, password) {
-        return auth.createUserWithEmailAndPassword(email, password)
+    async function signup(email, password) {
+        return auth.createUserWithEmailAndPassword(email, password).then(data => {
+            createProfile(data)
+            })
+    }
+
+    async function createProfile(userObject)
+    {
+        console.log("made it here")
+        console.log('email', userObject.user.email)
+        const data = {
+          uid: userObject.user.uid,
+          email: userObject.user.email,
+          recipes: []
+        }
+
+        console.log(JSON.stringify(data))
+    
+      const response = await fetch('http://localhost:3001/newuser', {
+          method: 'PUT',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+      })
+        console.log(response)
+        return response
+        
     }
 
     const logout = () => {

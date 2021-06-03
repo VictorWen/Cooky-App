@@ -23,7 +23,7 @@ const CreateARecipePage = () => {
       equipment: equipmentList,
       images: [imageURL]
     }
-    const response = await fetch('http://localhost:3001/user/' + useAuth +  '/recipes', {
+    const response = await fetch('http://localhost:3001/user/' + currentUser.uid +  '/recipes', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
