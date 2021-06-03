@@ -3,11 +3,11 @@ import styles from '../styles/LoginPage.module.css'
 import { useAuth } from "../contexts/AuthContext";
 import { useHistory } from "react-router-dom";
 
-const LoginPage = () => {
+const ResetPasswordPage = () => {
   const emailRef = useRef()
-  const passwordRef = useRef()
-  const { signin, currentUser } = useAuth()
+  const { resetPassword, currentUser } = useAuth()
   const [error, setError] = useState('')
+  const [message, setMessage] = useState('')
   const [loading, setLoading] = useState(false)
   let history = useHistory()
 
@@ -15,9 +15,11 @@ const LoginPage = () => {
   async function handleSubmit (e) {
     e.preventDefault()
     try {
+      setMessage('')
       setError('')
       setLoading(true)
-      await signin(emailRef.current.value, passwordRef.current.value)
+      await resetPassword(emailRef.current.value)
+      setMessage("A link has been sent to your inbox with further instructions")
     } catch(err) {
       console.log(err.code)
       setError(err.code)
@@ -31,7 +33,7 @@ const LoginPage = () => {
     <div className={styles.container}>
       <form className={styles.form} onSubmit = {handleSubmit}>
         <div>
-          <h1 className={styles.SignInTitle}>Sign In</h1>
+          <h1 className={styles.SignInTitle}>Reset Password</h1>
         </div>
         <div>
           <label htmlFor="email">Email:</label>
@@ -44,22 +46,12 @@ const LoginPage = () => {
                  required
           /> <br/>
         </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input type="password"
-                 id="password"
-                 className={styles.userInput}
-                 name="password"
-                 ref={passwordRef}
-                 required
-          /> <br/>
-        </div>
 
         <div>
           <button
-            name="signInButton"
+            name="resetPasswordButton"
             type="submit"
-            value="Sign In"
+            value="Reset Password"
             className={styles.SignInButton}
             disabled = {loading}
           > Sign In
@@ -73,21 +65,12 @@ const LoginPage = () => {
                 No user with this email exists.
               </p>
               <p>
-                Please create an account.
+                Please enter a different email.
               </p>
             </div>
           </div> : ""
         }
-        {error === "auth/wrong-password" ?
-          <div>
-            <div className={styles.loginError}>
-              <p>
-                Incorrect email or password
-              </p>
-            </div>
-          </div> : ""
-        }
-
+      </form>
         <div className={styles.SignInTitle}>
           <p onClick={() => {
             history.push('/accountPage')
@@ -95,9 +78,8 @@ const LoginPage = () => {
              className={styles.accountExistsText}
           > I don't have an account </p>
         </div>
-      </form>
     </div>
   )
 }
 
-export default LoginPage
+export default ResetPasswordPage
