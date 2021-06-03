@@ -31,8 +31,8 @@ app.use('/testAPI', testAPIRouter)
 // Initialize firebase app
 let firebase = require('firebase-admin');
 
-const key_path = "./cs-35l-cooking-app-firebase-adminsdk-pfw6m-00878e5a37.json";
-const db_url = "https://cs-35l-cooking-app-default-rtdb.firebaseio.com";
+const key_path = "./cs-35l-cooking-app-firebase-adminsdk-pfw6m-00878e5a37.json";  // Firebase Admin SDK private service key file
+const db_url = "https://cs-35l-cooking-app-default-rtdb.firebaseio.com";          // Firebase database url
 
 let serviceAccount = require(key_path);
 
