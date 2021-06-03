@@ -35,7 +35,7 @@ const SearchPage = () => {
         return false
     }
 
-    function displayRecipes(){
+   /* function displayRecipes(){
         if(recipeList.current.recipes.length !== 0) {
             if (recipeList.current.recipes.length > 10){
                 for (let i = 0; i < 10; ++i){
@@ -57,7 +57,7 @@ const SearchPage = () => {
             }
         }
         return null;
-    }
+    }*/
 
     return (
         
@@ -76,7 +76,11 @@ const SearchPage = () => {
                 }} className={styles.submitButton} value="Search" />
             </form>
             
-
+            {recipeList.current?.recipes?.length > 0 &&
+                recipeList.current.recipes.map(function(object,key){
+                    return <li key={ key }>{object.data.description}</li>;
+                })
+            }
                 
             
         
@@ -84,35 +88,6 @@ const SearchPage = () => {
 
     );
 
-
-  
-    {/* const [searchTerm,setSearchTerm] = useState('')
-    return (
-        <div className = {styles.container}>
-            <input type = "text" 
-                placeholder = "search" 
-                className = {styles.searchFormat}
-                onChange = {event => {setSearchTerm(event.target.value)
-                }}
-            >
-            </input>
-            {JSONDATA.filter((value) => {
-                if(searchTerm =="") {}
-                
-                else if (value.user_name.toLowerCase().includes(searchTerm.toLowerCase())) {
-                    return value.user_name;
-                }
-
-            })
-                .map((val,key) => {
-                return <div className = {styles.recipeFormat}>
-                    Recipe Name: {val.user_name} {'\n'}
-                    Recipe Creator: {val.first_name} {val.last_name} {'\n'}
-                    Date Created : {val.email}
-                </div>
-            })}
-        </div>
-        )*/}
 }
 
 export default SearchPage
