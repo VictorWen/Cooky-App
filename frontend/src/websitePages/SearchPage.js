@@ -1,4 +1,4 @@
-import React, {useRef} from 'react'
+import React, {useRef, useEffect} from 'react'
 import styles from '../styles/SearchPage.module.css'
 import JSONDATA from '../mockData.json'
 
@@ -7,31 +7,41 @@ import JSONDATA from '../mockData.json'
 const SearchPage = () => {
 
     const searchQuery = useRef()
-    const [recipeList,setrecipeList] = useRef('')
-    async function submitFunction(event) {
+    const recipeList = useRef({recipes: []})
 
-       // event.stopPropagation()
+
+
+    async function SubmitFunction(event) {
+        //event.preventDefault();
+        // event.stopPropagation()
         //event.nativeEvent.stopImmediatePropagation();
         const localhost = "http://localhost:3001/search/recipes/name/"
         const url = localhost.concat(searchQuery.current.value)
-        console.log(url)
-        try {
-            const response = await fetch(url,
-                {method: 'GET',headers: {
-                'Content-Type': 'application/json'
-            }})
+
+        if(url === localhost){
+            recipeList.current.recipes = undefined;
+            return false;
+        }
+
         
-        console.log(response)
-        const val = await response.json()
-        console.log(val)
-        setrecipeList(val)
-        }
-
-        catch(err){
-            console.log(err)
-        }
-
+            const response = await fetch(url,
+                {method: 'GET',headers: 
+                    {'Content-Type': 'application/json'}
+                })
+            const val = await response.json()
+            console.log(val)
+            recipeList.current.recipes =val;
+        
         return false
+    }
+
+    function displayResults(){
+        console.log(recipeList)
+        if ( recipeList.current?.recipes.length !== 0) {
+            return (
+                <h1>sad</h1>
+            )
+        }
     }
     return (
         
@@ -46,13 +56,16 @@ const SearchPage = () => {
  
             <input type="button" 
                 onClick={() => {
-                    submitFunction()
+                    SubmitFunction().then(displayResults())
                 }} className={styles.submitButton} value="Search" />
             </form>
+
+        
         </div>
 
     )
-  
+
+
   
     {/* const [searchTerm,setSearchTerm] = useState('')
     return (
