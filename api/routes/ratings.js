@@ -4,7 +4,7 @@ let router = express.Router()
 
 router.put('/', async function(req, res) {
     let rating_request = req.body;
-    await recipe_data.addRating(rating_request.recipe_id, rating_request.user_id, rating_request.rating);
+    await recipe_data.addRating(rating_request.recipe_id, rating_request.user_id, parseInt(rating_request.rating));
     res.end();
 });
 
