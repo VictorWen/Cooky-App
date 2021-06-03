@@ -8,9 +8,31 @@ import { useLocation, useHistory } from 'react-router-dom'
 
 
 const NavigationBar = () => {
-  const { signup, currentUser } = useAuth()
-  let location = useLocation()
-  let history = useHistory()
+    let location = useLocation()
+    const history = useHistory()
+  
+    const { currentUser, logout } = useAuth()
+    let authdiv
+    if (currentUser === null)
+    {
+      authdiv = <div
+      className={location.pathname === "/accountPage" ? styles.activeTab : styles.none}
+      onClick={() => {
+        history.push('/accountPage')
+      }}
+    >
+      <PeopleIcon/>
+    </div>
+    }
+    else
+    {
+      authdiv = <div
+      className={styles.none}
+      onClick={logout}
+      >
+        Log Out
+      </div>
+    }
   console.log(location)
   return (
     <div className={styles.navigationBar}>
@@ -42,8 +64,6 @@ const NavigationBar = () => {
           </div>
         </>
       }
-
-
       <div
         className={location.pathname === "/popularRecipes" ? styles.activeTab : styles.none}
         onClick={() => {
@@ -53,14 +73,7 @@ const NavigationBar = () => {
         Popular Recipes
       </div>
       <div className={styles.navBarSpace}>{/*Filler*/}</div>
-      <div
-        className={location.pathname === "/accountPage" || location.pathname === "/login" ? styles.activeTab : styles.none}
-        onClick={() => {
-          history.push('/accountPage')
-        }}
-      >
-        <PeopleIcon/>
-      </div>
+      {authdiv}
       <div
         className={location.pathname === "/searchPage" ? styles.activeTab : styles.none}
         onClick={() => {
