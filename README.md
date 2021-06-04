@@ -1,7 +1,7 @@
 # CS-35L-Cooking-App
 A website where users can create, edit, display, clone, and rate recipes.
-Users can create accounts and login in and view their recipes.
-Users can also search for recipe by name and ingredients, and see a list of the most popular recipes.
+Users can create accounts, log in, and view their recipes.
+Users can also search for recipes by name, and see a list of the most popular recipes.
 
 
 The website is split into a React frontend and a Express backend.
@@ -13,7 +13,7 @@ To run the website, you will need your own Firebase database.
 
 A .env.local file needs to be in both the frontend and api directories.
 The .env.local file should include the identifying information for the Firebase database. Find this information by selecting the gear
-icon next to the **Project Overview** tab on the Firebase Console navigating to **Project settings > General**, scrolling down to the
+icon next to the **Project Overview** tab on the Firebase Console, navigating to **Project settings > General**, scrolling down to the
 contents under the header **SDK setup and configuration**, and selecting **Config**.
 
 ![Screen Shot 2021-06-04 at 10 12 46 AM](https://user-images.githubusercontent.com/72584623/120815151-92a5e080-c51d-11eb-85c3-098d07685e7a.png)![Uploading Screen Shot 2021-06-04 at 10.13.24 AM.png…]()
