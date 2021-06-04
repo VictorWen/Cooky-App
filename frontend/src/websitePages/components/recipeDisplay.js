@@ -43,16 +43,14 @@ const RecipeDisplay = (props) => {
         />
       )
     }
-
   })
-
   return (
     <div className={styles.recipeInfoContainer}>
       <img src={props.item.data.images[0]}
            className={styles.recipeImage}
       />
       <div className={styles.recipeInfo}>
-        <h4>{props.item.data.name}</h4>
+        <h4 className={styles.recipeTitle}>{props.item.data.name}</h4>
         {stars} <span style={{
         position: 'relative',
         top: '-6px',

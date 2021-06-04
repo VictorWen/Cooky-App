@@ -35,14 +35,6 @@ const NavigationBar = () => {
     }
   return (
     <div className={styles.navigationBar}>
-      <div
-        className={location.pathname === "/" ? styles.activeTab : styles.none}
-        onClick={() => {
-          history.push('/')
-        }}
-      >
-        Home
-      </div>
       {currentUser === null ? "" :
         <>
           <div

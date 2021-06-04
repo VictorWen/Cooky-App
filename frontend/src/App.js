@@ -83,7 +83,7 @@ function App() {
               <ViewRecipePage />
             </Route>
             <Route path="/">
-              <HomePage/>
+              <PopularRecipesPage/>
             </Route>
           </Switch>
         </div>
