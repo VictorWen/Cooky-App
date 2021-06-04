@@ -8,8 +8,10 @@ import { useAuth } from '../contexts/AuthContext'
 const ViewRecipePage = () => {
   const rating = useRef()
   const location = useLocation()
+
   const [userData, setUserData] = useState({})
   const { currentUser } = useAuth()
+
   useEffect(() => {
     const getData = async () => {
       try {
@@ -28,6 +30,13 @@ const ViewRecipePage = () => {
     }
     getData()
   }, [])
+  if (location.state === undefined) {
+    return (
+      <h1>No Recipe Selected</h1>
+    )
+  }
+
+
   console.log("userData", userData)
   const recipeInstructions = location.state.data.steps.map((item, index) => (
     <li key={index}>{item}</li>
