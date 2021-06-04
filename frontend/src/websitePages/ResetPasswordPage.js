@@ -25,7 +25,7 @@ const ResetPasswordPage = () => {
       setError(err.code)
     }
     setLoading(false)
-    history.push('/yourRecipes')
+    history.push('/login')
 
   }
 
@@ -54,7 +54,7 @@ const ResetPasswordPage = () => {
             value="Reset Password"
             className={styles.SignInButton}
             disabled = {loading}
-          > Sign In
+          > Reset Password
           </button>
         </div>
         <br />

@@ -99,7 +99,13 @@ const LoginPage = () => {
           </div> : <br/>
 
         }
-	  
+        <div className={styles.SignInTitle}>
+          <p onClick={() => {
+            history.push('/resetPassword')
+          }}
+             className={styles.accountExistsText}
+          > Forgot password? </p>
+        </div>
         <div className={styles.SignInTitle}>
           <p onClick={() => {
             history.push('/accountPage')
