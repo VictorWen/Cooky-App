@@ -1,4 +1,4 @@
-# CS-35L-Cooking-App
+# Cooky-App
 A website where users can create, edit, display, clone, and rate recipes.
 Users can create accounts, log in, and view their recipes.
 Users can also search for recipes by name, and see a list of the most popular recipes.
